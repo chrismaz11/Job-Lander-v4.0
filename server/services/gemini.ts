@@ -53,7 +53,7 @@ Return a JSON object with this exact structure:
     contents: prompt,
   });
 
-  const jsonText = response.text;
+  const jsonText = response.text || "{}";
   return JSON.parse(jsonText);
 }
 

@@ -62,11 +62,15 @@ Job-Lander is a full-stack web application that helps users create professional 
 
 ### AI-Powered Resume Creation
 1. User uploads existing resume (PDF/DOCX)
-2. Gemini AI parses and extracts structured data
-3. User reviews/edits information in multi-step form
-4. AI enhances content with professional writing
-5. Select Canva template for design
-6. Download professional PDF resume
+2. **Hybrid Parsing Pipeline**:
+   - Library extraction (pdf-parse for text-based PDFs)
+   - OCR detection for scanned images (Tesseract.js)
+   - AI post-processing with Gemini Pro for text cleanup and error correction
+3. Gemini AI parses and extracts structured data
+4. User reviews/edits information in multi-step form
+5. AI enhances content with professional writing
+6. Select Canva template for design
+7. Download professional PDF resume
 
 ### Blockchain Verification
 1. Generate SHA-256 hash of resume
@@ -95,6 +99,14 @@ Job-Lander is a full-stack web application that helps users create professional 
 - **Interactions**: Smooth transitions and hover effects
 
 ## Recent Changes
+- 2025-10-12: Enhanced PDF Parsing with OCR + AI
+  - Implemented hybrid parsing: library extraction + OCR + AI correction
+  - Added Tesseract.js for OCR on scanned documents
+  - Multi-page OCR support: processes all pages, not just the first
+  - Integrated Gemini Pro for AI post-processing and text cleanup
+  - Smart detection: uses OCR only when text extraction yields <200 chars
+  - Proper temp file cleanup with finally blocks for resource safety
+  - Enhanced resume parsing accuracy for both text-based and scanned PDFs
 - 2025-10-12: Database & Authentication Implementation
   - Migrated from MemStorage to PostgreSQL with Drizzle ORM
   - Integrated Replit Auth for user management

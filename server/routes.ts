@@ -4,6 +4,7 @@ import multer from "multer";
 import mammoth from "mammoth";
 import { storage } from "./storage";
 import { parseResumeWithAI, generateResumeContent, generateCoverLetter, calculateJobMatch } from "./services/gemini";
+import { hybridTextExtraction, parseResumeWithHybridAI } from "./services/ocrParser";
 import { generateResumeHash, verifyOnChain, checkVerification } from "./services/blockchain";
 import { searchJobs } from "./services/jobs";
 import { getCanvaTemplates, createCanvaDesign, exportCanvaDesignAsPDF } from "./services/canva";
@@ -33,30 +34,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Parse resume from PDF/DOCX
+  // Parse resume from PDF/DOCX with hybrid OCR + AI approach
   app.post("/api/parse-resume", upload.single("file"), async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ error: "No file uploaded" });
       }
 
-      let text = "";
+      let rawText = "";
+      const mimeType = req.file.mimetype;
 
-      if (req.file.mimetype === "application/pdf") {
+      // Step 1: Library-based text extraction
+      if (mimeType === "application/pdf") {
         const pdfParse = (await import("pdf-parse")).default;
         const pdfData = await pdfParse(req.file.buffer);
-        text = pdfData.text;
+        rawText = pdfData.text;
       } else if (
-        req.file.mimetype === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       ) {
         const result = await mammoth.extractRawText({ buffer: req.file.buffer });
-        text = result.value;
+        rawText = result.value;
       } else {
         return res.status(400).json({ error: "Unsupported file type" });
       }
 
-      // Use AI to parse the resume text
-      const parsedData = await parseResumeWithAI(text);
+      // Step 2: Hybrid extraction (OCR for scanned documents)
+      const enhancedText = await hybridTextExtraction(
+        req.file.buffer,
+        rawText,
+        mimeType
+      );
+
+      // Step 3: AI parsing with error correction
+      const parsedData = await parseResumeWithHybridAI(enhancedText);
+      
       res.json(parsedData);
     } catch (error: any) {
       console.error("Parse resume error:", error);
