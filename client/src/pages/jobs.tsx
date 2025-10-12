@@ -12,7 +12,7 @@ export default function Jobs() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data: jobs, isLoading } = useQuery({
-    queryKey: ["/api/find-jobs", searchTerm, location],
+    queryKey: ["/api/find-jobs", { query: searchTerm, location }],
     enabled: !!searchTerm,
   });
 
@@ -20,65 +20,7 @@ export default function Jobs() {
     setSearchTerm(searchQuery);
   };
 
-  const MOCK_JOBS = [
-    {
-      id: "1",
-      title: "Senior Software Engineer",
-      company: "TechCorp Inc.",
-      location: "San Francisco, CA",
-      salary: "$150,000 - $200,000",
-      description: "We're looking for an experienced software engineer to join our growing team...",
-      postedDate: "2 days ago",
-      jobUrl: "#",
-      aiMatchScore: "95"
-    },
-    {
-      id: "2",
-      title: "Full Stack Developer",
-      company: "StartupXYZ",
-      location: "Remote",
-      salary: "$120,000 - $160,000",
-      description: "Join our innovative startup building the future of AI-powered applications...",
-      postedDate: "1 week ago",
-      jobUrl: "#",
-      aiMatchScore: "88"
-    },
-    {
-      id: "3",
-      title: "Product Designer",
-      company: "Design Studio Co.",
-      location: "New York, NY",
-      salary: "$100,000 - $140,000",
-      description: "We need a talented designer who can create beautiful, user-centric experiences...",
-      postedDate: "3 days ago",
-      jobUrl: "#",
-      aiMatchScore: "82"
-    },
-    {
-      id: "4",
-      title: "DevOps Engineer",
-      company: "CloudTech Solutions",
-      location: "Austin, TX",
-      salary: "$130,000 - $170,000",
-      description: "Looking for a DevOps expert to help scale our infrastructure...",
-      postedDate: "5 days ago",
-      jobUrl: "#",
-      aiMatchScore: "90"
-    },
-    {
-      id: "5",
-      title: "Data Scientist",
-      company: "AI Innovations Lab",
-      location: "Boston, MA",
-      salary: "$140,000 - $180,000",
-      description: "Join our AI research team working on cutting-edge machine learning projects...",
-      postedDate: "1 day ago",
-      jobUrl: "#",
-      aiMatchScore: "92"
-    },
-  ];
-
-  const displayJobs = jobs?.data || (searchTerm ? [] : MOCK_JOBS);
+  const displayJobs = jobs?.data || [];
 
   const getMatchColor = (score: string) => {
     const numScore = parseInt(score);

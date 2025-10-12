@@ -39,25 +39,21 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create">
-              <a data-testid="button-create-resume-hero">
-                <Button size="lg" className="text-lg px-8 py-6">
-                  Create Resume
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </a>
-            </Link>
-            <Link href="/templates">
-              <a data-testid="button-view-templates-hero">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="text-lg px-8 py-6 bg-background/60 backdrop-blur-sm border-2"
-                >
-                  View Templates
-                </Button>
-              </a>
-            </Link>
+            <Button asChild size="lg" className="text-lg px-8 py-6" data-testid="button-create-resume-hero">
+              <Link href="/create">
+                Create Resume
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button 
+              asChild
+              size="lg" 
+              variant="outline" 
+              className="text-lg px-8 py-6 bg-background/60 backdrop-blur-sm border-2"
+              data-testid="button-view-templates-hero"
+            >
+              <Link href="/templates">View Templates</Link>
+            </Button>
           </div>
 
           <div className="mt-12">
@@ -197,14 +193,12 @@ export default function Home() {
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
               Browse thousands of job listings powered by AI matching to find opportunities that fit your skills and experience
             </p>
-            <Link href="/jobs">
-              <a data-testid="button-search-jobs">
-                <Button size="lg" className="text-lg px-8 py-6">
-                  Search Jobs
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </a>
-            </Link>
+            <Button asChild size="lg" className="text-lg px-8 py-6" data-testid="button-search-jobs">
+              <Link href="/jobs">
+                Search Jobs
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
           </Card>
         </div>
       </section>
@@ -219,21 +213,15 @@ export default function Home() {
             Join thousands of professionals who have landed their dream jobs with Job-Lander
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/create">
-              <a data-testid="button-get-started-cta">
-                <Button size="lg" className="text-lg px-8 py-6">
-                  Get Started Free
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </a>
-            </Link>
-            <Link href="/templates">
-              <a data-testid="button-browse-templates">
-                <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-                  Browse Templates
-                </Button>
-              </a>
-            </Link>
+            <Button asChild size="lg" className="text-lg px-8 py-6" data-testid="button-get-started-cta">
+              <Link href="/create">
+                Get Started Free
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="text-lg px-8 py-6" data-testid="button-browse-templates">
+              <Link href="/templates">Browse Templates</Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -256,31 +244,23 @@ export default function Home() {
               <h3 className="font-bold mb-4">Product</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/create">
-                    <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-create">
-                      Create Resume
-                    </a>
+                  <Link href="/create" className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-sm" data-testid="link-footer-create">
+                    Create Resume
                   </Link>
                 </li>
                 <li>
-                  <Link href="/templates">
-                    <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-templates">
-                      Templates
-                    </a>
+                  <Link href="/templates" className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-sm" data-testid="link-footer-templates">
+                    Templates
                   </Link>
                 </li>
                 <li>
-                  <Link href="/verify">
-                    <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-verify">
-                      Verify Resume
-                    </a>
+                  <Link href="/verify" className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-sm" data-testid="link-footer-verify">
+                    Verify Resume
                   </Link>
                 </li>
                 <li>
-                  <Link href="/jobs">
-                    <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-jobs">
-                      Find Jobs
-                    </a>
+                  <Link href="/jobs" className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-sm" data-testid="link-footer-jobs">
+                    Find Jobs
                   </Link>
                 </li>
               </ul>

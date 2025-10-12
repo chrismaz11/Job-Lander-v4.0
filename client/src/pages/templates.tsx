@@ -6,41 +6,37 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { FileText, Search, Star, Eye, Download, Loader2 } from "lucide-react";
+import { FileText, Search, Eye, Loader2 } from "lucide-react";
 import { Link } from "wouter";
 
 const TEMPLATE_CATEGORIES = ["All", "Modern", "Classic", "Creative", "Professional", "Minimalist"];
 
-const MOCK_TEMPLATES = [
-  { id: "1", name: "Modern Professional", category: "Modern", rating: 4.8, downloads: 1234, preview: "/api/placeholder/400/500" },
-  { id: "2", name: "Classic Elegance", category: "Classic", rating: 4.7, downloads: 987, preview: "/api/placeholder/400/500" },
-  { id: "3", name: "Creative Bold", category: "Creative", rating: 4.9, downloads: 1567, preview: "/api/placeholder/400/500" },
-  { id: "4", name: "Executive Suite", category: "Professional", rating: 4.6, downloads: 876, preview: "/api/placeholder/400/500" },
-  { id: "5", name: "Minimalist Clean", category: "Minimalist", rating: 4.8, downloads: 1345, preview: "/api/placeholder/400/500" },
-  { id: "6", name: "Tech Innovator", category: "Modern", rating: 4.7, downloads: 1123, preview: "/api/placeholder/400/500" },
-  { id: "7", name: "Traditional Formal", category: "Classic", rating: 4.5, downloads: 654, preview: "/api/placeholder/400/500" },
-  { id: "8", name: "Designer Portfolio", category: "Creative", rating: 4.9, downloads: 1876, preview: "/api/placeholder/400/500" },
-  { id: "9", name: "Corporate Pro", category: "Professional", rating: 4.6, downloads: 934, preview: "/api/placeholder/400/500" },
-];
+interface Template {
+  id: string;
+  name: string;
+  category: string;
+  thumbnailUrl?: string;
+}
 
 export default function Templates() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedTemplate, setSelectedTemplate] = useState<typeof MOCK_TEMPLATES[0] | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
 
-  const { data: templates, isLoading } = useQuery({
+  const { data: templatesData, isLoading } = useQuery({
     queryKey: ["/api/canva/templates"],
-    enabled: false,
   });
 
-  const filteredTemplates = MOCK_TEMPLATES.filter(template => {
+  const templates: Template[] = templatesData || [];
+
+  const filteredTemplates = templates.filter(template => {
     const matchesCategory = selectedCategory === "All" || template.category === selectedCategory;
     const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  const handlePreview = (template: typeof MOCK_TEMPLATES[0]) => {
+  const handlePreview = (template: Template) => {
     setSelectedTemplate(template);
     setPreviewOpen(true);
   };
@@ -85,7 +81,7 @@ export default function Templates() {
           <div className="flex items-center justify-center py-20">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
           </div>
-        ) : (
+        ) : filteredTemplates.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTemplates.map((template) => (
               <Card
@@ -115,7 +111,7 @@ export default function Templates() {
 
                 {/* Template Info */}
                 <div className="p-4">
-                  <div className="flex items-start justify-between mb-2">
+                  <div className="flex items-start justify-between mb-4">
                     <h3 className="font-bold text-lg" data-testid={`text-template-name-${template.id}`}>
                       {template.name}
                     </h3>
@@ -124,31 +120,14 @@ export default function Templates() {
                     </Badge>
                   </div>
 
-                  <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                    <div className="flex items-center gap-1">
-                      <Star className="h-4 w-4 fill-chart-4 text-chart-4" />
-                      <span data-testid={`text-rating-${template.id}`}>{template.rating}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Download className="h-4 w-4" />
-                      <span data-testid={`text-downloads-${template.id}`}>{template.downloads.toLocaleString()}</span>
-                    </div>
-                  </div>
-
-                  <Link href={`/create?template=${template.id}`}>
-                    <a>
-                      <Button className="w-full" data-testid={`button-use-template-${template.id}`}>
-                        Use Template
-                      </Button>
-                    </a>
-                  </Link>
+                  <Button asChild className="w-full" data-testid={`button-use-template-${template.id}`}>
+                    <Link href={`/create?template=${template.id}`}>Use Template</Link>
+                  </Button>
                 </div>
               </Card>
             ))}
           </div>
-        )}
-
-        {filteredTemplates.length === 0 && (
+        ) : (
           <div className="text-center py-20">
             <FileText className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
             <h3 className="text-xl font-bold mb-2">No templates found</h3>
@@ -164,7 +143,7 @@ export default function Templates() {
             <DialogHeader>
               <DialogTitle>{selectedTemplate?.name}</DialogTitle>
               <DialogDescription>
-                {selectedTemplate?.category} template with {selectedTemplate?.downloads.toLocaleString()} downloads
+                {selectedTemplate?.category} template - Professional resume design powered by Canva
               </DialogDescription>
             </DialogHeader>
 
@@ -173,13 +152,9 @@ export default function Templates() {
             </div>
 
             <div className="flex gap-4">
-              <Link href={`/create?template=${selectedTemplate?.id}`}>
-                <a className="flex-1">
-                  <Button className="w-full" data-testid="button-use-template-preview">
-                    Use This Template
-                  </Button>
-                </a>
-              </Link>
+              <Button asChild className="w-full" data-testid="button-use-template-preview">
+                <Link href={`/create?template=${selectedTemplate?.id}`}>Use This Template</Link>
+              </Button>
               <Button variant="outline" onClick={() => setPreviewOpen(false)} className="flex-1">
                 Close
               </Button>

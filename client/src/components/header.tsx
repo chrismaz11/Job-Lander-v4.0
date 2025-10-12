@@ -11,59 +11,51 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-lg">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href="/">
-          <div className="flex items-center gap-2 hover-elevate rounded-lg px-3 py-2 transition-all cursor-pointer" data-testid="link-home">
-            <Sparkles className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">Job-Lander</span>
-          </div>
+        <Link href="/" className="flex items-center gap-2 hover-elevate rounded-lg px-3 py-2 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" data-testid="link-home">
+          <Sparkles className="h-6 w-6 text-primary" />
+          <span className="text-xl font-bold">Job-Lander</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">
-          <Link href="/create">
-            <Button
-              variant={isActive("/create") ? "secondary" : "ghost"}
-              className="font-medium"
-              data-testid="link-create"
-            >
-              Create Resume
-            </Button>
-          </Link>
-          <Link href="/templates">
-            <Button
-              variant={isActive("/templates") ? "secondary" : "ghost"}
-              className="font-medium"
-              data-testid="link-templates"
-            >
-              Templates
-            </Button>
-          </Link>
-          <Link href="/verify">
-            <Button
-              variant={isActive("/verify") ? "secondary" : "ghost"}
-              className="font-medium"
-              data-testid="link-verify"
-            >
-              Verify
-            </Button>
-          </Link>
-          <Link href="/jobs">
-            <Button
-              variant={isActive("/jobs") ? "secondary" : "ghost"}
-              className="font-medium"
-              data-testid="link-jobs"
-            >
-              Find Jobs
-            </Button>
-          </Link>
+          <Button
+            asChild
+            variant={isActive("/create") ? "secondary" : "ghost"}
+            className="font-medium"
+            data-testid="link-create"
+          >
+            <Link href="/create">Create Resume</Link>
+          </Button>
+          <Button
+            asChild
+            variant={isActive("/templates") ? "secondary" : "ghost"}
+            className="font-medium"
+            data-testid="link-templates"
+          >
+            <Link href="/templates">Templates</Link>
+          </Button>
+          <Button
+            asChild
+            variant={isActive("/verify") ? "secondary" : "ghost"}
+            className="font-medium"
+            data-testid="link-verify"
+          >
+            <Link href="/verify">Verify</Link>
+          </Button>
+          <Button
+            asChild
+            variant={isActive("/jobs") ? "secondary" : "ghost"}
+            className="font-medium"
+            data-testid="link-jobs"
+          >
+            <Link href="/jobs">Find Jobs</Link>
+          </Button>
         </nav>
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Link href="/create">
-            <Button className="hidden sm:inline-flex" data-testid="link-get-started">
-              Get Started
-            </Button>
-          </Link>
+          <Button asChild className="hidden sm:inline-flex" data-testid="link-get-started">
+            <Link href="/create">Get Started</Link>
+          </Button>
         </div>
       </div>
     </header>

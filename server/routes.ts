@@ -1,7 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import multer from "multer";
-import pdfParse from "pdf-parse";
 import mammoth from "mammoth";
 import { storage } from "./storage";
 import { parseResumeWithAI, generateResumeContent, generateCoverLetter, calculateJobMatch } from "./services/gemini";
@@ -26,7 +25,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let text = "";
 
       if (req.file.mimetype === "application/pdf") {
-        const pdfData = await (pdfParse as any).default(req.file.buffer);
+        const pdfParse = (await import("pdf-parse")).default;
+        const pdfData = await pdfParse(req.file.buffer);
         text = pdfData.text;
       } else if (
         req.file.mimetype === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
