@@ -1,0 +1,48 @@
+Build a full-stack web app called “VeriHire” that helps users upload résumés, design them in Canva, and find verified jobs.
+
+✅ TECH STACK:
+- Backend: Node.js + Express
+- Frontend: React (or Vite + React)
+- File uploads: multer (limit 5MB, accept .pdf and .docx)
+- AI integration: Gemini Pro API (for résumé parsing + job match scoring)
+- Design integration: Canva Connect API (for template editing)
+- Job search: Mock job API that supports city-only queries (e.g., typing “Chicago” returns jobs in Chicago)
+- Blockchain placeholder: include a “Verify Reference” button that calls a dummy endpoint `/verify` to simulate future blockchain verification
+- Must run entirely within Replit’s free tier (no external DBs)
+
+✅ FUNCTIONALITY:
+1. Home page with two buttons:
+   - “Upload Résumé”
+   - “Design in Canva”
+2. Résumé Upload Page:
+   - Upload PDF or DOCX
+   - Send to Gemini Pro for parsing → show extracted name, skills, and summary
+3. Canva Design Page:
+   - Integrate Canva Connect API
+   - Allow user to select a public Canva résumé template
+   - Display embedded Canva editor in an iframe
+4. Job Search Page:
+   - Search field for “City” (no keyword required)
+   - Display mock job results from a local JSON file (e.g. jobs.json)
+5. Reference Verification Page:
+   - Button “Verify on Blockchain” → triggers `/verify` → returns mock transaction hash
+6. Add a navbar linking Home | Upload | Design | Search | Verify
+
+✅ SETUP NOTES:
+- Include example .env file with placeholders:
+  CANVA_CLIENT_ID=
+  CANVA_CLIENT_SECRET=
+  CANVA_REDIRECT_URI=http://localhost:3000/callback
+  GEMINI_API_KEY=
+- Make sure the server proxies API calls so frontend requests don’t hit CORS issues.
+- Store uploads in /tmp to stay within Replit limits.
+- Include comments for where to insert real blockchain verification logic later.
+- Style should be modern, bold, and professional (use TailwindCSS).
+
+✅ OUTPUT:
+- Fully runnable Replit project
+- Working routes and frontend
+- No external DBs or paid dependencies
+- Ready for deployment on Replit’s free tier
+
+When complete, run the server and frontend together and output the local URL (e.g., https://verihire.<username>.repl.co).
