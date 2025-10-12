@@ -10,6 +10,7 @@ import CreateResume from "@/pages/create-resume";
 import Templates from "@/pages/templates";
 import Verify from "@/pages/verify";
 import Jobs from "@/pages/jobs";
+import Dashboard from "@/pages/dashboard";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/create" component={CreateResume} />
       <Route path="/templates" component={Templates} />
+      <Route path="/dashboard" component={Dashboard} />
       <Route path="/verify" component={Verify} />
       <Route path="/jobs" component={Jobs} />
       <Route component={NotFound} />

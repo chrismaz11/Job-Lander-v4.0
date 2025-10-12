@@ -10,7 +10,9 @@ Job-Lander is a full-stack web application that helps users create professional 
 ## Tech Stack
 - **Frontend**: React, Vite, TypeScript, TailwindCSS, Wouter, React Query, Shadcn UI
 - **Backend**: Node.js, Express, Gemini AI, ethers.js, Multer
-- **Storage**: In-memory (MemStorage)
+- **Database**: PostgreSQL (Neon) with Drizzle ORM
+- **Authentication**: Replit Auth (OpenID Connect)
+- **Storage**: DatabaseStorage (PostgreSQL)
 - **Blockchain**: Polygon Mumbai Testnet
 
 ## Architecture
@@ -19,24 +21,42 @@ Job-Lander is a full-stack web application that helps users create professional 
 1. **Home (/)** - Landing page with hero, features, how-it-works, CTA
 2. **Create Resume (/create)** - Multi-step form with AI parsing and live preview
 3. **Templates (/templates)** - Gallery of Canva templates with filters
-4. **Verify (/verify)** - Blockchain verification interface
-5. **Jobs (/jobs)** - Job search with AI matching
+4. **Dashboard (/dashboard)** - User's resume history with delete/download (protected)
+5. **Verify (/verify)** - Blockchain verification interface
+6. **Jobs (/jobs)** - Job search with AI matching
 
 ### Backend API Endpoints
+**Authentication (Replit Auth)**
+- `GET /api/login` - Start authentication flow
+- `GET /api/logout` - End session
+- `GET /api/callback` - OAuth callback
+- `GET /api/auth/user` - Get current user (protected)
+
+**Resumes**
 - `POST /api/parse-resume` - Parse PDF/DOCX with AI
-- `POST /api/generate-resume` - Generate enhanced resume
+- `POST /api/generate-resume` - Generate enhanced resume (protected)
+- `GET /api/resumes` - Get user's resumes (protected)
+- `GET /api/resumes/:id` - Get single resume
+- `PATCH /api/resumes/:id` - Update resume (protected)
+- `DELETE /api/resumes/:id` - Delete resume (protected)
+
+**Cover Letters & Jobs**
 - `POST /api/generate-coverletter` - Create AI cover letter
+- `GET /api/find-jobs` - Search jobs with JSearch API
+
+**Blockchain & Templates**
 - `POST /api/verify-on-chain` - Blockchain verification
 - `POST /api/verify-resume` - Check verification status
-- `GET /api/find-jobs` - Search jobs
 - `GET /api/canva/templates` - Get templates
 - `POST /api/canva/create-template` - Create design
 - `POST /api/canva/export-pdf` - Export PDF
 
 ### Data Models (shared/schema.ts)
-- **Resume**: Personal info, experience, education, skills, template, blockchain hash
+- **User**: ID, email, name, profile image (Replit Auth)
+- **Resume**: User ID, personal info, experience, education, skills, template, blockchain hash
 - **CoverLetter**: Resume link, company, position, AI-generated content
 - **Job**: Title, company, location, description, salary, AI match score
+- **Session**: Authentication session storage
 
 ## Key Features
 
@@ -75,15 +95,24 @@ Job-Lander is a full-stack web application that helps users create professional 
 - **Interactions**: Smooth transitions and hover effects
 
 ## Recent Changes
-- 2025-01: Initial MVP implementation
-- Complete frontend with 5 pages
-- Full backend API with AI, blockchain, and job search
-- In-memory storage for rapid development
-- Dark mode with theme toggle
-- Responsive design across all pages
+- 2025-10-12: Database & Authentication Implementation
+  - Migrated from MemStorage to PostgreSQL with Drizzle ORM
+  - Integrated Replit Auth for user management
+  - Added user authentication with protected routes
+  - Created Dashboard page for resume history management
+  - Implemented user-specific resume storage with CRUD operations
+  - Added login/logout UI in header with user dropdown
+- 2025-01: Initial MVP Implementation
+  - Complete frontend with 5 pages
+  - Full backend API with AI, blockchain, and job search
+  - Dark mode with theme toggle
+  - Responsive design across all pages
 
 ## Development Notes
-- Using in-memory storage (MemStorage) - data resets on server restart
+- Using PostgreSQL database for persistent storage
+- Replit Auth handles all authentication flows (Google, GitHub, email)
+- Protected routes require authentication via middleware
+- User sessions stored in database for persistence
 - Blockchain verification simulated for MVP (no actual contract deployment needed)
 - Canva integration uses mock data (requires OAuth setup for full integration)
 - All AI features powered by Gemini 2.5 Flash/Pro models
@@ -93,9 +122,13 @@ Job-Lander is a full-stack web application that helps users create professional 
 npm run dev  # Starts both frontend and backend on port 5000
 ```
 
-## Next Steps
-- Add persistent PostgreSQL database
-- Implement user authentication
-- Deploy smart contract to Polygon Mumbai
-- Complete Canva OAuth integration
-- Add resume history dashboard
+## Next Steps (In Progress)
+- ✅ Add persistent PostgreSQL database
+- ✅ Implement user authentication
+- ✅ Add resume history dashboard
+- 🔄 Advanced AI features (job tailoring, skill gap analysis, interview prep)
+- 🔄 Collaborative sharing features for teams
+- 🔄 Batch processing for multiple job applications
+- 🔄 Analytics dashboard with charts
+- ⏳ Deploy smart contract to Polygon Mumbai
+- ⏳ Complete Canva OAuth integration

@@ -7,6 +7,7 @@ import { parseResumeWithAI, generateResumeContent, generateCoverLetter, calculat
 import { generateResumeHash, verifyOnChain, checkVerification } from "./services/blockchain";
 import { searchJobs } from "./services/jobs";
 import { getCanvaTemplates, createCanvaDesign, exportCanvaDesignAsPDF } from "./services/canva";
+import { setupAuth, isAuthenticated } from "./replitAuth";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -14,6 +15,23 @@ const upload = multer({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Setup authentication
+  await setupAuth(app);
+
+  // Auth endpoint to get current user
+  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
   
   // Parse resume from PDF/DOCX
   app.post("/api/parse-resume", upload.single("file"), async (req, res) => {
@@ -46,9 +64,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Generate resume
-  app.post("/api/generate-resume", async (req, res) => {
+  // Generate resume (protected route)
+  app.post("/api/generate-resume", isAuthenticated, async (req: any, res) => {
     try {
+      const userId = req.user.claims.sub;
       const { personalInfo, experience, education, skills, templateId } = req.body;
 
       // Enhance content with AI
@@ -71,8 +90,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         pdfUrl = await exportCanvaDesignAsPDF(design.designId);
       }
 
-      // Save to storage
+      // Save to storage with userId
       const resume = await storage.createResume({
+        userId,
         personalInfo: enhanced.personalInfo || personalInfo,
         experience: enhanced.experience || experience,
         education: enhanced.education || education,
@@ -108,8 +128,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         companyName,
         position,
         jobDescription,
-        experience: resume.experience,
-        skills: resume.skills,
+        experience: resume.experience || [],
+        skills: resume.skills || [],
       });
 
       const coverLetter = await storage.createCoverLetter({
@@ -245,10 +265,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all resumes
-  app.get("/api/resumes", async (req, res) => {
+  // Get user's resumes (protected)
+  app.get("/api/resumes", isAuthenticated, async (req: any, res) => {
     try {
-      const resumes = await storage.getAllResumes();
+      const userId = req.user.claims.sub;
+      const resumes = await storage.getResumesByUserId(userId);
       res.json(resumes);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -263,6 +284,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Resume not found" });
       }
       res.json(resume);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Update resume (protected)
+  app.patch("/api/resumes/:id", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const resume = await storage.getResume(req.params.id);
+      
+      if (!resume) {
+        return res.status(404).json({ error: "Resume not found" });
+      }
+      
+      if (resume.userId !== userId) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+
+      const updated = await storage.updateResume(req.params.id, req.body);
+      res.json(updated);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Delete resume (protected)
+  app.delete("/api/resumes/:id", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const resume = await storage.getResume(req.params.id);
+      
+      if (!resume) {
+        return res.status(404).json({ error: "Resume not found" });
+      }
+      
+      if (resume.userId !== userId) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+
+      await storage.deleteResume(req.params.id);
+      res.json({ success: true });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
