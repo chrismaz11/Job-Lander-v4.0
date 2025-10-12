@@ -3,10 +3,10 @@ import { createServer, type Server } from "http";
 import multer from "multer";
 import mammoth from "mammoth";
 import { storage } from "./storage";
-import { parseResumeWithAI, generateResumeContent, generateCoverLetter, calculateJobMatch } from "./services/gemini";
+import { parseResumeWithAI, generateResumeContent, generateCoverLetter, calculateJobMatch, rankJobsByRelevance, suggestCities } from "./services/gemini";
 import { hybridTextExtraction, parseResumeWithHybridAI } from "./services/ocrParser";
 import { generateResumeHash, verifyOnChain, checkVerification } from "./services/blockchain";
-import { searchJobs } from "./services/jobs";
+import { searchJobs, getAvailableCities, getJobStatistics, type JobSearchFilters } from "./services/jobs";
 import { getCanvaTemplates, createCanvaDesign, exportCanvaDesignAsPDF } from "./services/canva";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 
@@ -214,19 +214,80 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Find jobs
+  // Find jobs with enhanced filters
   app.get("/api/find-jobs", async (req, res) => {
     try {
-      const { query, location } = req.query;
+      const { 
+        query, 
+        location, 
+        city, 
+        remote, 
+        employmentType, 
+        salaryRange, 
+        page, 
+        limit,
+        useSemanticRanking 
+      } = req.query;
 
-      if (!query) {
-        return res.status(400).json({ error: "Query parameter required" });
+      // Build filters object
+      const filters: JobSearchFilters = {
+        query: query as string,
+        location: location as string,
+        city: city as string,
+        remote: remote as "yes" | "no" | "any",
+        employmentType: employmentType ? (employmentType as string).split(',') : undefined,
+        salaryRange: salaryRange as string,
+        page: page ? parseInt(page as string) : 1,
+        limit: limit ? parseInt(limit as string) : 10
+      };
+
+      // Search jobs with filters
+      const result = await searchJobs(filters);
+
+      // Apply semantic ranking if requested and we have results
+      if (useSemanticRanking === 'true' && result.data.length > 0 && (query || city)) {
+        const rankedJobs = await rankJobsByRelevance(
+          result.data, 
+          (query || city) as string,
+          {
+            // You could add user preferences here if available
+          }
+        );
+        result.data = rankedJobs;
       }
 
-      const result = await searchJobs(query as string, location as string);
       res.json(result);
     } catch (error: any) {
       console.error("Job search error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Get available cities for autocomplete
+  app.get("/api/cities", async (req, res) => {
+    try {
+      const { search } = req.query;
+      const cities = getAvailableCities();
+      
+      if (search) {
+        const suggestions = await suggestCities(search as string, cities);
+        res.json({ cities: suggestions });
+      } else {
+        res.json({ cities: cities.slice(0, 20) });
+      }
+    } catch (error: any) {
+      console.error("Get cities error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Get job search statistics
+  app.get("/api/job-stats", async (req, res) => {
+    try {
+      const stats = getJobStatistics();
+      res.json(stats);
+    } catch (error: any) {
+      console.error("Get job stats error:", error);
       res.status(500).json({ error: error.message });
     }
   });

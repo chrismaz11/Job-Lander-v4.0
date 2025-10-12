@@ -144,7 +144,13 @@ Your task:
 1. Intelligently parse the resume information
 2. Correct any OCR errors or formatting issues
 3. Extract structured information accurately
-4. Fill in missing fields with appropriate defaults
+4. Assess confidence level for each field based on clarity and completeness
+5. Fill in missing fields with appropriate defaults
+
+CONFIDENCE SCORING GUIDELINES:
+- "high": Field is clearly present, well-formatted, and unambiguous
+- "medium": Field is present but may have minor OCR errors or formatting issues
+- "low": Field is unclear, has significant errors, or is inferred/guessed
 
 Resume text:
 ${text}
@@ -182,19 +188,77 @@ Return a JSON object with this exact structure:
       "current": boolean
     }
   ],
-  "skills": ["skill1", "skill2", "skill3"]
+  "skills": ["skill1", "skill2", "skill3"],
+  "confidence": {
+    "overall": "high" | "medium" | "low",
+    "fields": {
+      "fullName": "high" | "medium" | "low",
+      "email": "high" | "medium" | "low",
+      "phone": "high" | "medium" | "low",
+      "location": "high" | "medium" | "low",
+      "linkedin": "high" | "medium" | "low",
+      "website": "high" | "medium" | "low",
+      "summary": "high" | "medium" | "low",
+      "experience": "high" | "medium" | "low",
+      "education": "high" | "medium" | "low",
+      "skills": "high" | "medium" | "low"
+    }
+  },
+  "rawText": "${text.substring(0, 500)}..." 
 }
 
-If any field is not found, use empty string or empty array as appropriate.`;
+If any field is not found, use empty string or empty array as appropriate. Always include confidence scoring for each field. Set overall confidence based on the majority of field confidences.`;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-pro",
-    config: {
-      responseMimeType: "application/json",
-    },
-    contents: prompt,
-  });
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-pro",
+      config: {
+        responseMimeType: "application/json",
+      },
+      contents: prompt,
+    });
 
-  const jsonText = response.text || "{}";
-  return JSON.parse(jsonText);
+    const jsonText = response.text || "{}";
+    const result = JSON.parse(jsonText);
+    
+    // Ensure rawText is always included for fallback
+    if (!result.rawText) {
+      result.rawText = text;
+    }
+    
+    return result;
+  } catch (error) {
+    console.error("AI parsing error:", error);
+    // Return a fallback response with low confidence
+    return {
+      personalInfo: {
+        fullName: "",
+        email: "",
+        phone: "",
+        location: "",
+        linkedin: "",
+        website: "",
+        summary: ""
+      },
+      experience: [],
+      education: [],
+      skills: [],
+      confidence: {
+        overall: "low",
+        fields: {
+          fullName: "low",
+          email: "low",
+          phone: "low",
+          location: "low",
+          linkedin: "low",
+          website: "low",
+          summary: "low",
+          experience: "low",
+          education: "low",
+          skills: "low"
+        }
+      },
+      rawText: text
+    };
+  }
 }

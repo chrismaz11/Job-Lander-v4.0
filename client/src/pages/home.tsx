@@ -1,11 +1,32 @@
 import { Link } from "wouter";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Sparkles, FileText, Shield, Search, CheckCircle2, Upload, Wand2, Download } from "lucide-react";
+import { ArrowRight, Sparkles, FileText, Shield, Search, CheckCircle2, Upload, Wand2, Download, Star, Zap, Eye, TrendingUp } from "lucide-react";
 import heroImage from "@assets/stock_images/modern_office_desk_w_94f20872.jpg";
+import { getTemplateImage } from "@/lib/templateImages";
+import { useQuery } from "@tanstack/react-query";
+
+interface Template {
+  id: string;
+  name: string;
+  category: string;
+  description?: string;
+  thumbnailUrl?: string;
+  isPremium?: string;
+}
 
 export default function Home() {
+  const [hoveredTemplate, setHoveredTemplate] = useState<string | null>(null);
+
+  const { data: templatesData } = useQuery<Template[]>({
+    queryKey: ["/api/canva/templates"],
+  });
+
+  // Get featured templates (first 6 from different categories)
+  const featuredTemplates = templatesData?.slice(0, 6) || [];
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -107,6 +128,114 @@ export default function Home() {
                 Verify resume authenticity with blockchain technology. Hash your credentials on Polygon Mumbai testnet for tamper-proof verification.
               </p>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Template Showcase Section */}
+      <section className="py-20 md:py-32">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-16">
+            <Badge className="mb-4 bg-chart-2/20 text-chart-2 border-chart-2/30" data-testid="badge-templates-showcase">
+              <TrendingUp className="h-3 w-3 mr-1" />
+              Featured Templates
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Professional Templates for Every Career
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+              Choose from 6 distinct categories designed to match your professional style
+            </p>
+          </div>
+
+          {/* Template Categories Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {featuredTemplates.length > 0 ? (
+              featuredTemplates.map((template) => {
+                const imageUrl = template.thumbnailUrl ? getTemplateImage(template.thumbnailUrl) : null;
+                const isHovered = hoveredTemplate === template.id;
+                
+                return (
+                  <Link href={`/templates?category=${template.category}`} key={template.id}>
+                    <Card 
+                      className="group relative overflow-hidden hover-elevate transition-all duration-300 cursor-pointer"
+                      onMouseEnter={() => setHoveredTemplate(template.id)}
+                      onMouseLeave={() => setHoveredTemplate(null)}
+                      data-testid={`card-featured-template-${template.id}`}
+                    >
+                      {/* Template Preview */}
+                      <div className="aspect-[8.5/11] bg-muted relative overflow-hidden">
+                        {imageUrl ? (
+                          <img 
+                            src={imageUrl}
+                            alt={template.name}
+                            className={`w-full h-full object-cover transition-transform duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center bg-card">
+                            <FileText className="h-24 w-24 text-muted-foreground/20" />
+                          </div>
+                        )}
+                        
+                        {/* Premium Badge */}
+                        {template.isPremium === "true" && (
+                          <div className="absolute top-3 right-3 z-10">
+                            <Badge className="bg-chart-4/90 text-white border-chart-4">
+                              <Star className="h-3 w-3 mr-1 fill-current" />
+                              Premium
+                            </Badge>
+                          </div>
+                        )}
+                        
+                        {/* Hover Overlay */}
+                        <div className={`absolute inset-0 bg-gradient-to-t from-background to-transparent transition-opacity duration-300 ${isHovered ? 'opacity-90' : 'opacity-0'}`}>
+                          <div className="absolute bottom-0 p-6 w-full">
+                            <Button className="w-full" size="lg">
+                              <Eye className="h-4 w-4 mr-2" />
+                              View Template
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Template Info */}
+                      <div className="p-6">
+                        <Badge variant="outline" className="mb-3 text-xs">
+                          {template.category}
+                        </Badge>
+                        <h3 className="font-bold text-lg mb-2">{template.name}</h3>
+                        {template.description && (
+                          <p className="text-sm text-muted-foreground line-clamp-2">
+                            {template.description}
+                          </p>
+                        )}
+                      </div>
+                    </Card>
+                  </Link>
+                );
+              })
+            ) : (
+              // Placeholder templates
+              [1, 2, 3, 4, 5, 6].map((index) => (
+                <Card key={index} className="overflow-hidden">
+                  <div className="aspect-[8.5/11] bg-muted animate-pulse" />
+                  <div className="p-6">
+                    <div className="h-4 bg-muted rounded w-24 mb-3 animate-pulse" />
+                    <div className="h-6 bg-muted rounded w-3/4 mb-2 animate-pulse" />
+                    <div className="h-4 bg-muted rounded w-full animate-pulse" />
+                  </div>
+                </Card>
+              ))
+            )}
+          </div>
+
+          <div className="text-center">
+            <Button asChild size="lg" variant="outline" className="text-lg">
+              <Link href="/templates">
+                View All Templates
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

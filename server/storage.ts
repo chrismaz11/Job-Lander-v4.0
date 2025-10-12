@@ -1,4 +1,4 @@
-import { type Resume, type InsertResume, type CoverLetter, type InsertCoverLetter, type Job, type User, type UpsertUser, resumes, coverLetters, jobs, users } from "@shared/schema";
+import { type Resume, type InsertResume, type CoverLetter, type InsertCoverLetter, type Job, type User, type UpsertUser, type Template, type InsertTemplate, resumes, coverLetters, jobs, users, templates } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { db } from "./db";
 import { eq, or, and, like } from "drizzle-orm";
@@ -26,6 +26,12 @@ export interface IStorage {
   getJob(id: string): Promise<Job | undefined>;
   getAllJobs(): Promise<Job[]>;
   searchJobs(query: string, location?: string): Promise<Job[]>;
+  
+  // Template operations
+  createTemplate(template: InsertTemplate & { id?: string }): Promise<Template>;
+  getTemplate(id: string): Promise<Template | undefined>;
+  getAllTemplates(): Promise<Template[]>;
+  getTemplatesByCategory(category: string): Promise<Template[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -33,12 +39,14 @@ export class MemStorage implements IStorage {
   private resumes: Map<string, Resume>;
   private coverLetters: Map<string, CoverLetter>;
   private jobs: Map<string, Job>;
+  private templates: Map<string, Template>;
 
   constructor() {
     this.users = new Map();
     this.resumes = new Map();
     this.coverLetters = new Map();
     this.jobs = new Map();
+    this.templates = new Map();
   }
 
   // User operations
@@ -159,6 +167,38 @@ export class MemStorage implements IStorage {
         : true;
       return matchesQuery && matchesLocation;
     });
+  }
+
+  // Template operations
+  async createTemplate(templateData: InsertTemplate & { id?: string }): Promise<Template> {
+    const id = templateData.id || randomUUID();
+    const template: Template = {
+      ...templateData,
+      id,
+      description: templateData.description || null,
+      thumbnailUrl: templateData.thumbnailUrl || null,
+      previewUrl: templateData.previewUrl || null,
+      canvaTemplateId: templateData.canvaTemplateId || null,
+      tags: (templateData.tags as any) || [],
+      isPremium: templateData.isPremium || "false",
+      createdAt: new Date(),
+    };
+    this.templates.set(id, template);
+    return template;
+  }
+
+  async getTemplate(id: string): Promise<Template | undefined> {
+    return this.templates.get(id);
+  }
+
+  async getAllTemplates(): Promise<Template[]> {
+    return Array.from(this.templates.values());
+  }
+
+  async getTemplatesByCategory(category: string): Promise<Template[]> {
+    return Array.from(this.templates.values()).filter(
+      (t) => t.category === category
+    );
   }
 }
 
@@ -288,6 +328,33 @@ export class DatabaseStorage implements IStorage {
     }
 
     return await db.select().from(jobs).where(and(...conditions));
+  }
+
+  // Template operations
+  async createTemplate(templateData: InsertTemplate & { id?: string }): Promise<Template> {
+    const id = templateData.id || randomUUID();
+    const [template] = await db
+      .insert(templates)
+      .values({ 
+        ...templateData, 
+        id,
+        tags: templateData.tags || [],
+      })
+      .returning();
+    return template;
+  }
+
+  async getTemplate(id: string): Promise<Template | undefined> {
+    const [template] = await db.select().from(templates).where(eq(templates.id, id));
+    return template || undefined;
+  }
+
+  async getAllTemplates(): Promise<Template[]> {
+    return await db.select().from(templates);
+  }
+
+  async getTemplatesByCategory(category: string): Promise<Template[]> {
+    return await db.select().from(templates).where(eq(templates.category, category));
   }
 }
 

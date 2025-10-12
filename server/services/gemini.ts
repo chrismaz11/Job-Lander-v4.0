@@ -6,6 +6,11 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 export async function parseResumeWithAI(text: string): Promise<any> {
   const prompt = `You are an expert resume parser. Extract structured information from the following resume text and return it as JSON.
 
+Assess confidence level for each field based on clarity and completeness:
+- "high": Field is clearly present, well-formatted, and unambiguous
+- "medium": Field is present but may have minor formatting issues
+- "low": Field is unclear, missing, or requires guessing
+
 Resume text:
 ${text}
 
@@ -42,19 +47,77 @@ Return a JSON object with this exact structure:
       "current": boolean
     }
   ],
-  "skills": ["skill1", "skill2", "skill3"]
+  "skills": ["skill1", "skill2", "skill3"],
+  "confidence": {
+    "overall": "high" | "medium" | "low",
+    "fields": {
+      "fullName": "high" | "medium" | "low",
+      "email": "high" | "medium" | "low",
+      "phone": "high" | "medium" | "low",
+      "location": "high" | "medium" | "low",
+      "linkedin": "high" | "medium" | "low",
+      "website": "high" | "medium" | "low",
+      "summary": "high" | "medium" | "low",
+      "experience": "high" | "medium" | "low",
+      "education": "high" | "medium" | "low",
+      "skills": "high" | "medium" | "low"
+    }
+  },
+  "rawText": "${text.substring(0, 500)}..."
 }`;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    config: {
-      responseMimeType: "application/json",
-    },
-    contents: prompt,
-  });
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      config: {
+        responseMimeType: "application/json",
+      },
+      contents: prompt,
+    });
 
-  const jsonText = response.text || "{}";
-  return JSON.parse(jsonText);
+    const jsonText = response.text || "{}";
+    const result = JSON.parse(jsonText);
+    
+    // Ensure rawText is always included
+    if (!result.rawText) {
+      result.rawText = text;
+    }
+    
+    return result;
+  } catch (error) {
+    console.error("AI parsing error:", error);
+    // Return a fallback response with low confidence
+    return {
+      personalInfo: {
+        fullName: "",
+        email: "",
+        phone: "",
+        location: "",
+        linkedin: "",
+        website: "",
+        summary: ""
+      },
+      experience: [],
+      education: [],
+      skills: [],
+      confidence: {
+        overall: "low",
+        fields: {
+          fullName: "low",
+          email: "low",
+          phone: "low",
+          location: "low",
+          linkedin: "low",
+          website: "low",
+          summary: "low",
+          experience: "low",
+          education: "low",
+          skills: "low"
+        }
+      },
+      rawText: text
+    };
+  }
 }
 
 export async function generateResumeContent(data: any): Promise<string> {
@@ -154,4 +217,106 @@ Return a JSON object with a match score from 0-100:
 
   const result = JSON.parse(response.text || '{"matchScore": 0}');
   return result.matchScore;
+}
+
+// Rank jobs by semantic relevance to search query and user preferences
+export async function rankJobsByRelevance(jobs: any[], query: string, preferences?: {
+  skills?: string[];
+  preferredLocation?: string;
+  experienceLevel?: string;
+}): Promise<any[]> {
+  if (!jobs || jobs.length === 0) return [];
+  
+  // Don't rank if no query provided
+  if (!query) return jobs;
+
+  const prompt = `You are a job search expert. Rank these jobs by relevance to the search query and preferences.
+
+Search Query: "${query}"
+${preferences?.skills ? `User Skills: ${preferences.skills.join(', ')}` : ''}
+${preferences?.preferredLocation ? `Preferred Location: ${preferences.preferredLocation}` : ''}
+${preferences?.experienceLevel ? `Experience Level: ${preferences.experienceLevel}` : ''}
+
+Jobs to rank:
+${jobs.map((job, index) => `
+Job ${index + 1}:
+- Title: ${job.title}
+- Company: ${job.company}
+- Location: ${job.location || job.city}
+- Remote: ${job.remote ? 'Yes' : 'No'}
+- Description: ${(job.description || '').substring(0, 200)}...
+`).join('\n')}
+
+Return a JSON array with job indices sorted by relevance and a match score (0-100):
+[{"index": number, "score": number, "reason": "brief explanation"}]
+
+Consider:
+1. Title match to query
+2. Skills alignment
+3. Location preferences
+4. Experience level fit
+5. Remote availability if mentioned`;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      config: {
+        responseMimeType: "application/json",
+      },
+      contents: prompt,
+    });
+
+    const rankings = JSON.parse(response.text || '[]');
+    
+    // Apply rankings to jobs
+    const rankedJobs = rankings.map((rank: any) => {
+      const job = jobs[rank.index];
+      return {
+        ...job,
+        aiMatchScore: rank.score,
+        matchReason: rank.reason
+      };
+    });
+
+    // Add any jobs that weren't ranked
+    const rankedIndices = new Set(rankings.map((r: any) => r.index));
+    jobs.forEach((job, index) => {
+      if (!rankedIndices.has(index)) {
+        rankedJobs.push({
+          ...job,
+          aiMatchScore: 50,
+          matchReason: "Standard match"
+        });
+      }
+    });
+
+    return rankedJobs.sort((a, b) => (b.aiMatchScore || 0) - (a.aiMatchScore || 0));
+  } catch (error) {
+    console.error("Error ranking jobs:", error);
+    // Return jobs with default scores
+    return jobs.map(job => ({
+      ...job,
+      aiMatchScore: 50,
+      matchReason: "Standard match"
+    }));
+  }
+}
+
+// Get city suggestions based on partial input
+export async function suggestCities(partialCity: string, availableCities: string[]): Promise<string[]> {
+  if (!partialCity || partialCity.length < 2) return [];
+  
+  const partial = partialCity.toLowerCase();
+  const suggestions = availableCities.filter(city => 
+    city.toLowerCase().includes(partial)
+  );
+  
+  // Sort by how early the partial appears in the city name
+  suggestions.sort((a, b) => {
+    const aIndex = a.toLowerCase().indexOf(partial);
+    const bIndex = b.toLowerCase().indexOf(partial);
+    return aIndex - bIndex;
+  });
+  
+  return suggestions.slice(0, 5);
 }

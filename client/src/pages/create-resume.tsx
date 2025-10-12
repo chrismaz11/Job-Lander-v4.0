@@ -10,16 +10,35 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { personalInfoSchema, experienceSchema, educationSchema, type PersonalInfo, type Experience, type Education } from "@shared/schema";
-import { Upload, Sparkles, FileText, Download, Loader2, Plus, Trash2, CheckCircle } from "lucide-react";
+import { Upload, Sparkles, FileText, Download, Loader2, Plus, Trash2, CheckCircle, AlertTriangle, Shield } from "lucide-react";
 import { nanoid } from "nanoid";
+import { ParsedResumeReview } from "@/components/ParsedResumeReview";
+
+// Type for parsed resume response with confidence scores
+interface ParsedResumeResponse {
+  personalInfo?: PersonalInfo;
+  experience?: Experience[];
+  education?: Education[];
+  skills?: string[];
+  confidence?: {
+    overall: "high" | "medium" | "low";
+    fields?: {
+      [key: string]: "high" | "medium" | "low";
+    };
+  };
+  id?: string;
+}
 
 export default function CreateResume() {
   const [currentStep, setCurrentStep] = useState(0);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [parsedData, setParsedData] = useState<any>(null);
+  const [parsedData, setParsedData] = useState<ParsedResumeResponse | null>(null);
+  const [showReview, setShowReview] = useState(false);
+  const [parseStatus, setParseStatus] = useState<"idle" | "parsing" | "success" | "error">("idle");
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [educations, setEducations] = useState<Education[]>([]);
   const [skills, setSkills] = useState<string[]>([]);
@@ -29,7 +48,7 @@ export default function CreateResume() {
   
   const { toast } = useToast();
 
-  const steps = ["Upload", "Personal Info", "Experience", "Education", "Skills", "Preview"];
+  const steps = ["Upload", showReview ? "Review" : "Personal Info", "Experience", "Education", "Skills", "Preview"];
   const progress = ((currentStep + 1) / steps.length) * 100;
 
   // Personal Info Form
@@ -49,36 +68,55 @@ export default function CreateResume() {
   // Parse resume mutation
   const parseResumeMutation = useMutation({
     mutationFn: async (file: File) => {
+      setParseStatus("parsing");
       const formData = new FormData();
       formData.append("file", file);
       return apiRequest("POST", "/api/parse-resume", formData);
     },
-    onSuccess: (data) => {
+    onSuccess: (response) => {
+      const data = response as ParsedResumeResponse;
+      setParseStatus("success");
       setParsedData(data);
-      if (data.personalInfo) {
-        personalForm.reset(data.personalInfo);
+      
+      // Check if we should show review based on confidence
+      const hasLowConfidence = data.confidence && 
+        (data.confidence.overall === "low" || 
+         Object.values(data.confidence.fields || {}).some((level) => level === "low"));
+      
+      if (hasLowConfidence || data.confidence) {
+        // Show review interface for confidence-enabled responses
+        setShowReview(true);
+        setCurrentStep(1);
+      } else {
+        // Legacy path for responses without confidence
+        if (data.personalInfo) {
+          personalForm.reset(data.personalInfo);
+        }
+        if (data.experience) {
+          setExperiences(data.experience);
+        }
+        if (data.education) {
+          setEducations(data.education);
+        }
+        if (data.skills) {
+          setSkills(data.skills);
+        }
+        toast({
+          title: "Resume Parsed Successfully",
+          description: "Your resume has been analyzed by AI. Review and edit the extracted information.",
+        });
+        setCurrentStep(1);
       }
-      if (data.experience) {
-        setExperiences(data.experience);
-      }
-      if (data.education) {
-        setEducations(data.education);
-      }
-      if (data.skills) {
-        setSkills(data.skills);
-      }
-      toast({
-        title: "Resume Parsed Successfully",
-        description: "Your resume has been analyzed by AI. Review and edit the extracted information.",
-      });
-      setCurrentStep(1);
     },
-    onError: () => {
+    onError: (error) => {
+      setParseStatus("error");
       toast({
         variant: "destructive",
         title: "Parse Failed",
-        description: "Failed to parse resume. Please try again or enter information manually.",
+        description: "Failed to parse resume. You can try again or enter information manually.",
       });
+      // Still allow manual entry
+      setShowReview(false);
       setCurrentStep(1);
     },
   });
@@ -95,8 +133,9 @@ export default function CreateResume() {
       };
       return apiRequest("POST", "/api/generate-resume", data);
     },
-    onSuccess: (data) => {
-      setResumeId(data.id);
+    onSuccess: (response) => {
+      const data = response as ParsedResumeResponse;
+      setResumeId(data.id || null);
       toast({
         title: "Resume Generated!",
         description: "Your professional resume is ready to download.",
@@ -114,9 +153,59 @@ export default function CreateResume() {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate file type
+      const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!validTypes.includes(file.type)) {
+        toast({
+          variant: "destructive",
+          title: "Invalid File Type",
+          description: "Please upload a PDF or DOCX file.",
+        });
+        return;
+      }
+      
+      // Validate file size (10MB max)
+      if (file.size > 10 * 1024 * 1024) {
+        toast({
+          variant: "destructive",
+          title: "File Too Large",
+          description: "Please upload a file smaller than 10MB.",
+        });
+        return;
+      }
+      
       setUploadedFile(file);
       parseResumeMutation.mutate(file);
     }
+  };
+
+  const handleAcceptParsedData = (data: any) => {
+    // Apply the accepted data
+    if (data.personalInfo) {
+      personalForm.reset(data.personalInfo);
+    }
+    if (data.experience) {
+      setExperiences(data.experience);
+    }
+    if (data.education) {
+      setEducations(data.education);
+    }
+    if (data.skills) {
+      setSkills(data.skills);
+    }
+    
+    toast({
+      title: "Data Accepted",
+      description: "Resume data has been accepted. Continue editing if needed.",
+    });
+    
+    setShowReview(false);
+    setCurrentStep(1);
+  };
+
+  const handleEditParsedData = (data: any) => {
+    // Apply the edited data
+    handleAcceptParsedData(data);
   };
 
   const addExperience = () => {
@@ -228,11 +317,26 @@ export default function CreateResume() {
                     </label>
                   </div>
 
-                  {parseResumeMutation.isPending && (
-                    <div className="flex items-center justify-center gap-3 text-primary">
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                      <span>AI is parsing your resume...</span>
+                  {parseStatus === "parsing" && (
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-center gap-3 text-primary">
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                        <span>AI is analyzing your resume...</span>
+                      </div>
+                      <Progress value={33} className="h-2" />
+                      <p className="text-sm text-center text-muted-foreground">
+                        Extracting text and assessing confidence levels...
+                      </p>
                     </div>
+                  )}
+                  
+                  {parseStatus === "error" && (
+                    <Alert className="border-red-500">
+                      <AlertTriangle className="h-4 w-4" />
+                      <AlertDescription>
+                        Failed to parse your resume. You can try uploading again or proceed to manual entry.
+                      </AlertDescription>
+                    </Alert>
                   )}
 
                   <Button
@@ -246,8 +350,17 @@ export default function CreateResume() {
                 </div>
               )}
 
-              {/* Step 1: Personal Info */}
-              {currentStep === 1 && (
+              {/* Step 1: Review Parsed Data (if confidence scores available) */}
+              {currentStep === 1 && showReview && parsedData && (
+                <ParsedResumeReview
+                  parsedData={parsedData}
+                  onAccept={handleAcceptParsedData}
+                  onEdit={handleEditParsedData}
+                />
+              )}
+
+              {/* Step 1: Personal Info (manual entry or after review) */}
+              {currentStep === 1 && !showReview && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold">Personal Information</h2>
                   

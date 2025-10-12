@@ -54,6 +54,20 @@ export const coverLetters = pgTable("cover_letters", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Template schema
+export const templates = pgTable("templates", {
+  id: varchar("id").primaryKey(),
+  name: text("name").notNull(),
+  category: text("category").notNull(),
+  description: text("description"),
+  thumbnailUrl: text("thumbnail_url"),
+  previewUrl: text("preview_url"),
+  canvaTemplateId: text("canva_template_id"),
+  tags: jsonb("tags").$type<string[]>().default([]),
+  isPremium: text("is_premium").default("false"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Job listing schema
 export const jobs = pgTable("jobs", {
   id: varchar("id").primaryKey(),
@@ -109,12 +123,19 @@ export const insertCoverLetterSchema = createInsertSchema(coverLetters).omit({
   createdAt: true,
 });
 
+export const insertTemplateSchema = createInsertSchema(templates).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Infer types
 export type InsertResume = z.infer<typeof insertResumeSchema>;
 export type Resume = typeof resumes.$inferSelect;
 export type InsertCoverLetter = z.infer<typeof insertCoverLetterSchema>;
 export type CoverLetter = typeof coverLetters.$inferSelect;
 export type Job = typeof jobs.$inferSelect;
+export type Template = typeof templates.$inferSelect;
+export type InsertTemplate = z.infer<typeof insertTemplateSchema>;
 
 // Form validation schemas
 export const personalInfoSchema = z.object({

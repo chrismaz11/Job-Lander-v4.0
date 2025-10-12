@@ -6,16 +6,21 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { FileText, Search, Eye, Loader2 } from "lucide-react";
+import { FileText, Search, Eye, Loader2, Sparkles, Zap, Star } from "lucide-react";
 import { Link } from "wouter";
+import { getTemplateImage } from "@/lib/templateImages";
 
-const TEMPLATE_CATEGORIES = ["All", "Modern", "Classic", "Creative", "Professional", "Minimalist"];
+const TEMPLATE_CATEGORIES = ["All", "Modern Professional", "Minimalist", "Creative", "Executive", "Student", "Tech"];
 
 interface Template {
   id: string;
   name: string;
   category: string;
+  description?: string;
   thumbnailUrl?: string;
+  previewUrl?: string;
+  tags?: string[];
+  isPremium?: string;
 }
 
 export default function Templates() {
@@ -24,7 +29,7 @@ export default function Templates() {
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
 
-  const { data: templatesData, isLoading } = useQuery({
+  const { data: templatesData, isLoading } = useQuery<Template[]>({
     queryKey: ["/api/canva/templates"],
   });
 
@@ -32,7 +37,9 @@ export default function Templates() {
 
   const filteredTemplates = templates.filter(template => {
     const matchesCategory = selectedCategory === "All" || template.category === selectedCategory;
-    const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      template.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      template.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
@@ -41,14 +48,35 @@ export default function Templates() {
     setPreviewOpen(true);
   };
 
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case "Modern Professional": return "bg-primary/10 text-primary border-primary/30";
+      case "Minimalist": return "bg-secondary/10 text-secondary-foreground border-secondary";
+      case "Creative": return "bg-chart-2/10 text-chart-2 border-chart-2/30";
+      case "Executive": return "bg-chart-4/10 text-chart-4 border-chart-4/30";
+      case "Student": return "bg-chart-3/10 text-chart-3 border-chart-3/30";
+      case "Tech": return "bg-chart-1/10 text-chart-1 border-chart-1/30";
+      default: return "bg-muted text-muted-foreground border-border";
+    }
+  };
+
   return (
     <div className="min-h-screen py-12">
       <div className="container mx-auto px-4 md:px-6">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Resume Templates</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Choose from 50+ professional templates powered by Canva
+          <div className="inline-flex items-center gap-2 mb-4">
+            <Badge className="bg-primary/20 text-primary border-primary/30" data-testid="badge-templates">
+              <Sparkles className="h-3 w-3 mr-1" />
+              50+ Professional Templates
+            </Badge>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            Choose Your Perfect Resume Template
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Select from our collection of professionally designed templates powered by Canva. 
+            Each template is optimized for ATS systems and recruiter preferences.
           </p>
         </div>
 
@@ -57,7 +85,7 @@ export default function Templates() {
           <div className="relative max-w-md mx-auto">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
-              placeholder="Search templates..."
+              placeholder="Search templates by name, style, or tags..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
@@ -66,9 +94,15 @@ export default function Templates() {
           </div>
 
           <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 md:grid-cols-6">
+            <TabsList className="w-full h-auto flex-wrap justify-center gap-2 p-1 bg-muted/30">
               {TEMPLATE_CATEGORIES.map(category => (
-                <TabsTrigger key={category} value={category} data-testid={`tab-${category.toLowerCase()}`}>
+                <TabsTrigger 
+                  key={category} 
+                  value={category} 
+                  data-testid={`tab-${category.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="data-[state=active]:bg-background"
+                >
+                  {category === "All" && <Sparkles className="h-3 w-3 mr-1" />}
                   {category}
                 </TabsTrigger>
               ))}
@@ -78,85 +112,182 @@ export default function Templates() {
 
         {/* Templates Grid */}
         {isLoading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <div className="flex flex-col items-center justify-center py-20">
+            <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
+            <p className="text-muted-foreground">Loading templates...</p>
           </div>
         ) : filteredTemplates.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredTemplates.map((template) => (
-              <Card
-                key={template.id}
-                className="group overflow-hidden hover-elevate transition-all hover:scale-105"
-                data-testid={`card-template-${template.id}`}
-              >
-                {/* Template Preview */}
-                <div className="aspect-[8.5/11] bg-muted relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center bg-card">
-                    <FileText className="h-24 w-24 text-muted-foreground/20" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredTemplates.map((template) => {
+              const imageUrl = template.thumbnailUrl ? getTemplateImage(template.thumbnailUrl) : null;
+              
+              return (
+                <Card
+                  key={template.id}
+                  className="group overflow-hidden hover-elevate transition-all duration-300 hover:scale-[1.02]"
+                  data-testid={`card-template-${template.id}`}
+                >
+                  {/* Template Preview */}
+                  <div className="aspect-[8.5/11] bg-muted relative overflow-hidden">
+                    {imageUrl ? (
+                      <img 
+                        src={imageUrl}
+                        alt={template.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-card">
+                        <FileText className="h-24 w-24 text-muted-foreground/20" />
+                      </div>
+                    )}
+                    
+                    {/* Premium Badge */}
+                    {template.isPremium === "true" && (
+                      <div className="absolute top-2 right-2">
+                        <Badge className="bg-chart-4/90 text-white border-chart-4">
+                          <Star className="h-3 w-3 mr-1 fill-current" />
+                          Premium
+                        </Badge>
+                      </div>
+                    )}
+                    
+                    {/* Overlay on Hover */}
+                    <div className="absolute inset-0 bg-background/90 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3">
+                      <Button
+                        onClick={() => handlePreview(template)}
+                        variant="secondary"
+                        size="sm"
+                        className="hover:scale-105 transition-transform"
+                        data-testid={`button-preview-${template.id}`}
+                      >
+                        <Eye className="h-4 w-4 mr-2" />
+                        Preview
+                      </Button>
+                    </div>
                   </div>
-                  
-                  {/* Overlay on Hover */}
-                  <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <Button
-                      onClick={() => handlePreview(template)}
-                      variant="secondary"
-                      size="sm"
-                      data-testid={`button-preview-${template.id}`}
-                    >
-                      <Eye className="h-4 w-4 mr-2" />
-                      Preview
-                    </Button>
-                  </div>
-                </div>
 
-                {/* Template Info */}
-                <div className="p-4">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="font-bold text-lg" data-testid={`text-template-name-${template.id}`}>
-                      {template.name}
-                    </h3>
-                    <Badge variant="outline" data-testid={`badge-category-${template.id}`}>
-                      {template.category}
-                    </Badge>
-                  </div>
+                  {/* Template Info */}
+                  <div className="p-4 space-y-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="font-bold text-base line-clamp-1" data-testid={`text-template-name-${template.id}`}>
+                        {template.name}
+                      </h3>
+                      <Badge 
+                        variant="outline" 
+                        className={`${getCategoryColor(template.category)} text-xs shrink-0`}
+                        data-testid={`badge-category-${template.id}`}
+                      >
+                        {template.category}
+                      </Badge>
+                    </div>
+                    
+                    {template.description && (
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {template.description}
+                      </p>
+                    )}
 
-                  <Button asChild className="w-full" data-testid={`button-use-template-${template.id}`}>
-                    <Link href={`/create?template=${template.id}`}>Use Template</Link>
-                  </Button>
-                </div>
-              </Card>
-            ))}
+                    <div className="flex gap-2">
+                      <Button 
+                        asChild 
+                        className="flex-1" 
+                        size="sm"
+                        data-testid={`button-use-template-${template.id}`}
+                      >
+                        <Link href={`/create?template=${template.id}`}>
+                          <Zap className="h-3 w-3 mr-1" />
+                          Use Template
+                        </Link>
+                      </Button>
+                      <Button
+                        onClick={() => handlePreview(template)}
+                        variant="outline"
+                        size="sm"
+                        className="px-3"
+                        data-testid={`button-quick-view-${template.id}`}
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              );
+            })}
           </div>
         ) : (
           <div className="text-center py-20">
             <FileText className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
             <h3 className="text-xl font-bold mb-2">No templates found</h3>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground mb-6">
               Try adjusting your search or filter criteria
             </p>
+            <Button onClick={() => { setSearchQuery(""); setSelectedCategory("All"); }} variant="outline">
+              Clear Filters
+            </Button>
           </div>
         )}
 
         {/* Preview Dialog */}
         <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-          <DialogContent className="max-w-4xl">
+          <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden flex flex-col">
             <DialogHeader>
-              <DialogTitle>{selectedTemplate?.name}</DialogTitle>
-              <DialogDescription>
-                {selectedTemplate?.category} template - Professional resume design powered by Canva
-              </DialogDescription>
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <DialogTitle className="text-2xl flex items-center gap-2">
+                    {selectedTemplate?.name}
+                    {selectedTemplate?.isPremium === "true" && (
+                      <Badge className="bg-chart-4/90 text-white border-chart-4">
+                        <Star className="h-3 w-3 mr-1 fill-current" />
+                        Premium
+                      </Badge>
+                    )}
+                  </DialogTitle>
+                  <DialogDescription className="mt-2">
+                    {selectedTemplate?.description || `${selectedTemplate?.category} template - Professional resume design powered by Canva`}
+                  </DialogDescription>
+                </div>
+                <Badge 
+                  className={`${getCategoryColor(selectedTemplate?.category || "")} shrink-0`}
+                >
+                  {selectedTemplate?.category}
+                </Badge>
+              </div>
             </DialogHeader>
 
-            <div className="aspect-[8.5/11] bg-muted rounded-lg flex items-center justify-center">
-              <FileText className="h-32 w-32 text-muted-foreground/20" />
+            <div className="flex-1 overflow-auto">
+              <div className="aspect-[8.5/11] bg-muted rounded-lg overflow-hidden">
+                {selectedTemplate?.thumbnailUrl ? (
+                  <img 
+                    src={getTemplateImage(selectedTemplate.thumbnailUrl)}
+                    alt={selectedTemplate.name}
+                    className="w-full h-full object-contain bg-white dark:bg-gray-950"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <FileText className="h-32 w-32 text-muted-foreground/20" />
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="flex gap-4">
-              <Button asChild className="w-full" data-testid="button-use-template-preview">
-                <Link href={`/create?template=${selectedTemplate?.id}`}>Use This Template</Link>
+            <div className="flex gap-3 mt-4">
+              <Button 
+                asChild 
+                className="flex-1" 
+                size="lg"
+                data-testid="button-use-template-preview"
+              >
+                <Link href={`/create?template=${selectedTemplate?.id}`}>
+                  <Zap className="h-4 w-4 mr-2" />
+                  Use This Template
+                </Link>
               </Button>
-              <Button variant="outline" onClick={() => setPreviewOpen(false)} className="flex-1">
-                Close
+              <Button 
+                variant="outline" 
+                onClick={() => setPreviewOpen(false)} 
+                size="lg"
+              >
+                Close Preview
               </Button>
             </div>
           </DialogContent>
