@@ -52,6 +52,14 @@ export function Header() {
           >
             <Link href="/templates">Templates</Link>
           </Button>
+          <Button
+            asChild
+            variant={isActive("/portfolio") ? "secondary" : "ghost"}
+            className="font-medium"
+            data-testid="link-portfolio"
+          >
+            <Link href="/portfolio">Portfolio</Link>
+          </Button>
           {isAuthenticated && (
             <Button
               asChild

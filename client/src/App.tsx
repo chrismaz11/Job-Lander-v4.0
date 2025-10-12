@@ -12,6 +12,7 @@ import Verify from "@/pages/verify";
 import Jobs from "@/pages/jobs";
 import Dashboard from "@/pages/dashboard";
 import CoverLetter from "@/pages/cover-letter";
+import Portfolio from "@/pages/portfolio";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/verify" component={Verify} />
       <Route path="/jobs" component={Jobs} />
+      <Route path="/portfolio" component={Portfolio} />
       <Route component={NotFound} />
     </Switch>
   );

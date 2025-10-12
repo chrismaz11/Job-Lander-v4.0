@@ -9,6 +9,14 @@ import { generateResumeHash, verifyOnChain, checkVerification, estimateVerificat
 import { searchJobs, getAvailableCities, getJobStatistics, type JobSearchFilters } from "./services/jobs";
 import { getCanvaTemplates, createCanvaDesign, exportCanvaDesignAsPDF } from "./services/canva";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { 
+  generatePortfolioHTML, 
+  getAvailableThemes, 
+  getAvailableFonts, 
+  getLayoutOptions,
+  type PortfolioOptions 
+} from "./services/portfolioGenerator";
+import { createPortfolioExportPackage } from "./services/vercelExport";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -472,6 +480,300 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.deleteResume(req.params.id);
       res.json({ success: true });
     } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Portfolio Generation Endpoints
+  
+  // Generate portfolio HTML
+  app.post("/api/generate-portfolio", async (req, res) => {
+    try {
+      const { resumeId, options } = req.body;
+      
+      if (!resumeId) {
+        return res.status(400).json({ error: "Resume ID required" });
+      }
+      
+      const resume = await storage.getResume(resumeId);
+      if (!resume) {
+        return res.status(404).json({ error: "Resume not found" });
+      }
+      
+      const portfolioOptions: PortfolioOptions = {
+        theme: options?.theme || "professionalBlue",
+        font: options?.font || "Inter",
+        layout: options?.layout || "centered",
+        includeContactForm: options?.includeContactForm || false,
+        includeAnalytics: options?.includeAnalytics || false
+      };
+      
+      const html = generatePortfolioHTML(resume, portfolioOptions);
+      
+      res.json({ 
+        html,
+        options: portfolioOptions,
+        resumeId
+      });
+    } catch (error: any) {
+      console.error("Generate portfolio error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  // Get portfolio preview
+  app.get("/api/portfolio/preview/:resumeId", async (req, res) => {
+    try {
+      const { resumeId } = req.params;
+      const { theme, font, layout } = req.query;
+      
+      const resume = await storage.getResume(resumeId);
+      if (!resume) {
+        return res.status(404).json({ error: "Resume not found" });
+      }
+      
+      const options: PortfolioOptions = {
+        theme: (theme as string) || "professionalBlue",
+        font: (font as string) || "Inter", 
+        layout: (layout as "sidebar" | "centered" | "full-width") || "centered"
+      };
+      
+      const html = generatePortfolioHTML(resume, options);
+      
+      // Return HTML directly for iframe preview
+      res.setHeader('Content-Type', 'text/html');
+      res.send(html);
+    } catch (error: any) {
+      console.error("Portfolio preview error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  // Export portfolio with Vercel config
+  app.post("/api/portfolio/export", async (req, res) => {
+    try {
+      const { resumeId, options } = req.body;
+      
+      if (!resumeId) {
+        return res.status(400).json({ error: "Resume ID required" });
+      }
+      
+      const resume = await storage.getResume(resumeId);
+      if (!resume) {
+        return res.status(404).json({ error: "Resume not found" });
+      }
+      
+      const portfolioOptions: PortfolioOptions = {
+        theme: options?.theme || "professionalBlue",
+        font: options?.font || "Inter",
+        layout: options?.layout || "centered",
+        includeContactForm: options?.includeContactForm || false,
+        includeAnalytics: options?.includeAnalytics || false
+      };
+      
+      const exportPackage = createPortfolioExportPackage(resume, portfolioOptions);
+      
+      res.json(exportPackage);
+    } catch (error: any) {
+      console.error("Portfolio export error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  // Get available portfolio themes
+  app.get("/api/portfolio/themes", async (req, res) => {
+    try {
+      const themes = getAvailableThemes();
+      res.json(themes);
+    } catch (error: any) {
+      console.error("Get themes error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  // Get available portfolio fonts
+  app.get("/api/portfolio/fonts", async (req, res) => {
+    try {
+      const fonts = getAvailableFonts();
+      res.json(fonts);
+    } catch (error: any) {
+      console.error("Get fonts error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+  // Get available portfolio layouts
+  app.get("/api/portfolio/layouts", async (req, res) => {
+    try {
+      const layouts = getLayoutOptions();
+      res.json(layouts);
+    } catch (error: any) {
+      console.error("Get layouts error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // ===== LLM Cache Management Endpoints =====
+  
+  // Import cache and metrics modules
+  const { llmCache } = await import("./services/llmCache");
+  const { llmMetrics } = await import("./services/llmMetrics");
+  const { validateLLMConfig } = await import("./config/llm.config");
+
+  // Get cache statistics
+  app.get("/api/admin/llm/cache/stats", async (req, res) => {
+    try {
+      const stats = llmCache.getStats();
+      const entries = llmCache.getEntriesSummary();
+      res.json({
+        stats,
+        topEntries: entries.slice(0, 10),
+        totalEntries: entries.length
+      });
+    } catch (error: any) {
+      console.error("Get cache stats error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Clear entire cache
+  app.delete("/api/admin/llm/cache", async (req, res) => {
+    try {
+      await llmCache.clear();
+      res.json({ message: "Cache cleared successfully", timestamp: new Date().toISOString() });
+    } catch (error: any) {
+      console.error("Clear cache error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Clear cache by pattern
+  app.delete("/api/admin/llm/cache/pattern", async (req, res) => {
+    try {
+      const { pattern } = req.body;
+      if (!pattern) {
+        return res.status(400).json({ error: "Pattern is required" });
+      }
+      
+      const cleared = await llmCache.clearByPattern(pattern);
+      res.json({ 
+        message: `Cleared ${cleared} cache entries matching pattern: ${pattern}`,
+        cleared,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error: any) {
+      console.error("Clear cache by pattern error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Get LLM metrics
+  app.get("/api/admin/llm/metrics", async (req, res) => {
+    try {
+      const { since } = req.query;
+      const sinceMs = since ? parseInt(since as string, 10) : undefined;
+      
+      const metrics = llmMetrics.getMetrics(sinceMs);
+      const providerMetrics = llmMetrics.getProviderMetrics(sinceMs);
+      const operationMetrics = llmMetrics.getOperationMetrics(sinceMs);
+      const costBreakdown = llmMetrics.getCostBreakdown();
+      const summary = llmMetrics.getSummary();
+      
+      res.json({
+        summary,
+        aggregated: metrics,
+        byProvider: providerMetrics,
+        byOperation: operationMetrics,
+        costs: costBreakdown,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error: any) {
+      console.error("Get metrics error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Export metrics for analysis
+  app.get("/api/admin/llm/metrics/export", async (req, res) => {
+    try {
+      const format = (req.query.format as string) || 'json';
+      const data = llmMetrics.exportMetrics(format as 'json' | 'csv');
+      
+      if (format === 'csv') {
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename="llm-metrics-${Date.now()}.csv"`);
+        res.send(data);
+      } else {
+        res.json(JSON.parse(data));
+      }
+    } catch (error: any) {
+      console.error("Export metrics error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Clear metrics data
+  app.delete("/api/admin/llm/metrics", async (req, res) => {
+    try {
+      llmMetrics.clear();
+      res.json({ message: "Metrics cleared successfully", timestamp: new Date().toISOString() });
+    } catch (error: any) {
+      console.error("Clear metrics error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Get LLM configuration and health
+  app.get("/api/admin/llm/health", async (req, res) => {
+    try {
+      const errors = validateLLMConfig();
+      const { serviceMetadata } = await import("./services/gemini");
+      const summary = llmMetrics.getSummary();
+      
+      res.json({
+        healthy: errors.length === 0 && summary.status !== 'critical',
+        status: summary.status,
+        configErrors: errors,
+        metadata: serviceMetadata,
+        alerts: summary.alerts,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error: any) {
+      console.error("Get health error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Test LLM connection with a simple prompt
+  app.post("/api/admin/llm/test", async (req, res) => {
+    try {
+      const { provider, prompt } = req.body;
+      const testPrompt = prompt || "Hello, respond with 'OK' if you're working.";
+      
+      const { LLMFactory } = await import("./services/llmAdapter");
+      const adapter = provider 
+        ? LLMFactory.createAdapter(provider as any)
+        : LLMFactory.getDefaultAdapter();
+      
+      const response = await adapter.generateText(testPrompt, {
+        temperature: 0.1,
+        maxTokens: 50,
+        cacheTTL: 0 // Don't cache test prompts
+      });
+      
+      res.json({
+        success: response.success,
+        response: response.data,
+        metadata: {
+          provider: response.provider,
+          model: response.model,
+          latency: response.latency,
+          confidence: response.confidence
+        },
+        timestamp: new Date().toISOString()
+      });
+    } catch (error: any) {
+      console.error("Test LLM error:", error);
       res.status(500).json({ error: error.message });
     }
   });

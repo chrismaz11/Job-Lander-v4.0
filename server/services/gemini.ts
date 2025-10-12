@@ -1,92 +1,47 @@
-import { GoogleGenAI } from "@google/genai";
+/**
+ * Gemini Service - Refactored to use centralized LLM Adapter
+ * All LLM operations now go through the unified adapter system
+ */
 
-// Integration reference: javascript_gemini blueprint
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+import { LLMFactory, type LLMResponse } from './llmAdapter';
+import { llmConfig, getTaskConfig } from '../config/llm.config';
+import {
+  buildResumeParsingPrompt,
+  getResumeParsingConfig,
+  buildCoverLetterPrompt,
+  getCoverLetterSchema,
+  buildJobMatchPrompt,
+  JOB_MATCH_SCORE,
+  buildJobRankingPrompt,
+  JOB_RANKING,
+  buildEnhancementPrompt,
+  RESUME_ENHANCEMENT,
+  type CoverLetterData
+} from './prompts';
 
+/**
+ * Parse resume with AI using the centralized adapter
+ */
 export async function parseResumeWithAI(text: string): Promise<any> {
-  const prompt = `You are an expert resume parser. Extract structured information from the following resume text and return it as JSON.
-
-Assess confidence level for each field based on clarity and completeness:
-- "high": Field is clearly present, well-formatted, and unambiguous
-- "medium": Field is present but may have minor formatting issues
-- "low": Field is unclear, missing, or requires guessing
-
-Resume text:
-${text}
-
-Return a JSON object with this exact structure:
-{
-  "personalInfo": {
-    "fullName": "string",
-    "email": "string",
-    "phone": "string",
-    "location": "string",
-    "linkedin": "string",
-    "website": "string",
-    "summary": "string"
-  },
-  "experience": [
+  const adapter = LLMFactory.getDefaultAdapter();
+  const config = getResumeParsingConfig(false);
+  const prompt = buildResumeParsingPrompt(text, false);
+  const taskConfig = getTaskConfig('resumeParsing');
+  
+  const response: LLMResponse = await adapter.generateJSON(
+    prompt,
+    config.schema,
     {
-      "id": "unique-id",
-      "company": "string",
-      "position": "string",
-      "startDate": "YYYY-MM",
-      "endDate": "YYYY-MM or empty if current",
-      "current": boolean,
-      "description": "string"
+      temperature: config.temperature,
+      maxTokens: config.maxTokens,
+      cacheTTL: taskConfig.cacheTTL,
+      timeout: taskConfig.timeout
     }
-  ],
-  "education": [
-    {
-      "id": "unique-id",
-      "institution": "string",
-      "degree": "string",
-      "field": "string",
-      "startDate": "YYYY-MM",
-      "endDate": "YYYY-MM or empty if current",
-      "current": boolean
-    }
-  ],
-  "skills": ["skill1", "skill2", "skill3"],
-  "confidence": {
-    "overall": "high" | "medium" | "low",
-    "fields": {
-      "fullName": "high" | "medium" | "low",
-      "email": "high" | "medium" | "low",
-      "phone": "high" | "medium" | "low",
-      "location": "high" | "medium" | "low",
-      "linkedin": "high" | "medium" | "low",
-      "website": "high" | "medium" | "low",
-      "summary": "high" | "medium" | "low",
-      "experience": "high" | "medium" | "low",
-      "education": "high" | "medium" | "low",
-      "skills": "high" | "medium" | "low"
-    }
-  },
-  "rawText": "${text.substring(0, 500)}..."
-}`;
+  );
 
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      config: {
-        responseMimeType: "application/json",
-      },
-      contents: prompt,
-    });
-
-    const jsonText = response.text || "{}";
-    const result = JSON.parse(jsonText);
-    
-    // Ensure rawText is always included
-    if (!result.rawText) {
-      result.rawText = text;
-    }
-    
-    return result;
-  } catch (error) {
-    console.error("AI parsing error:", error);
-    // Return a fallback response with low confidence
+  if (!response.success) {
+    console.error("AI parsing error:", response.error);
+    // Return fallback response with low confidence
     return {
       personalInfo: {
         fullName: "",
@@ -115,299 +70,241 @@ Return a JSON object with this exact structure:
           skills: "low"
         }
       },
-      rawText: text
+      rawText: text,
+      _metadata: {
+        model: response.model,
+        latency: response.latency,
+        cached: response.cached,
+        confidence: response.confidence
+      }
     };
   }
-}
 
-export async function generateResumeContent(data: any): Promise<string> {
-  const prompt = `You are a professional resume writer. Based on the following information, generate polished, professional content that highlights achievements and uses action verbs.
-
-Personal Info:
-${JSON.stringify(data.personalInfo, null, 2)}
-
-Experience:
-${JSON.stringify(data.experience, null, 2)}
-
-Education:
-${JSON.stringify(data.education, null, 2)}
-
-Skills:
-${JSON.stringify(data.skills, null, 2)}
-
-Enhance the descriptions to be more impactful and achievement-oriented. Return the enhanced data in the same JSON structure.`;
-
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    config: {
-      responseMimeType: "application/json",
-    },
-    contents: prompt,
-  });
-
-  return response.text || "{}";
-}
-
-export async function generateCoverLetter(data: {
-  personalInfo: any;
-  companyName: string;
-  position: string;
-  jobDescription?: string;
-  experience?: any[];
-  skills?: string[];
-  tone?: "professional" | "concise" | "bold";
-}): Promise<string> {
-  const toneInstructions = {
-    professional: `Write in a PROFESSIONAL tone:
-- Use formal, traditional business language
-- Maintain a respectful and courteous tone
-- Include standard business letter structure
-- Focus on qualifications and achievements
-- Use phrases like "I am writing to express my interest" and "I would welcome the opportunity"
-- 250-350 words`,
-    
-    concise: `Write in a CONCISE tone:
-- Be direct and to-the-point
-- Use bullet points for key achievements
-- Maximum 3 short paragraphs
-- Focus only on most relevant qualifications
-- Eliminate unnecessary words and phrases
-- 150-250 words`,
-    
-    bold: `Write in a BOLD tone:
-- Be creative and confident
-- Show personality and enthusiasm
-- Use dynamic action verbs
-- Include a memorable opening hook
-- Express genuine passion for the role
-- Use phrases like "I'm excited to" and "I'm confident that"
-- 200-300 words`
-  };
-
-  const selectedTone = data.tone || "professional";
+  // Ensure rawText is always included
+  const result = response.data;
+  if (!result.rawText) {
+    result.rawText = text;
+  }
   
-  const prompt = `You are a professional cover letter writer. Create a compelling cover letter for:
-
-Applicant: ${data.personalInfo.fullName}
-Position: ${data.position}
-Company: ${data.companyName}
-${data.jobDescription ? `Job Description: ${data.jobDescription}` : ''}
-
-Applicant's Experience:
-${JSON.stringify(data.experience || [], null, 2)}
-
-Applicant's Skills:
-${data.skills?.join(', ') || 'Not provided'}
-
-${toneInstructions[selectedTone]}
-
-Write a cover letter that:
-1. Shows genuine interest in the company and position
-2. Highlights relevant experience and skills
-3. Demonstrates value the applicant can bring
-4. Has a strong opening and closing
-5. Matches the specified tone perfectly
-
-Return only the cover letter text, no JSON.`;
-
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-  });
-
-  return response.text || "";
+  // Add metadata about the response
+  result._metadata = {
+    model: response.model,
+    latency: response.latency,
+    cached: response.cached,
+    confidence: response.confidence
+  };
+  
+  return result;
 }
 
-// New function to generate all 3 tone variants at once
-export async function generateAllCoverLetterTones(data: {
-  personalInfo: any;
-  companyName: string;
-  position: string;
-  jobDescription?: string;
-  experience?: any[];
-  skills?: string[];
-}): Promise<{
+/**
+ * Generate enhanced resume content
+ */
+export async function generateResumeContent(data: any): Promise<string> {
+  const adapter = LLMFactory.getDefaultAdapter();
+  const prompt = buildEnhancementPrompt(data);
+  const taskConfig = getTaskConfig('resumeEnhancement');
+  
+  const response: LLMResponse = await adapter.generateJSON(
+    prompt,
+    RESUME_ENHANCEMENT.schema,
+    {
+      temperature: RESUME_ENHANCEMENT.temperature,
+      maxTokens: RESUME_ENHANCEMENT.maxTokens,
+      cacheTTL: taskConfig.cacheTTL,
+      timeout: taskConfig.timeout
+    }
+  );
+
+  if (!response.success) {
+    console.error("Resume enhancement error:", response.error);
+    return JSON.stringify(data); // Return original data if enhancement fails
+  }
+
+  return JSON.stringify(response.data);
+}
+
+/**
+ * Generate cover letter with specified tone
+ */
+export async function generateCoverLetter(data: CoverLetterData): Promise<string> {
+  const adapter = LLMFactory.getDefaultAdapter();
+  const prompt = buildCoverLetterPrompt(data, false);
+  const taskConfig = getTaskConfig('coverLetterGeneration');
+  
+  const response: LLMResponse<string> = await adapter.generateText(
+    prompt,
+    {
+      temperature: 0.8,
+      maxTokens: 1024,
+      cacheTTL: taskConfig.cacheTTL,
+      timeout: taskConfig.timeout
+    }
+  );
+
+  if (!response.success) {
+    console.error("Cover letter generation error:", response.error);
+    return "Failed to generate cover letter. Please try again.";
+  }
+
+  return response.data;
+}
+
+/**
+ * Generate all three cover letter tone variants at once
+ */
+export async function generateAllCoverLetterTones(data: CoverLetterData): Promise<{
   professional: string;
   concise: string;
   bold: string;
 }> {
-  const prompt = `You are a professional cover letter writer. Create THREE different versions of a cover letter with different tones.
+  const adapter = LLMFactory.getDefaultAdapter();
+  const prompt = buildCoverLetterPrompt(data, true);
+  const schema = getCoverLetterSchema(true);
+  const taskConfig = getTaskConfig('coverLetterGeneration');
+  
+  const response: LLMResponse = await adapter.generateJSON(
+    prompt,
+    schema,
+    {
+      temperature: 0.8,
+      maxTokens: 2048,
+      cacheTTL: taskConfig.cacheTTL,
+      timeout: taskConfig.timeout
+    }
+  );
 
-Applicant: ${data.personalInfo.fullName}
-Position: ${data.position}
-Company: ${data.companyName}
-${data.jobDescription ? `Job Description: ${data.jobDescription}` : ''}
+  if (!response.success) {
+    console.error("Cover letter generation error:", response.error);
+    const fallback = "Failed to generate cover letter variant. Please try again.";
+    return {
+      professional: fallback,
+      concise: fallback,
+      bold: fallback
+    };
+  }
 
-Applicant's Experience:
-${JSON.stringify(data.experience || [], null, 2)}
-
-Applicant's Skills:
-${data.skills?.join(', ') || 'Not provided'}
-
-Create THREE versions:
-
-1. PROFESSIONAL TONE (250-350 words):
-- Use formal, traditional business language
-- Maintain respectful and courteous tone
-- Standard business letter structure
-- Focus on qualifications and achievements
-- Use phrases like "I am writing to express my interest"
-
-2. CONCISE TONE (150-250 words):
-- Direct and to-the-point
-- Use bullet points for key achievements where appropriate
-- Maximum 3 short paragraphs
-- Focus only on most relevant qualifications
-- Eliminate unnecessary words
-
-3. BOLD TONE (200-300 words):
-- Creative and confident
-- Show personality and enthusiasm
-- Use dynamic action verbs
-- Include memorable opening hook
-- Express genuine passion
-- Use phrases like "I'm excited to" and "I'm confident that"
-
-Return a JSON object with all three versions:
-{
-  "professional": "full professional cover letter text",
-  "concise": "full concise cover letter text",
-  "bold": "full bold cover letter text"
-}`;
-
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    config: {
-      responseMimeType: "application/json",
-    },
-    contents: prompt,
-  });
-
-  const result = JSON.parse(response.text || '{}');
   return {
-    professional: result.professional || "",
-    concise: result.concise || "",
-    bold: result.bold || ""
+    professional: response.data.professional || "",
+    concise: response.data.concise || "",
+    bold: response.data.bold || ""
   };
 }
 
+/**
+ * Calculate job match score
+ */
 export async function calculateJobMatch(resume: any, jobDescription: string): Promise<number> {
-  const prompt = `You are a job matching expert. Calculate how well this resume matches the job description.
+  const adapter = LLMFactory.getDefaultAdapter();
+  const prompt = buildJobMatchPrompt(resume, jobDescription);
+  const taskConfig = getTaskConfig('jobMatching');
+  
+  const response: LLMResponse = await adapter.generateJSON(
+    prompt,
+    JOB_MATCH_SCORE.schema,
+    {
+      temperature: JOB_MATCH_SCORE.temperature,
+      maxTokens: JOB_MATCH_SCORE.maxTokens,
+      cacheTTL: taskConfig.cacheTTL,
+      timeout: taskConfig.timeout
+    }
+  );
 
-Resume Summary:
-- Skills: ${resume.skills?.join(', ')}
-- Experience: ${resume.experience?.map((e: any) => e.position).join(', ')}
-- Education: ${resume.education?.map((e: any) => `${e.degree} in ${e.field}`).join(', ')}
+  if (!response.success) {
+    console.error("Job matching error:", response.error);
+    return 0;
+  }
 
-Job Description:
-${jobDescription}
-
-Return a JSON object with a match score from 0-100:
-{"matchScore": number}`;
-
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    config: {
-      responseMimeType: "application/json",
-      responseSchema: {
-        type: "object",
-        properties: {
-          matchScore: { type: "number" },
-        },
-        required: ["matchScore"],
-      },
-    },
-    contents: prompt,
-  });
-
-  const result = JSON.parse(response.text || '{"matchScore": 0}');
-  return result.matchScore;
+  return response.data.matchScore || 0;
 }
 
-// Rank jobs by semantic relevance to search query and user preferences
-export async function rankJobsByRelevance(jobs: any[], query: string, preferences?: {
-  skills?: string[];
-  preferredLocation?: string;
-  experienceLevel?: string;
-}): Promise<any[]> {
+/**
+ * Rank jobs by relevance using AI
+ */
+export async function rankJobsByRelevance(
+  jobs: any[],
+  query: string,
+  preferences?: {
+    skills?: string[];
+    preferredLocation?: string;
+    experienceLevel?: string;
+  }
+): Promise<any[]> {
   if (!jobs || jobs.length === 0) return [];
-  
-  // Don't rank if no query provided
   if (!query) return jobs;
 
-  const prompt = `You are a job search expert. Rank these jobs by relevance to the search query and preferences.
+  const adapter = LLMFactory.getDefaultAdapter();
+  const prompt = buildJobRankingPrompt(jobs, query, preferences);
+  const taskConfig = getTaskConfig('jobMatching');
+  
+  const response: LLMResponse = await adapter.generateJSON(
+    prompt,
+    JOB_RANKING.schema,
+    {
+      temperature: JOB_RANKING.temperature,
+      maxTokens: JOB_RANKING.maxTokens,
+      cacheTTL: taskConfig.cacheTTL,
+      timeout: taskConfig.timeout
+    }
+  );
 
-Search Query: "${query}"
-${preferences?.skills ? `User Skills: ${preferences.skills.join(', ')}` : ''}
-${preferences?.preferredLocation ? `Preferred Location: ${preferences.preferredLocation}` : ''}
-${preferences?.experienceLevel ? `Experience Level: ${preferences.experienceLevel}` : ''}
-
-Jobs to rank:
-${jobs.map((job, index) => `
-Job ${index + 1}:
-- Title: ${job.title}
-- Company: ${job.company}
-- Location: ${job.location || job.city}
-- Remote: ${job.remote ? 'Yes' : 'No'}
-- Description: ${(job.description || '').substring(0, 200)}...
-`).join('\n')}
-
-Return a JSON array with job indices sorted by relevance and a match score (0-100):
-[{"index": number, "score": number, "reason": "brief explanation"}]
-
-Consider:
-1. Title match to query
-2. Skills alignment
-3. Location preferences
-4. Experience level fit
-5. Remote availability if mentioned`;
-
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      config: {
-        responseMimeType: "application/json",
-      },
-      contents: prompt,
-    });
-
-    const rankings = JSON.parse(response.text || '[]');
-    
-    // Apply rankings to jobs
-    const rankedJobs = rankings.map((rank: any) => {
-      const job = jobs[rank.index];
-      return {
-        ...job,
-        aiMatchScore: rank.score,
-        matchReason: rank.reason
-      };
-    });
-
-    // Add any jobs that weren't ranked
-    const rankedIndices = new Set(rankings.map((r: any) => r.index));
-    jobs.forEach((job, index) => {
-      if (!rankedIndices.has(index)) {
-        rankedJobs.push({
-          ...job,
-          aiMatchScore: 50,
-          matchReason: "Standard match"
-        });
-      }
-    });
-
-    return rankedJobs.sort((a, b) => (b.aiMatchScore || 0) - (a.aiMatchScore || 0));
-  } catch (error) {
-    console.error("Error ranking jobs:", error);
+  if (!response.success) {
+    console.error("Job ranking error:", response.error);
     // Return jobs with default scores
     return jobs.map(job => ({
       ...job,
       aiMatchScore: 50,
-      matchReason: "Standard match"
+      matchReason: "Standard match",
+      _aiMetadata: {
+        error: response.error,
+        model: response.model,
+        cached: response.cached
+      }
     }));
   }
+
+  const rankings = response.data;
+  
+  // Apply rankings to jobs
+  const rankedJobs = rankings.map((rank: any) => {
+    const job = jobs[rank.index];
+    return {
+      ...job,
+      aiMatchScore: rank.score,
+      matchReason: rank.reason,
+      matchingFactors: rank.matchingFactors,
+      _aiMetadata: {
+        model: response.model,
+        confidence: response.confidence,
+        cached: response.cached,
+        latency: response.latency
+      }
+    };
+  });
+
+  // Add any jobs that weren't ranked
+  const rankedIndices = new Set(rankings.map((r: any) => r.index));
+  jobs.forEach((job, index) => {
+    if (!rankedIndices.has(index)) {
+      rankedJobs.push({
+        ...job,
+        aiMatchScore: 50,
+        matchReason: "Standard match",
+        _aiMetadata: {
+          model: response.model,
+          confidence: 0,
+          cached: false
+        }
+      });
+    }
+  });
+
+  return rankedJobs.sort((a, b) => (b.aiMatchScore || 0) - (a.aiMatchScore || 0));
 }
 
-// Get city suggestions based on partial input
+/**
+ * Get city suggestions (simplified, doesn't need AI)
+ */
 export async function suggestCities(partialCity: string, availableCities: string[]): Promise<string[]> {
   if (!partialCity || partialCity.length < 2) return [];
   
@@ -425,3 +322,14 @@ export async function suggestCities(partialCity: string, availableCities: string
   
   return suggestions.slice(0, 5);
 }
+
+/**
+ * Export service metadata for monitoring
+ */
+export const serviceMetadata = {
+  version: '2.0',
+  adapter: 'centralized',
+  provider: llmConfig.defaultProvider,
+  cacheEnabled: llmConfig.cacheEnabled,
+  models: llmConfig.models
+};
