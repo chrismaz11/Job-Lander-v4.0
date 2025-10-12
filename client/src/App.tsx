@@ -11,6 +11,7 @@ import Templates from "@/pages/templates";
 import Verify from "@/pages/verify";
 import Jobs from "@/pages/jobs";
 import Dashboard from "@/pages/dashboard";
+import CoverLetter from "@/pages/cover-letter";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -18,6 +19,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/create" component={CreateResume} />
+      <Route path="/cover-letter" component={CoverLetter} />
       <Route path="/templates" component={Templates} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/verify" component={Verify} />

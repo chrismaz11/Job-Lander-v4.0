@@ -123,6 +123,9 @@ export class MemStorage implements IStorage {
       ...insertCoverLetter,
       resumeId: insertCoverLetter.resumeId || null,
       id,
+      tone: insertCoverLetter.tone || "professional",
+      variants: insertCoverLetter.variants || {},
+      jobDescription: insertCoverLetter.jobDescription || null,
       createdAt: new Date(),
     };
     this.coverLetters.set(id, coverLetter);
@@ -274,6 +277,9 @@ export class DatabaseStorage implements IStorage {
       .values({
         ...insertCoverLetter,
         resumeId: insertCoverLetter.resumeId || null,
+        tone: insertCoverLetter.tone || "professional",
+        variants: insertCoverLetter.variants || {},
+        jobDescription: insertCoverLetter.jobDescription || null,
       })
       .returning();
     return coverLetter;

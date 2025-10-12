@@ -155,7 +155,37 @@ export async function generateCoverLetter(data: {
   jobDescription?: string;
   experience?: any[];
   skills?: string[];
+  tone?: "professional" | "concise" | "bold";
 }): Promise<string> {
+  const toneInstructions = {
+    professional: `Write in a PROFESSIONAL tone:
+- Use formal, traditional business language
+- Maintain a respectful and courteous tone
+- Include standard business letter structure
+- Focus on qualifications and achievements
+- Use phrases like "I am writing to express my interest" and "I would welcome the opportunity"
+- 250-350 words`,
+    
+    concise: `Write in a CONCISE tone:
+- Be direct and to-the-point
+- Use bullet points for key achievements
+- Maximum 3 short paragraphs
+- Focus only on most relevant qualifications
+- Eliminate unnecessary words and phrases
+- 150-250 words`,
+    
+    bold: `Write in a BOLD tone:
+- Be creative and confident
+- Show personality and enthusiasm
+- Use dynamic action verbs
+- Include a memorable opening hook
+- Express genuine passion for the role
+- Use phrases like "I'm excited to" and "I'm confident that"
+- 200-300 words`
+  };
+
+  const selectedTone = data.tone || "professional";
+  
   const prompt = `You are a professional cover letter writer. Create a compelling cover letter for:
 
 Applicant: ${data.personalInfo.fullName}
@@ -169,12 +199,14 @@ ${JSON.stringify(data.experience || [], null, 2)}
 Applicant's Skills:
 ${data.skills?.join(', ') || 'Not provided'}
 
-Write a professional, engaging cover letter that:
+${toneInstructions[selectedTone]}
+
+Write a cover letter that:
 1. Shows genuine interest in the company and position
 2. Highlights relevant experience and skills
 3. Demonstrates value the applicant can bring
-4. Is concise (3-4 paragraphs)
-5. Has a strong opening and closing
+4. Has a strong opening and closing
+5. Matches the specified tone perfectly
 
 Return only the cover letter text, no JSON.`;
 
@@ -184,6 +216,79 @@ Return only the cover letter text, no JSON.`;
   });
 
   return response.text || "";
+}
+
+// New function to generate all 3 tone variants at once
+export async function generateAllCoverLetterTones(data: {
+  personalInfo: any;
+  companyName: string;
+  position: string;
+  jobDescription?: string;
+  experience?: any[];
+  skills?: string[];
+}): Promise<{
+  professional: string;
+  concise: string;
+  bold: string;
+}> {
+  const prompt = `You are a professional cover letter writer. Create THREE different versions of a cover letter with different tones.
+
+Applicant: ${data.personalInfo.fullName}
+Position: ${data.position}
+Company: ${data.companyName}
+${data.jobDescription ? `Job Description: ${data.jobDescription}` : ''}
+
+Applicant's Experience:
+${JSON.stringify(data.experience || [], null, 2)}
+
+Applicant's Skills:
+${data.skills?.join(', ') || 'Not provided'}
+
+Create THREE versions:
+
+1. PROFESSIONAL TONE (250-350 words):
+- Use formal, traditional business language
+- Maintain respectful and courteous tone
+- Standard business letter structure
+- Focus on qualifications and achievements
+- Use phrases like "I am writing to express my interest"
+
+2. CONCISE TONE (150-250 words):
+- Direct and to-the-point
+- Use bullet points for key achievements where appropriate
+- Maximum 3 short paragraphs
+- Focus only on most relevant qualifications
+- Eliminate unnecessary words
+
+3. BOLD TONE (200-300 words):
+- Creative and confident
+- Show personality and enthusiasm
+- Use dynamic action verbs
+- Include memorable opening hook
+- Express genuine passion
+- Use phrases like "I'm excited to" and "I'm confident that"
+
+Return a JSON object with all three versions:
+{
+  "professional": "full professional cover letter text",
+  "concise": "full concise cover letter text",
+  "bold": "full bold cover letter text"
+}`;
+
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    config: {
+      responseMimeType: "application/json",
+    },
+    contents: prompt,
+  });
+
+  const result = JSON.parse(response.text || '{}');
+  return {
+    professional: result.professional || "",
+    concise: result.concise || "",
+    bold: result.bold || ""
+  };
 }
 
 export async function calculateJobMatch(resume: any, jobDescription: string): Promise<number> {

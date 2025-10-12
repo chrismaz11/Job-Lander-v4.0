@@ -51,6 +51,9 @@ export const coverLetters = pgTable("cover_letters", {
   companyName: text("company_name").notNull(),
   position: text("position").notNull(),
   content: text("content").notNull(),
+  tone: text("tone").default("professional"),
+  variants: jsonb("variants").$type<CoverLetterVariants>().default({}),
+  jobDescription: text("job_description"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -110,6 +113,12 @@ export interface Education {
   startDate: string;
   endDate: string;
   current: boolean;
+}
+
+export interface CoverLetterVariants {
+  professional?: string;
+  concise?: string;
+  bold?: string;
 }
 
 // Insert schemas

@@ -3,9 +3,9 @@ import { createServer, type Server } from "http";
 import multer from "multer";
 import mammoth from "mammoth";
 import { storage } from "./storage";
-import { parseResumeWithAI, generateResumeContent, generateCoverLetter, calculateJobMatch, rankJobsByRelevance, suggestCities } from "./services/gemini";
+import { parseResumeWithAI, generateResumeContent, generateCoverLetter, generateAllCoverLetterTones, calculateJobMatch, rankJobsByRelevance, suggestCities } from "./services/gemini";
 import { hybridTextExtraction, parseResumeWithHybridAI } from "./services/ocrParser";
-import { generateResumeHash, verifyOnChain, checkVerification } from "./services/blockchain";
+import { generateResumeHash, verifyOnChain, checkVerification, estimateVerificationGas, batchVerifyOnChain } from "./services/blockchain";
 import { searchJobs, getAvailableCities, getJobStatistics, type JobSearchFilters } from "./services/jobs";
 import { getCanvaTemplates, createCanvaDesign, exportCanvaDesignAsPDF } from "./services/canva";
 import { setupAuth, isAuthenticated } from "./replitAuth";
@@ -120,10 +120,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Generate cover letter
+  // Generate cover letter - returns all 3 tone variants
   app.post("/api/generate-coverletter", async (req, res) => {
     try {
-      const { resumeId, companyName, position, jobDescription } = req.body;
+      const { resumeId, companyName, position, jobDescription, tone } = req.body;
 
       if (!resumeId || !companyName || !position) {
         return res.status(400).json({ error: "Missing required fields" });
@@ -134,7 +134,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Resume not found" });
       }
 
-      const content = await generateCoverLetter({
+      // Generate all 3 tone variants in one request for efficiency
+      const variants = await generateAllCoverLetterTones({
         personalInfo: resume.personalInfo,
         companyName,
         position,
@@ -143,11 +144,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         skills: resume.skills || [],
       });
 
+      // Save cover letter with all variants
       const coverLetter = await storage.createCoverLetter({
         resumeId,
         companyName,
         position,
-        content,
+        content: variants.professional, // Default to professional
+        tone: tone || "professional",
+        variants,
+        jobDescription,
       });
 
       res.json(coverLetter);
@@ -210,6 +215,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(result);
     } catch (error: any) {
       console.error("Resume verification check error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Estimate gas for verification
+  app.post("/api/estimate-gas", upload.single("file"), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
+
+      const resumeHash = generateResumeHash(req.file.buffer);
+      const estimate = await estimateVerificationGas(resumeHash);
+
+      res.json(estimate);
+    } catch (error: any) {
+      console.error("Gas estimation error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Batch verify multiple resumes
+  app.post("/api/batch-verify", async (req, res) => {
+    try {
+      const { hashes, metadata } = req.body;
+
+      if (!hashes || !Array.isArray(hashes) || hashes.length === 0) {
+        return res.status(400).json({ error: "No hashes provided for batch verification" });
+      }
+
+      if (hashes.length > 50) {
+        return res.status(400).json({ error: "Too many hashes (max 50 per batch)" });
+      }
+
+      const result = await batchVerifyOnChain(hashes, metadata);
+
+      if (result.success) {
+        res.json({
+          success: true,
+          transactionHash: result.transactionHash,
+          blockNumber: result.blockNumber,
+          verifiedCount: result.verifiedCount,
+          gasUsed: result.gasUsed,
+          explorerUrl: result.explorerUrl,
+          network: "Polygon Mumbai Testnet"
+        });
+      } else {
+        res.status(500).json({ error: result.error || "Batch verification failed" });
+      }
+    } catch (error: any) {
+      console.error("Batch verification error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Check verification by hash (without file upload)
+  app.get("/api/check-verification/:hash", async (req, res) => {
+    try {
+      const { hash } = req.params;
+      
+      if (!hash) {
+        return res.status(400).json({ error: "Hash parameter required" });
+      }
+
+      const result = await checkVerification(hash);
+      res.json(result);
+    } catch (error: any) {
+      console.error("Verification check error:", error);
       res.status(500).json({ error: error.message });
     }
   });
