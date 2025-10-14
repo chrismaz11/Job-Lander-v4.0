@@ -1,4 +1,4 @@
-import { Resume } from "@/shared/schema";
+import { Resume } from "../../shared/schema.js";
 
 export interface PortfolioTheme {
   name: string;

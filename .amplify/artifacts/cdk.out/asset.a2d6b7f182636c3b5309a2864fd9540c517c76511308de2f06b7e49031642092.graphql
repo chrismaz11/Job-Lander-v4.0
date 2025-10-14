@@ -1,0 +1,596 @@
+type Resume @aws_api_key @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  userId: String!
+  content: AWSJSON!
+  templateId: String
+  canvaDesignId: String
+  pdfUrl: String
+  blockchainHash: String
+  verifiedAt: AWSDateTime
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  owner: String
+}
+
+type JobApplication @aws_api_key @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  userId: String!
+  resumeId: ID!
+  jobTitle: String!
+  company: String!
+  jobDescription: String
+  applicationStatus: JobApplicationApplicationStatus
+  appliedAt: AWSDateTime
+  notes: String
+  matchScore: Float
+  coverLetter: AWSJSON
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type Portfolio @aws_api_key @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  userId: String!
+  resumeId: ID!
+  title: String!
+  htmlContent: String!
+  deploymentUrl: String
+  isPublic: Boolean
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  owner: String
+}
+
+type UserSettings @aws_api_key @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  userId: String!
+  preferences: AWSJSON!
+  subscriptionTier: UserSettingsSubscriptionTier
+  usage: AWSJSON
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+enum JobApplicationApplicationStatus {
+  APPLIED
+  INTERVIEW
+  REJECTED
+  OFFER
+}
+
+enum UserSettingsSubscriptionTier {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+input AmplifyAIConversationTurnErrorInput {
+  errorType: String!
+  message: String!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelResumeConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [Resume]!
+  nextToken: String
+}
+
+input ModelResumeFilterInput {
+  id: ModelIDInput
+  userId: ModelStringInput
+  content: ModelStringInput
+  templateId: ModelStringInput
+  canvaDesignId: ModelStringInput
+  pdfUrl: ModelStringInput
+  blockchainHash: ModelStringInput
+  verifiedAt: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelResumeFilterInput]
+  or: [ModelResumeFilterInput]
+  not: ModelResumeFilterInput
+  owner: ModelStringInput
+}
+
+type Query {
+  getResume(id: ID!): Resume @aws_api_key @aws_iam @aws_cognito_user_pools
+  listResumes(id: ID, filter: ModelResumeFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelResumeConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getJobApplication(id: ID!): JobApplication @aws_api_key @aws_iam @aws_cognito_user_pools
+  listJobApplications(id: ID, filter: ModelJobApplicationFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelJobApplicationConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getPortfolio(id: ID!): Portfolio @aws_api_key @aws_iam @aws_cognito_user_pools
+  listPortfolios(id: ID, filter: ModelPortfolioFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelPortfolioConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getUserSettings(id: ID!): UserSettings @aws_api_key @aws_iam @aws_cognito_user_pools
+  listUserSettings(id: ID, filter: ModelUserSettingsFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelUserSettingsConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+}
+
+input ModelResumeConditionInput {
+  userId: ModelStringInput
+  content: ModelStringInput
+  templateId: ModelStringInput
+  canvaDesignId: ModelStringInput
+  pdfUrl: ModelStringInput
+  blockchainHash: ModelStringInput
+  verifiedAt: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelResumeConditionInput]
+  or: [ModelResumeConditionInput]
+  not: ModelResumeConditionInput
+  owner: ModelStringInput
+}
+
+input CreateResumeInput {
+  id: ID
+  userId: String!
+  content: AWSJSON!
+  templateId: String
+  canvaDesignId: String
+  pdfUrl: String
+  blockchainHash: String
+  verifiedAt: AWSDateTime
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+input UpdateResumeInput {
+  id: ID!
+  userId: String
+  content: AWSJSON
+  templateId: String
+  canvaDesignId: String
+  pdfUrl: String
+  blockchainHash: String
+  verifiedAt: AWSDateTime
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+input DeleteResumeInput {
+  id: ID!
+}
+
+type Mutation {
+  createResume(input: CreateResumeInput!, condition: ModelResumeConditionInput): Resume @aws_api_key @aws_iam @aws_cognito_user_pools
+  updateResume(input: UpdateResumeInput!, condition: ModelResumeConditionInput): Resume @aws_api_key @aws_iam @aws_cognito_user_pools
+  deleteResume(input: DeleteResumeInput!, condition: ModelResumeConditionInput): Resume @aws_api_key @aws_iam @aws_cognito_user_pools
+  createJobApplication(input: CreateJobApplicationInput!, condition: ModelJobApplicationConditionInput): JobApplication @aws_api_key @aws_iam @aws_cognito_user_pools
+  updateJobApplication(input: UpdateJobApplicationInput!, condition: ModelJobApplicationConditionInput): JobApplication @aws_api_key @aws_iam @aws_cognito_user_pools
+  deleteJobApplication(input: DeleteJobApplicationInput!, condition: ModelJobApplicationConditionInput): JobApplication @aws_api_key @aws_iam @aws_cognito_user_pools
+  createPortfolio(input: CreatePortfolioInput!, condition: ModelPortfolioConditionInput): Portfolio @aws_api_key @aws_iam @aws_cognito_user_pools
+  updatePortfolio(input: UpdatePortfolioInput!, condition: ModelPortfolioConditionInput): Portfolio @aws_api_key @aws_iam @aws_cognito_user_pools
+  deletePortfolio(input: DeletePortfolioInput!, condition: ModelPortfolioConditionInput): Portfolio @aws_api_key @aws_iam @aws_cognito_user_pools
+  createUserSettings(input: CreateUserSettingsInput!, condition: ModelUserSettingsConditionInput): UserSettings @aws_api_key @aws_iam @aws_cognito_user_pools
+  updateUserSettings(input: UpdateUserSettingsInput!, condition: ModelUserSettingsConditionInput): UserSettings @aws_api_key @aws_iam @aws_cognito_user_pools
+  deleteUserSettings(input: DeleteUserSettingsInput!, condition: ModelUserSettingsConditionInput): UserSettings @aws_api_key @aws_iam @aws_cognito_user_pools
+}
+
+input ModelSubscriptionResumeFilterInput {
+  id: ModelSubscriptionIDInput
+  userId: ModelSubscriptionStringInput
+  content: ModelSubscriptionStringInput
+  templateId: ModelSubscriptionStringInput
+  canvaDesignId: ModelSubscriptionStringInput
+  pdfUrl: ModelSubscriptionStringInput
+  blockchainHash: ModelSubscriptionStringInput
+  verifiedAt: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionResumeFilterInput]
+  or: [ModelSubscriptionResumeFilterInput]
+  owner: ModelStringInput
+}
+
+type Subscription {
+  onCreateResume(filter: ModelSubscriptionResumeFilterInput, owner: String): Resume @aws_subscribe(mutations: ["createResume"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdateResume(filter: ModelSubscriptionResumeFilterInput, owner: String): Resume @aws_subscribe(mutations: ["updateResume"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeleteResume(filter: ModelSubscriptionResumeFilterInput, owner: String): Resume @aws_subscribe(mutations: ["deleteResume"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreateJobApplication(filter: ModelSubscriptionJobApplicationFilterInput, owner: String): JobApplication @aws_subscribe(mutations: ["createJobApplication"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdateJobApplication(filter: ModelSubscriptionJobApplicationFilterInput, owner: String): JobApplication @aws_subscribe(mutations: ["updateJobApplication"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeleteJobApplication(filter: ModelSubscriptionJobApplicationFilterInput, owner: String): JobApplication @aws_subscribe(mutations: ["deleteJobApplication"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreatePortfolio(filter: ModelSubscriptionPortfolioFilterInput, owner: String): Portfolio @aws_subscribe(mutations: ["createPortfolio"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdatePortfolio(filter: ModelSubscriptionPortfolioFilterInput, owner: String): Portfolio @aws_subscribe(mutations: ["updatePortfolio"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeletePortfolio(filter: ModelSubscriptionPortfolioFilterInput, owner: String): Portfolio @aws_subscribe(mutations: ["deletePortfolio"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreateUserSettings(filter: ModelSubscriptionUserSettingsFilterInput, owner: String): UserSettings @aws_subscribe(mutations: ["createUserSettings"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdateUserSettings(filter: ModelSubscriptionUserSettingsFilterInput, owner: String): UserSettings @aws_subscribe(mutations: ["updateUserSettings"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeleteUserSettings(filter: ModelSubscriptionUserSettingsFilterInput, owner: String): UserSettings @aws_subscribe(mutations: ["deleteUserSettings"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+}
+
+type ModelJobApplicationConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [JobApplication]!
+  nextToken: String
+}
+
+input ModelJobApplicationApplicationStatusInput {
+  eq: JobApplicationApplicationStatus
+  ne: JobApplicationApplicationStatus
+}
+
+input ModelJobApplicationFilterInput {
+  id: ModelIDInput
+  userId: ModelStringInput
+  resumeId: ModelIDInput
+  jobTitle: ModelStringInput
+  company: ModelStringInput
+  jobDescription: ModelStringInput
+  applicationStatus: ModelJobApplicationApplicationStatusInput
+  appliedAt: ModelStringInput
+  notes: ModelStringInput
+  matchScore: ModelFloatInput
+  coverLetter: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelJobApplicationFilterInput]
+  or: [ModelJobApplicationFilterInput]
+  not: ModelJobApplicationFilterInput
+  owner: ModelStringInput
+}
+
+input ModelJobApplicationConditionInput {
+  userId: ModelStringInput
+  resumeId: ModelIDInput
+  jobTitle: ModelStringInput
+  company: ModelStringInput
+  jobDescription: ModelStringInput
+  applicationStatus: ModelJobApplicationApplicationStatusInput
+  appliedAt: ModelStringInput
+  notes: ModelStringInput
+  matchScore: ModelFloatInput
+  coverLetter: ModelStringInput
+  and: [ModelJobApplicationConditionInput]
+  or: [ModelJobApplicationConditionInput]
+  not: ModelJobApplicationConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateJobApplicationInput {
+  id: ID
+  userId: String!
+  resumeId: ID!
+  jobTitle: String!
+  company: String!
+  jobDescription: String
+  applicationStatus: JobApplicationApplicationStatus
+  appliedAt: AWSDateTime
+  notes: String
+  matchScore: Float
+  coverLetter: AWSJSON
+}
+
+input UpdateJobApplicationInput {
+  id: ID!
+  userId: String
+  resumeId: ID
+  jobTitle: String
+  company: String
+  jobDescription: String
+  applicationStatus: JobApplicationApplicationStatus
+  appliedAt: AWSDateTime
+  notes: String
+  matchScore: Float
+  coverLetter: AWSJSON
+}
+
+input DeleteJobApplicationInput {
+  id: ID!
+}
+
+input ModelSubscriptionJobApplicationFilterInput {
+  id: ModelSubscriptionIDInput
+  userId: ModelSubscriptionStringInput
+  resumeId: ModelSubscriptionIDInput
+  jobTitle: ModelSubscriptionStringInput
+  company: ModelSubscriptionStringInput
+  jobDescription: ModelSubscriptionStringInput
+  applicationStatus: ModelSubscriptionStringInput
+  appliedAt: ModelSubscriptionStringInput
+  notes: ModelSubscriptionStringInput
+  matchScore: ModelSubscriptionFloatInput
+  coverLetter: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionJobApplicationFilterInput]
+  or: [ModelSubscriptionJobApplicationFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelPortfolioConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [Portfolio]!
+  nextToken: String
+}
+
+input ModelPortfolioFilterInput {
+  id: ModelIDInput
+  userId: ModelStringInput
+  resumeId: ModelIDInput
+  title: ModelStringInput
+  htmlContent: ModelStringInput
+  deploymentUrl: ModelStringInput
+  isPublic: ModelBooleanInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelPortfolioFilterInput]
+  or: [ModelPortfolioFilterInput]
+  not: ModelPortfolioFilterInput
+  owner: ModelStringInput
+}
+
+input ModelPortfolioConditionInput {
+  userId: ModelStringInput
+  resumeId: ModelIDInput
+  title: ModelStringInput
+  htmlContent: ModelStringInput
+  deploymentUrl: ModelStringInput
+  isPublic: ModelBooleanInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelPortfolioConditionInput]
+  or: [ModelPortfolioConditionInput]
+  not: ModelPortfolioConditionInput
+  owner: ModelStringInput
+}
+
+input CreatePortfolioInput {
+  id: ID
+  userId: String!
+  resumeId: ID!
+  title: String!
+  htmlContent: String!
+  deploymentUrl: String
+  isPublic: Boolean
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+input UpdatePortfolioInput {
+  id: ID!
+  userId: String
+  resumeId: ID
+  title: String
+  htmlContent: String
+  deploymentUrl: String
+  isPublic: Boolean
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+input DeletePortfolioInput {
+  id: ID!
+}
+
+input ModelSubscriptionPortfolioFilterInput {
+  id: ModelSubscriptionIDInput
+  userId: ModelSubscriptionStringInput
+  resumeId: ModelSubscriptionIDInput
+  title: ModelSubscriptionStringInput
+  htmlContent: ModelSubscriptionStringInput
+  deploymentUrl: ModelSubscriptionStringInput
+  isPublic: ModelSubscriptionBooleanInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionPortfolioFilterInput]
+  or: [ModelSubscriptionPortfolioFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelUserSettingsConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [UserSettings]!
+  nextToken: String
+}
+
+input ModelUserSettingsSubscriptionTierInput {
+  eq: UserSettingsSubscriptionTier
+  ne: UserSettingsSubscriptionTier
+}
+
+input ModelUserSettingsFilterInput {
+  id: ModelIDInput
+  userId: ModelStringInput
+  preferences: ModelStringInput
+  subscriptionTier: ModelUserSettingsSubscriptionTierInput
+  usage: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelUserSettingsFilterInput]
+  or: [ModelUserSettingsFilterInput]
+  not: ModelUserSettingsFilterInput
+  owner: ModelStringInput
+}
+
+input ModelUserSettingsConditionInput {
+  userId: ModelStringInput
+  preferences: ModelStringInput
+  subscriptionTier: ModelUserSettingsSubscriptionTierInput
+  usage: ModelStringInput
+  and: [ModelUserSettingsConditionInput]
+  or: [ModelUserSettingsConditionInput]
+  not: ModelUserSettingsConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateUserSettingsInput {
+  id: ID
+  userId: String!
+  preferences: AWSJSON!
+  subscriptionTier: UserSettingsSubscriptionTier
+  usage: AWSJSON
+}
+
+input UpdateUserSettingsInput {
+  id: ID!
+  userId: String
+  preferences: AWSJSON
+  subscriptionTier: UserSettingsSubscriptionTier
+  usage: AWSJSON
+}
+
+input DeleteUserSettingsInput {
+  id: ID!
+}
+
+input ModelSubscriptionUserSettingsFilterInput {
+  id: ModelSubscriptionIDInput
+  userId: ModelSubscriptionStringInput
+  preferences: ModelSubscriptionStringInput
+  subscriptionTier: ModelSubscriptionStringInput
+  usage: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionUserSettingsFilterInput]
+  or: [ModelSubscriptionUserSettingsFilterInput]
+  owner: ModelStringInput
+}

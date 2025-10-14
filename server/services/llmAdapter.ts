@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { llmConfig } from "../config/llm.config";
 import { llmCache } from "./llmCache";
 import { llmMetrics } from "./llmMetrics";
@@ -175,11 +175,11 @@ export abstract class LLMAdapter {
  * Gemini Adapter Implementation
  */
 export class GeminiAdapter extends LLMAdapter {
-  private client: GoogleGenAI;
+  private client: GoogleGenerativeAI;
 
   constructor(apiKey: string, model: string = "gemini-2.0-flash-exp") {
     super(model, "gemini");
-    this.client = new GoogleGenAI({ apiKey });
+    this.client = new GoogleGenerativeAI(apiKey);
   }
 
   async generateText(
@@ -191,10 +191,10 @@ export class GeminiAdapter extends LLMAdapter {
 
     return this.wrapWithMiddleware(
       async () => {
-        const response = await this.client.models.generateContent({
-          model: this.model,
-          contents: prompt,
-          config: {
+        const model = this.client.getGenerativeModel({ model: this.model });
+        const result = await model.generateContent({
+          contents: [{ role: "user", parts: [{ text: prompt }] }],
+          generationConfig: {
             temperature: config?.temperature ?? llmConfig.defaultTemperature,
             maxOutputTokens: config?.maxTokens,
             topP: config?.topP,
@@ -203,7 +203,8 @@ export class GeminiAdapter extends LLMAdapter {
           },
         });
 
-        return response.text || "";
+        const response = await result.response;
+        return response.text() || "";
       },
       cacheKey,
       cacheTTL,
@@ -221,12 +222,16 @@ export class GeminiAdapter extends LLMAdapter {
 
     return this.wrapWithMiddleware(
       async () => {
-        const response = await this.client.models.generateContent({
+        const model = this.client.getGenerativeModel({ 
           model: this.model,
-          contents: prompt,
-          config: {
+          generationConfig: {
             responseMimeType: "application/json",
             responseSchema: schema,
+          }
+        });
+        const result = await model.generateContent({
+          contents: [{ role: "user", parts: [{ text: prompt }] }],
+          generationConfig: {
             temperature: config?.temperature ?? llmConfig.defaultTemperature,
             maxOutputTokens: config?.maxTokens,
             topP: config?.topP,
@@ -235,7 +240,8 @@ export class GeminiAdapter extends LLMAdapter {
           },
         });
 
-        const jsonText = response.text || "{}";
+        const response = await result.response;
+        const jsonText = response.text() || "{}";
         return JSON.parse(jsonText);
       },
       cacheKey,

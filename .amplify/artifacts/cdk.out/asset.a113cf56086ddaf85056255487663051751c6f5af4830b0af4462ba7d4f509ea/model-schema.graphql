@@ -1,0 +1,67 @@
+type Resume @model @auth(rules: [{allow: owner, operations: [create, read, update, delete], ownerField: "owner"},
+  {allow: public, provider: apiKey, operations: [create, read, update, delete]}])
+{
+  id: ID! @primaryKey
+  userId: String!
+  content: AWSJSON!
+  templateId: String
+  canvaDesignId: String
+  pdfUrl: String
+  blockchainHash: String
+  verifiedAt: AWSDateTime
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type JobApplication @model @auth(rules: [{allow: owner, operations: [create, read, update, delete], ownerField: "owner"},
+  {allow: public, provider: apiKey, operations: [create, read, update, delete]}])
+{
+  id: ID! @primaryKey
+  userId: String!
+  resumeId: ID!
+  jobTitle: String!
+  company: String!
+  jobDescription: String
+  applicationStatus: JobApplicationApplicationStatus
+  appliedAt: AWSDateTime
+  notes: String
+  matchScore: Float
+  coverLetter: AWSJSON
+}
+
+type Portfolio @model @auth(rules: [{allow: owner, operations: [create, read, update, delete], ownerField: "owner"},
+  {allow: public, provider: apiKey, operations: [read]}])
+{
+  id: ID! @primaryKey
+  userId: String!
+  resumeId: ID!
+  title: String!
+  htmlContent: String!
+  deploymentUrl: String
+  isPublic: Boolean
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type UserSettings @model @auth(rules: [{allow: owner, operations: [create, read, update, delete], ownerField: "owner"},
+  {allow: public, provider: apiKey, operations: [create, read, update, delete]}])
+{
+  id: ID! @primaryKey
+  userId: String!
+  preferences: AWSJSON!
+  subscriptionTier: UserSettingsSubscriptionTier
+  usage: AWSJSON
+}
+
+enum JobApplicationApplicationStatus {
+  APPLIED
+  INTERVIEW
+  REJECTED
+  OFFER
+}
+
+enum UserSettingsSubscriptionTier {
+  FREE
+  PRO
+  ENTERPRISE
+}

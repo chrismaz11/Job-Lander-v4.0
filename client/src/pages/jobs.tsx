@@ -115,8 +115,8 @@ export default function Jobs() {
   };
 
   const hasActiveFilters = remoteFilter !== "any" || employmentTypes.length > 0 || salaryRange !== "any";
-  const displayJobs = jobsData?.data || [];
-  const pagination = jobsData?.pagination;
+  const displayJobs = (jobsData as any)?.data || [];
+  const pagination = (jobsData as any)?.pagination;
 
   return (
     <div className="min-h-screen py-12">
@@ -125,20 +125,20 @@ export default function Jobs() {
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Find Your Dream Job</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Browse {stats?.totalJobs || "thousands of"} job opportunities across {stats?.citiesAvailable || "many"} cities
+            Browse {(stats as any)?.totalJobs || "thousands of"} job opportunities across {(stats as any)?.citiesAvailable || "many"} cities
           </p>
           {stats && (
             <div className="flex justify-center gap-8 mt-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary">{stats.totalJobs}</div>
+                <div className="text-3xl font-bold text-primary">{(stats as any).totalJobs}</div>
                 <div className="text-sm text-muted-foreground">Total Jobs</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary">{stats.remoteJobs}</div>
+                <div className="text-3xl font-bold text-primary">{(stats as any).remoteJobs}</div>
                 <div className="text-sm text-muted-foreground">Remote Jobs</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary">${(stats.avgSalary / 1000).toFixed(0)}k</div>
+                <div className="text-3xl font-bold text-primary">${((stats as any).avgSalary / 1000).toFixed(0)}k</div>
                 <div className="text-sm text-muted-foreground">Avg Salary</div>
               </div>
             </div>
@@ -199,7 +199,7 @@ export default function Jobs() {
                           <Globe className="h-4 w-4 mr-2" />
                           Remote
                         </CommandItem>
-                        {citiesData?.cities?.map((c: string) => (
+                        {(citiesData as any)?.cities?.map((c: string) => (
                           <CommandItem
                             key={c}
                             onSelect={() => {

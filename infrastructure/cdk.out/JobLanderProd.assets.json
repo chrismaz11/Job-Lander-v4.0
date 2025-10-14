@@ -1,0 +1,21 @@
+{
+  "version": "48.0.0",
+  "files": {
+    "21bcc395b5c17ffe9a6b7ac1b3fef499fd93edeaca59fc184a3ad2aed8669351": {
+      "displayName": "JobLanderProd Template",
+      "source": {
+        "path": "JobLanderProd.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "817977749885-us-east-1-9d51c064": {
+          "bucketName": "cdk-hnb659fds-assets-817977749885-us-east-1",
+          "objectKey": "21bcc395b5c17ffe9a6b7ac1b3fef499fd93edeaca59fc184a3ad2aed8669351.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::817977749885:role/cdk-hnb659fds-file-publishing-role-817977749885-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

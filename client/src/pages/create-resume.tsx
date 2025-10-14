@@ -351,9 +351,15 @@ export default function CreateResume() {
               )}
 
               {/* Step 1: Review Parsed Data (if confidence scores available) */}
-              {currentStep === 1 && showReview && parsedData && (
+              {currentStep === 1 && showReview && parsedData && parsedData.personalInfo && (
                 <ParsedResumeReview
-                  parsedData={parsedData}
+                  parsedData={{
+                    personalInfo: parsedData.personalInfo,
+                    experience: parsedData.experience || [],
+                    education: parsedData.education || [],
+                    skills: parsedData.skills || [],
+                    confidence: parsedData.confidence as any,
+                  }}
                   onAccept={handleAcceptParsedData}
                   onEdit={handleEditParsedData}
                 />

@@ -1,109 +1,201 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { FileText, Search, Eye, Loader2, Sparkles, Zap, Star } from "lucide-react";
-import { Link } from "wouter";
-import { getTemplateImage } from "@/lib/templateImages";
+import React, { useState, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { 
+  FileText, 
+  Star, 
+  Search, 
+  Eye, 
+  Download, 
+  Sparkles, 
+  Crown, 
+  Check, 
+  ArrowLeft,
+  Zap,
+  Shield,
+  ChevronRight
+} from 'lucide-react';
+import { Link } from 'wouter';
+import { PROFESSIONAL_TEMPLATES, TemplateData, renderTemplate } from '@/data/professional-templates';
 
-const TEMPLATE_CATEGORIES = ["All", "Modern Professional", "Minimalist", "Creative", "Executive", "Student", "Tech"];
-
-interface Template {
-  id: string;
-  name: string;
-  category: string;
-  description?: string;
-  thumbnailUrl?: string;
-  previewUrl?: string;
-  tags?: string[];
-  isPremium?: string;
-}
+// Sample data for template preview
+const SAMPLE_DATA = {
+  personalInfo: {
+    fullName: 'Sarah Johnson',
+    title: 'Senior Software Engineer',
+    email: 'sarah.johnson@email.com',
+    phone: '(555) 123-4567',
+    location: 'San Francisco, CA',
+    linkedin: 'linkedin.com/in/sarahjohnson',
+    website: 'sarahjohnson.dev',
+    summary: 'Experienced software engineer with 8+ years building scalable web applications. Passionate about clean code, user experience, and leading high-performing teams.'
+  },
+  experience: [
+    {
+      id: '1',
+      position: 'Senior Software Engineer',
+      company: 'TechCorp Inc.',
+      startDate: '2020-03',
+      endDate: '',
+      current: true,
+      description: '• Led development of microservices architecture serving 10M+ users\n• Mentored 5 junior developers and improved team productivity by 40%\n• Implemented CI/CD pipelines reducing deployment time by 60%'
+    },
+    {
+      id: '2',
+      position: 'Software Engineer',
+      company: 'StartupXYZ',
+      startDate: '2018-06',
+      endDate: '2020-02',
+      current: false,
+      description: '• Built full-stack web applications using React, Node.js, and PostgreSQL\n• Collaborated with design team to create responsive, accessible user interfaces\n• Optimized database queries improving application performance by 30%'
+    }
+  ],
+  education: [
+    {
+      id: '1',
+      institution: 'Stanford University',
+      degree: 'Bachelor of Science',
+      field: 'Computer Science',
+      startDate: '2014-09',
+      endDate: '2018-06',
+      current: false
+    }
+  ],
+  skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'PostgreSQL', 'AWS', 'Docker', 'GraphQL', 'Git', 'Agile', 'Leadership']
+};
 
 export default function Templates() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateData | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
 
-  const { data: templatesData, isLoading } = useQuery<Template[]>({
-    queryKey: ["/api/canva/templates"],
-  });
+  const categories = [
+    { id: 'all', name: 'All Templates', count: PROFESSIONAL_TEMPLATES.length },
+    { id: 'professional', name: 'Professional', count: PROFESSIONAL_TEMPLATES.filter(t => t.category === 'professional').length },
+    { id: 'modern', name: 'Modern', count: PROFESSIONAL_TEMPLATES.filter(t => t.category === 'modern').length },
+    { id: 'executive', name: 'Executive', count: PROFESSIONAL_TEMPLATES.filter(t => t.category === 'executive').length },
+    { id: 'minimalist', name: 'Minimalist', count: PROFESSIONAL_TEMPLATES.filter(t => t.category === 'minimalist').length },
+    { id: 'technical', name: 'Technical', count: PROFESSIONAL_TEMPLATES.filter(t => t.category === 'technical').length },
+    { id: 'creative', name: 'Creative', count: PROFESSIONAL_TEMPLATES.filter(t => t.category === 'creative').length }
+  ];
 
-  const templates: Template[] = templatesData || [];
+  const filteredTemplates = useMemo(() => {
+    return PROFESSIONAL_TEMPLATES.filter(template => {
+      const matchesCategory = selectedCategory === 'all' || template.category === selectedCategory;
+      const matchesSearch = 
+        template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        template.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        template.features.some(feature => feature.toLowerCase().includes(searchQuery.toLowerCase()));
+      return matchesCategory && matchesSearch;
+    });
+  }, [selectedCategory, searchQuery]);
 
-  const filteredTemplates = templates.filter(template => {
-    const matchesCategory = selectedCategory === "All" || template.category === selectedCategory;
-    const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      template.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      template.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesCategory && matchesSearch;
-  });
-
-  const handlePreview = (template: Template) => {
+  const handlePreview = (template: TemplateData) => {
     setSelectedTemplate(template);
     setPreviewOpen(true);
   };
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "Modern Professional": return "bg-primary/10 text-primary border-primary/30";
-      case "Minimalist": return "bg-secondary/10 text-secondary-foreground border-secondary";
-      case "Creative": return "bg-chart-2/10 text-chart-2 border-chart-2/30";
-      case "Executive": return "bg-chart-4/10 text-chart-4 border-chart-4/30";
-      case "Student": return "bg-chart-3/10 text-chart-3 border-chart-3/30";
-      case "Tech": return "bg-chart-1/10 text-chart-1 border-chart-1/30";
-      default: return "bg-muted text-muted-foreground border-border";
-    }
+  const generateTemplatePreview = (template: TemplateData) => {
+    const html = renderTemplate(template, SAMPLE_DATA);
+    return `
+      <html>
+        <head>
+          <style>${template.css}</style>
+          <style>
+            body { margin: 0; padding: 20px; background: #f5f5f5; font-family: Inter, sans-serif; }
+            .template-container { transform: scale(0.6); transform-origin: top left; }
+          </style>
+        </head>
+        <body>
+          <div class="template-container">${html}</div>
+        </body>
+      </html>
+    `;
   };
 
   return (
-    <div className="min-h-screen py-12">
-      <div className="container mx-auto px-4 md:px-6">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <Badge className="bg-primary/20 text-primary border-primary/30" data-testid="badge-templates">
-              <Sparkles className="h-3 w-3 mr-1" />
-              50+ Professional Templates
+    <div className="min-h-screen bg-background">
+      {/* Navigation */}
+      <nav className="nav-clean">
+        <div className="nav-content">
+          <Link href="/" className="nav-logo">
+            Job-Lander
+          </Link>
+          
+          <div className="flex items-center gap-4">
+            <Link href="/" className="nav-link">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Home
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Header */}
+      <section className="section-padding text-center">
+        <div className="container-max">
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <Badge variant="secondary" className="px-3 py-1 text-sm">
+              <Crown className="w-3 h-3 mr-1" />
+              Professional Templates
             </Badge>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Choose Your Perfect Resume Template
+          
+          <h1 className="heading-5xl mb-4">
+            Choose Your Perfect
+            <span className="block text-accent">Resume Template</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Select from our collection of professionally designed templates powered by Canva. 
-            Each template is optimized for ATS systems and recruiter preferences.
+          
+          <p className="body-lg max-w-2xl mx-auto mb-8">
+            Select from our collection of professionally designed, ATS-optimized resume templates. 
+            Each template is crafted to help you stand out and get noticed by hiring managers.
           </p>
+          
+          {/* Stats */}
+          <div className="flex justify-center gap-8 mb-12">
+            <div className="text-center">
+              <div className="heading-2xl text-accent mb-1">{PROFESSIONAL_TEMPLATES.length}+</div>
+              <div className="body-sm">Templates</div>
+            </div>
+            <div className="text-center">
+              <div className="heading-2xl text-accent mb-1">ATS</div>
+              <div className="body-sm">Optimized</div>
+            </div>
+            <div className="text-center">
+              <div className="heading-2xl text-accent mb-1">100%</div>
+              <div className="body-sm">Customizable</div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Search and Filter */}
-        <div className="mb-8 space-y-4">
-          <div className="relative max-w-md mx-auto">
+      <div className="container-max">
+        {/* Search and Filters */}
+        <div className="mb-8">
+          <div className="relative max-w-md mx-auto mb-6">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
-              placeholder="Search templates by name, style, or tags..."
+              placeholder="Search templates..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-              data-testid="input-search-templates"
+              className="input-clean pl-10"
             />
           </div>
 
           <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-            <TabsList className="w-full h-auto flex-wrap justify-center gap-2 p-1 bg-muted/30">
-              {TEMPLATE_CATEGORIES.map(category => (
+            <TabsList className="w-full justify-center bg-muted/30 p-1">
+              {categories.map(category => (
                 <TabsTrigger 
-                  key={category} 
-                  value={category} 
-                  data-testid={`tab-${category.toLowerCase().replace(/\s+/g, '-')}`}
+                  key={category.id} 
+                  value={category.id}
                   className="data-[state=active]:bg-background"
                 >
-                  {category === "All" && <Sparkles className="h-3 w-3 mr-1" />}
-                  {category}
+                  {category.name} ({category.count})
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -111,188 +203,225 @@ export default function Templates() {
         </div>
 
         {/* Templates Grid */}
-        {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
-            <p className="text-muted-foreground">Loading templates...</p>
-          </div>
-        ) : filteredTemplates.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredTemplates.map((template) => {
-              const imageUrl = template.thumbnailUrl ? getTemplateImage(template.thumbnailUrl) : null;
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-16">
+          {filteredTemplates.map((template) => (
+            <Card key={template.id} className="card-clean group cursor-pointer" onClick={() => handlePreview(template)}>
+              {/* Template Preview */}
+              <div className="aspect-[8.5/11] bg-muted rounded-lg overflow-hidden relative mb-4">
+                <iframe
+                  srcDoc={generateTemplatePreview(template)}
+                  className="w-full h-full border-none pointer-events-none"
+                  title={`Preview of ${template.name}`}
+                />
+                
+                {/* Premium Badge */}
+                {template.isPremium && (
+                  <div className="absolute top-3 right-3">
+                    <Badge className="bg-accent text-accent-foreground">
+                      <Star className="w-3 h-3 mr-1 fill-current" />
+                      Premium
+                    </Badge>
+                  </div>
+                )}
+                
+                {/* ATS Badge */}
+                {template.atsOptimized && (
+                  <div className="absolute top-3 left-3">
+                    <Badge variant="secondary" className="bg-green-100 text-green-700 border-green-200">
+                      <Shield className="w-3 h-3 mr-1" />
+                      ATS
+                    </Badge>
+                  </div>
+                )}
+                
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-background/90 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                  <Button size="lg" className="btn-primary">
+                    <Eye className="w-4 h-4 mr-2" />
+                    Preview Template
+                  </Button>
+                </div>
+              </div>
               
-              return (
-                <Card
-                  key={template.id}
-                  className="group overflow-hidden hover-elevate transition-all duration-300 hover:scale-[1.02]"
-                  data-testid={`card-template-${template.id}`}
-                >
-                  {/* Template Preview */}
-                  <div className="aspect-[8.5/11] bg-muted relative overflow-hidden">
-                    {imageUrl ? (
-                      <img 
-                        src={imageUrl}
-                        alt={template.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center bg-card">
-                        <FileText className="h-24 w-24 text-muted-foreground/20" />
-                      </div>
-                    )}
-                    
-                    {/* Premium Badge */}
-                    {template.isPremium === "true" && (
-                      <div className="absolute top-2 right-2">
-                        <Badge className="bg-chart-4/90 text-white border-chart-4">
-                          <Star className="h-3 w-3 mr-1 fill-current" />
-                          Premium
-                        </Badge>
-                      </div>
-                    )}
-                    
-                    {/* Overlay on Hover */}
-                    <div className="absolute inset-0 bg-background/90 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3">
-                      <Button
-                        onClick={() => handlePreview(template)}
-                        variant="secondary"
-                        size="sm"
-                        className="hover:scale-105 transition-transform"
-                        data-testid={`button-preview-${template.id}`}
-                      >
-                        <Eye className="h-4 w-4 mr-2" />
-                        Preview
-                      </Button>
-                    </div>
-                  </div>
+              {/* Template Info */}
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <CardTitle className="heading-xl">{template.name}</CardTitle>
+                  <Badge variant="outline" className="text-xs shrink-0">
+                    {template.category}
+                  </Badge>
+                </div>
+                <CardDescription className="body-sm">
+                  {template.description}
+                </CardDescription>
+              </CardHeader>
+              
+              <CardContent className="pt-0">
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {template.features.slice(0, 3).map((feature, index) => (
+                    <Badge key={index} variant="secondary" className="text-xs">
+                      {feature}
+                    </Badge>
+                  ))}
+                  {template.features.length > 3 && (
+                    <Badge variant="secondary" className="text-xs">
+                      +{template.features.length - 3} more
+                    </Badge>
+                  )}
+                </div>
+                
+                <div className="flex gap-2">
+                  <Button className="btn-primary flex-1" asChild>
+                    <Link href={`/create-resume?template=${template.id}`}>
+                      <Zap className="w-4 h-4 mr-2" />
+                      Use Template
+                    </Link>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="icon"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePreview(template);
+                    }}
+                  >
+                    <Eye className="w-4 h-4" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-                  {/* Template Info */}
-                  <div className="p-4 space-y-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <h3 className="font-bold text-base line-clamp-1" data-testid={`text-template-name-${template.id}`}>
-                        {template.name}
-                      </h3>
-                      <Badge 
-                        variant="outline" 
-                        className={`${getCategoryColor(template.category)} text-xs shrink-0`}
-                        data-testid={`badge-category-${template.id}`}
-                      >
-                        {template.category}
-                      </Badge>
-                    </div>
-                    
-                    {template.description && (
-                      <p className="text-sm text-muted-foreground line-clamp-2">
-                        {template.description}
-                      </p>
-                    )}
-
-                    <div className="flex gap-2">
-                      <Button 
-                        asChild 
-                        className="flex-1" 
-                        size="sm"
-                        data-testid={`button-use-template-${template.id}`}
-                      >
-                        <Link href={`/create?template=${template.id}`}>
-                          <Zap className="h-3 w-3 mr-1" />
-                          Use Template
-                        </Link>
-                      </Button>
-                      <Button
-                        onClick={() => handlePreview(template)}
-                        variant="outline"
-                        size="sm"
-                        className="px-3"
-                        data-testid={`button-quick-view-${template.id}`}
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="text-center py-20">
-            <FileText className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
-            <h3 className="text-xl font-bold mb-2">No templates found</h3>
-            <p className="text-muted-foreground mb-6">
+        {/* No Results */}
+        {filteredTemplates.length === 0 && (
+          <div className="text-center py-16">
+            <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+            <h3 className="heading-xl mb-2">No templates found</h3>
+            <p className="body-base text-muted-foreground mb-4">
               Try adjusting your search or filter criteria
             </p>
-            <Button onClick={() => { setSearchQuery(""); setSelectedCategory("All"); }} variant="outline">
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedCategory('all');
+              }}
+            >
               Clear Filters
             </Button>
           </div>
         )}
+      </div>
 
-        {/* Preview Dialog */}
-        <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-          <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden flex flex-col">
-            <DialogHeader>
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <DialogTitle className="text-2xl flex items-center gap-2">
-                    {selectedTemplate?.name}
-                    {selectedTemplate?.isPremium === "true" && (
-                      <Badge className="bg-chart-4/90 text-white border-chart-4">
-                        <Star className="h-3 w-3 mr-1 fill-current" />
-                        Premium
-                      </Badge>
-                    )}
-                  </DialogTitle>
-                  <DialogDescription className="mt-2">
-                    {selectedTemplate?.description || `${selectedTemplate?.category} template - Professional resume design powered by Canva`}
-                  </DialogDescription>
-                </div>
-                <Badge 
-                  className={`${getCategoryColor(selectedTemplate?.category || "")} shrink-0`}
-                >
-                  {selectedTemplate?.category}
-                </Badge>
+      {/* Template Preview Modal */}
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden">
+          <DialogHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <DialogTitle className="heading-xl">{selectedTemplate?.name}</DialogTitle>
+                <p className="body-sm text-muted-foreground mt-1">
+                  {selectedTemplate?.description}
+                </p>
               </div>
-            </DialogHeader>
-
-            <div className="flex-1 overflow-auto">
-              <div className="aspect-[8.5/11] bg-muted rounded-lg overflow-hidden">
-                {selectedTemplate?.thumbnailUrl ? (
-                  <img 
-                    src={getTemplateImage(selectedTemplate.thumbnailUrl)}
-                    alt={selectedTemplate.name}
-                    className="w-full h-full object-contain bg-white dark:bg-gray-950"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <FileText className="h-32 w-32 text-muted-foreground/20" />
-                  </div>
+              <div className="flex items-center gap-2">
+                {selectedTemplate?.atsOptimized && (
+                  <Badge variant="secondary" className="bg-green-100 text-green-700">
+                    <Shield className="w-3 h-3 mr-1" />
+                    ATS Optimized
+                  </Badge>
+                )}
+                {selectedTemplate?.isPremium && (
+                  <Badge className="bg-accent text-accent-foreground">
+                    <Star className="w-3 h-3 mr-1 fill-current" />
+                    Premium
+                  </Badge>
                 )}
               </div>
             </div>
-
-            <div className="flex gap-3 mt-4">
-              <Button 
-                asChild 
-                className="flex-1" 
-                size="lg"
-                data-testid="button-use-template-preview"
-              >
-                <Link href={`/create?template=${selectedTemplate?.id}`}>
-                  <Zap className="h-4 w-4 mr-2" />
-                  Use This Template
-                </Link>
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => setPreviewOpen(false)} 
-                size="lg"
-              >
-                Close Preview
-              </Button>
+          </DialogHeader>
+          
+          <div className="grid lg:grid-cols-2 gap-6 mt-6">
+            {/* Preview */}
+            <div className="border rounded-lg overflow-hidden bg-white">
+              <div className="p-4 bg-muted text-center text-sm text-muted-foreground">
+                Live Preview
+              </div>
+              <div className="aspect-[8.5/11] overflow-auto">
+                {selectedTemplate && (
+                  <iframe
+                    srcDoc={generateTemplatePreview(selectedTemplate)}
+                    className="w-full h-full border-none"
+                    title={`Full preview of ${selectedTemplate.name}`}
+                  />
+                )}
+              </div>
             </div>
-          </DialogContent>
-        </Dialog>
-      </div>
+            
+            {/* Details */}
+            <div className="space-y-6">
+              <div>
+                <h4 className="heading-xl mb-3">Features</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {selectedTemplate?.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-2 text-sm">
+                      <Check className="w-4 h-4 text-green-500" />
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="heading-xl mb-3">Perfect For</h4>
+                <div className="text-sm space-y-1">
+                  {selectedTemplate?.category === 'executive' && (
+                    <>
+                      <p>• Senior-level positions</p>
+                      <p>• Leadership roles</p>
+                      <p>• C-suite applications</p>
+                    </>
+                  )}
+                  {selectedTemplate?.category === 'technical' && (
+                    <>
+                      <p>• Software engineers</p>
+                      <p>• Technical roles</p>
+                      <p>• IT professionals</p>
+                    </>
+                  )}
+                  {selectedTemplate?.category === 'modern' && (
+                    <>
+                      <p>• Creative professionals</p>
+                      <p>• Marketing roles</p>
+                      <p>• Design positions</p>
+                    </>
+                  )}
+                  {selectedTemplate?.category === 'minimalist' && (
+                    <>
+                      <p>• Any industry</p>
+                      <p>• Conservative fields</p>
+                      <p>• Clean, professional look</p>
+                    </>
+                  )}
+                </div>
+              </div>
+              
+              <div className="flex gap-3 pt-4">
+                <Button className="btn-primary flex-1" asChild>
+                  <Link href={`/create-resume?template=${selectedTemplate?.id}`}>
+                    <Zap className="w-4 h-4 mr-2" />
+                    Use This Template
+                  </Link>
+                </Button>
+                <Button variant="outline" size="icon">
+                  <Download className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -7,8 +7,8 @@ import { parseResumeWithAI, generateResumeContent, generateCoverLetter, generate
 import { hybridTextExtraction, parseResumeWithHybridAI } from "./services/ocrParser";
 import { generateResumeHash, verifyOnChain, checkVerification, estimateVerificationGas, batchVerifyOnChain } from "./services/blockchain";
 import { searchJobs, getAvailableCities, getJobStatistics, type JobSearchFilters } from "./services/jobs";
-import { getCanvaTemplates, createCanvaDesign, exportCanvaDesignAsPDF } from "./services/canva";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { getCanvaTemplates, createCanvaDesign, exportCanvaDesign } from "./services/canva";
+import { setupAuth, isAuthenticated } from "./simpleAuth";
 import { 
   generatePortfolioHTML, 
   getAvailableThemes, 
@@ -27,20 +27,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
   await setupAuth(app);
 
-  // Auth endpoint to get current user
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
+  // Health check endpoint
+  app.get('/api/health', (req, res) => {
+    res.json({ 
+      status: 'healthy', 
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV,
+      version: '1.0.0'
+    });
   });
+
   
   // Parse resume from PDF/DOCX with hybrid OCR + AI approach
   app.post("/api/parse-resume", upload.single("file"), async (req, res) => {
@@ -54,7 +50,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Step 1: Library-based text extraction
       if (mimeType === "application/pdf") {
-        const pdfParse = (await import("pdf-parse")).default;
+        const pdfParse = await import("pdf-parse");
         const pdfData = await pdfParse(req.file.buffer);
         rawText = pdfData.text;
       } else if (
@@ -104,9 +100,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let pdfUrl = null;
 
       if (templateId) {
-        const design = await createCanvaDesign(templateId, enhanced);
+        const design = await createCanvaDesign(templateId, enhanced, req.user?.claims?.sub || 'anonymous');
         canvaDesignId = design.designId;
-        pdfUrl = await exportCanvaDesignAsPDF(design.designId);
+        pdfUrl = await exportCanvaDesign(design.designId, 'pdf', req.user?.claims?.sub || 'anonymous');
       }
 
       // Save to storage with userId
@@ -118,7 +114,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         skills: enhanced.skills || skills,
         templateId,
         canvaDesignId,
-        pdfUrl,
+        pdfUrl: typeof pdfUrl === 'string' ? pdfUrl : pdfUrl?.url || null,
       });
 
       res.json(resume);
@@ -393,7 +389,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Missing required fields" });
       }
 
-      const design = await createCanvaDesign(templateId, data);
+      const design = await createCanvaDesign(templateId, data, req.user?.claims?.sub || 'anonymous');
       res.json(design);
     } catch (error: any) {
       console.error("Create template error:", error);
@@ -410,7 +406,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Design ID required" });
       }
 
-      const pdfUrl = await exportCanvaDesignAsPDF(designId);
+      const pdfUrl = await exportCanvaDesign(designId, 'pdf', req.user?.claims?.sub || 'anonymous');
       res.json({ pdfUrl });
     } catch (error: any) {
       console.error("Export PDF error:", error);

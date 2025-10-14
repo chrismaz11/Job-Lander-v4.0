@@ -42,6 +42,7 @@ export interface LLMConfig {
     resumeEnhancement: string;
     skillsExtraction: string;
     citysuggestions: string;
+    textCleaning: string;
   };
 
   // Default generation parameters
@@ -160,6 +161,7 @@ export const llmConfig: LLMConfig = {
     resumeEnhancement: "gemini-2.0-flash-exp",
     skillsExtraction: "gemini-2.0-flash-exp",
     citysuggestions: "gemini-2.0-flash-exp",
+    textCleaning: "gemini-2.0-flash-exp",
   },
 
   // Default generation parameters
@@ -178,6 +180,7 @@ export const llmConfig: LLMConfig = {
     jobMatching: 7200, // 2 hours
     templateSuggestions: 604800, // 7 days
     skillsExtraction: 86400, // 24 hours
+    textCleaning: 3600, // 1 hour
     default: 3600, // 1 hour
   },
 

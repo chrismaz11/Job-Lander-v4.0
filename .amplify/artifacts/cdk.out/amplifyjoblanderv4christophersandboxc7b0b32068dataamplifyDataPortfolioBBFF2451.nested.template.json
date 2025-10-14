@@ -1,0 +1,2311 @@
+{
+ "Parameters": {
+  "DynamoDBModelTableReadIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of read IOPS the table should support."
+  },
+  "DynamoDBModelTableWriteIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of write IOPS the table should support."
+  },
+  "DynamoDBBillingMode": {
+   "Type": "String",
+   "Default": "PAY_PER_REQUEST",
+   "AllowedValues": [
+    "PAY_PER_REQUEST",
+    "PROVISIONED"
+   ],
+   "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+  },
+  "DynamoDBEnablePointInTimeRecovery": {
+   "Type": "String",
+   "Default": "false",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Whether to enable Point in Time Recovery on the table."
+  },
+  "DynamoDBEnableServerSideEncryption": {
+   "Type": "String",
+   "Default": "true",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Enable server side encryption powered by KMS."
+  },
+  "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC83B5771Outputsamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTable60CDC9E4": {
+   "Type": "String"
+  },
+  "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name": {
+   "Type": "String"
+  },
+  "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef": {
+   "Type": "String"
+  },
+  "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef": {
+   "Type": "String"
+  },
+  "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef": {
+   "Type": "String"
+  }
+ },
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "ShouldUsePayPerRequestBilling": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBBillingMode"
+    },
+    "PAY_PER_REQUEST"
+   ]
+  },
+  "ShouldUsePointInTimeRecovery": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBEnablePointInTimeRecovery"
+    },
+    "true"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "PortfolioTable": {
+   "Type": "Custom::AmplifyDynamoDBTable",
+   "Properties": {
+    "ServiceToken": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC83B5771Outputsamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTable60CDC9E4"
+    },
+    "tableName": {
+     "Fn::Join": [
+      "",
+      [
+       "Portfolio-",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "attributeDefinitions": [
+     {
+      "attributeName": "id",
+      "attributeType": "S"
+     }
+    ],
+    "keySchema": [
+     {
+      "attributeName": "id",
+      "keyType": "HASH"
+     }
+    ],
+    "provisionedThroughput": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "ReadCapacityUnits": {
+        "Ref": "DynamoDBModelTableReadIOPS"
+       },
+       "WriteCapacityUnits": {
+        "Ref": "DynamoDBModelTableWriteIOPS"
+       }
+      }
+     ]
+    },
+    "sseSpecification": {
+     "sseEnabled": false
+    },
+    "streamSpecification": {
+     "streamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "deletionProtectionEnabled": false,
+    "allowDestructiveGraphqlSchemaUpdates": true,
+    "replaceTableUponGsiUpdate": true,
+    "pointInTimeRecoverySpecification": {
+     "Fn::If": [
+      "ShouldUsePointInTimeRecovery",
+      {
+       "PointInTimeRecoveryEnabled": true
+      },
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    },
+    "billingMode": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      "PAY_PER_REQUEST",
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioTable/Default/Default"
+   }
+  },
+  "PortfolioIAMRole2C9B04B7": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "Portfolio-",
+                {
+                 "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          },
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "Portfolio-",
+                {
+                 "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "DynamoDBAccess"
+     }
+    ],
+    "RoleName": {
+     "Fn::Join": [
+      "",
+      [
+       "PortfolioIAMRole63f490-",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioIAMRole/Resource"
+   }
+  },
+  "PortfolioDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Fn::Select": [
+       1,
+       {
+        "Fn::Split": [
+         "/",
+         {
+          "Fn::Select": [
+           5,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "PortfolioTable",
+               "TableArn"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "Name": "PortfolioTable",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "PortfolioIAMRole2C9B04B7",
+      "Arn"
+     ]
+    },
+    "Type": "AMAZON_DYNAMODB"
+   },
+   "DependsOn": [
+    "PortfolioIAMRole2C9B04B7"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioDataSource/Resource"
+   }
+  },
+  "QuerygetPortfoliopreAuth0FunctionQuerygetPortfoliopreAuth0FunctionAppSyncFunction91FDCB53": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetPortfoliopreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/ffc597e18023b530e6afcbe02cee647d49550fa9e77bd06f1dee09d8b1be8de3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerygetPortfoliopreAuth0Function/QuerygetPortfoliopreAuth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetPortfolioauth0FunctionQuerygetPortfolioauth0FunctionAppSyncFunction3A4998DA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetPortfolioauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b3e5411cda152c2308dac0a81ffb999cc9c81ea2a1f51e6ce05a377bef8c4dfd.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerygetPortfolioauth0Function/QuerygetPortfolioauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetPortfoliopostAuth0FunctionQuerygetPortfoliopostAuth0FunctionAppSyncFunctionD1CDDB0B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetPortfoliopostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerygetPortfoliopostAuth0Function/QuerygetPortfoliopostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryGetPortfolioDataResolverFnQueryGetPortfolioDataResolverFnAppSyncFunction693B75DD": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PortfolioDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryGetPortfolioDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/08f4d557693d96c1a4efba0f9dc91330e4b19772fd5477c156468843e3d9cb5e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c6a2d29f01c6091bd1d9afe16e5849d456c96f17c3b215938c8067399532719.vtl"
+    }
+   },
+   "DependsOn": [
+    "PortfolioDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QueryGetPortfolioDataResolverFn/QueryGetPortfolioDataResolverFn.AppSyncFunction"
+   }
+  },
+  "GetPortfolioResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "FieldName": "getPortfolio",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetPortfoliopreAuth0FunctionQuerygetPortfoliopreAuth0FunctionAppSyncFunction91FDCB53",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetPortfolioauth0FunctionQuerygetPortfolioauth0FunctionAppSyncFunction3A4998DA",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetPortfoliopostAuth0FunctionQuerygetPortfoliopostAuth0FunctionAppSyncFunctionD1CDDB0B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryGetPortfolioDataResolverFnQueryGetPortfolioDataResolverFnAppSyncFunction693B75DD",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getPortfolio\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "PortfolioTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/queryGetPortfolioResolver"
+   }
+  },
+  "QuerylistPortfoliospreAuth0FunctionQuerylistPortfoliospreAuth0FunctionAppSyncFunction7E0D2EA0": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistPortfoliospreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3e81312d4c75951808eda9fcd5f854c1925c0b819de0939f09c4fe2eebb190b8.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerylistPortfoliospreAuth0Function/QuerylistPortfoliospreAuth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistPortfoliosauth0FunctionQuerylistPortfoliosauth0FunctionAppSyncFunctionB1573F65": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistPortfoliosauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b3e5411cda152c2308dac0a81ffb999cc9c81ea2a1f51e6ce05a377bef8c4dfd.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerylistPortfoliosauth0Function/QuerylistPortfoliosauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistPortfoliospostAuth0FunctionQuerylistPortfoliospostAuth0FunctionAppSyncFunction1018B6A5": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistPortfoliospostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerylistPortfoliospostAuth0Function/QuerylistPortfoliospostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListPortfoliosDataResolverFnQueryListPortfoliosDataResolverFnAppSyncFunctionA92C81FB": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PortfolioDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListPortfoliosDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9fcbe070ecd3023c5bf5b966fa9584757db9762eef123bad0820bd87591b2174.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cc01911d0269d4080ea57505dc445dfc315ef7ad85d3d9d4ea1357858bff451d.vtl"
+    }
+   },
+   "DependsOn": [
+    "PortfolioDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QueryListPortfoliosDataResolverFn/QueryListPortfoliosDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ListPortfolioResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "FieldName": "listPortfolios",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistPortfoliospreAuth0FunctionQuerylistPortfoliospreAuth0FunctionAppSyncFunction7E0D2EA0",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistPortfoliosauth0FunctionQuerylistPortfoliosauth0FunctionAppSyncFunctionB1573F65",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistPortfoliospostAuth0FunctionQuerylistPortfoliospostAuth0FunctionAppSyncFunction1018B6A5",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListPortfoliosDataResolverFnQueryListPortfoliosDataResolverFnAppSyncFunctionA92C81FB",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listPortfolios\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "PortfolioTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/queryListPortfoliosResolver"
+   }
+  },
+  "MutationcreatePortfolioinit0FunctionMutationcreatePortfolioinit0FunctionAppSyncFunction02596DB6": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreatePortfolioinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a183ddccbd956316c38ef97177b8f088ef0826f62023323f5ae6053d348ccffc.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationcreatePortfolioinit0Function/MutationcreatePortfolioinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreatePortfoliopreAuth0FunctionMutationcreatePortfoliopreAuth0FunctionAppSyncFunction31AD1BC8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreatePortfoliopreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/39fb35c6f8e8573ffe3a63ba867cf543b05af129a104b387a44f03c3d85da0c3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationcreatePortfoliopreAuth0Function/MutationcreatePortfoliopreAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreatePortfolioauth0FunctionMutationcreatePortfolioauth0FunctionAppSyncFunction892B59C1": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreatePortfolioauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a684d9b0cdf16189ee6d127f92e9bf0375048d4deae0d4a713a3699f56f18801.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationcreatePortfolioauth0Function/MutationcreatePortfolioauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreatePortfoliopostAuth0FunctionMutationcreatePortfoliopostAuth0FunctionAppSyncFunction89813A10": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreatePortfoliopostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationcreatePortfoliopostAuth0Function/MutationcreatePortfoliopostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationCreatePortfolioDataResolverFnMutationCreatePortfolioDataResolverFnAppSyncFunction4FC234DD": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PortfolioDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationCreatePortfolioDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/ff268686c2660e5743d28de9fc2bd71ee1c40b2f9617508a96f9676aec7b259d.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "PortfolioDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationCreatePortfolioDataResolverFn/MutationCreatePortfolioDataResolverFn.AppSyncFunction"
+   }
+  },
+  "CreatePortfolioResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "FieldName": "createPortfolio",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationcreatePortfolioinit0FunctionMutationcreatePortfolioinit0FunctionAppSyncFunction02596DB6",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreatePortfoliopreAuth0FunctionMutationcreatePortfoliopreAuth0FunctionAppSyncFunction31AD1BC8",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreatePortfolioauth0FunctionMutationcreatePortfolioauth0FunctionAppSyncFunction892B59C1",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreatePortfoliopostAuth0FunctionMutationcreatePortfoliopostAuth0FunctionAppSyncFunction89813A10",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationCreatePortfolioDataResolverFnMutationCreatePortfolioDataResolverFnAppSyncFunction4FC234DD",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createPortfolio\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "PortfolioTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/mutationCreatePortfolioResolver"
+   }
+  },
+  "MutationupdatePortfolioinit0FunctionMutationupdatePortfolioinit0FunctionAppSyncFunction21981BA6": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdatePortfolioinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06db846fd14e6fc371f22b12b5545ba8e2dbfeda85d8c8d586c71c282166657b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationupdatePortfolioinit0Function/MutationupdatePortfolioinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdatePortfoliopreAuth0FunctionMutationupdatePortfoliopreAuth0FunctionAppSyncFunctionA3CAE805": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdatePortfoliopreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/39fb35c6f8e8573ffe3a63ba867cf543b05af129a104b387a44f03c3d85da0c3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationupdatePortfoliopreAuth0Function/MutationupdatePortfoliopreAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdatePortfolioauth0FunctionMutationupdatePortfolioauth0FunctionAppSyncFunction5FE35B14": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PortfolioDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdatePortfolioauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/51f94c9acb7d8ce139430b74c2d3a0e5182b59237e25e7a7736b8eb31f2bf20b.vtl"
+    }
+   },
+   "DependsOn": [
+    "PortfolioDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationupdatePortfolioauth0Function/MutationupdatePortfolioauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdatePortfoliopostAuth0FunctionMutationupdatePortfoliopostAuth0FunctionAppSyncFunction06F7699F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdatePortfoliopostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationupdatePortfoliopostAuth0Function/MutationupdatePortfoliopostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationUpdatePortfolioDataResolverFnMutationUpdatePortfolioDataResolverFnAppSyncFunctionDCB17CBA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PortfolioDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationUpdatePortfolioDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/474bf0776ec2164a13191d1a0a9e057154931e4918fea5086f49850d02a5371b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "PortfolioDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationUpdatePortfolioDataResolverFn/MutationUpdatePortfolioDataResolverFn.AppSyncFunction"
+   }
+  },
+  "UpdatePortfolioResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "FieldName": "updatePortfolio",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationupdatePortfolioinit0FunctionMutationupdatePortfolioinit0FunctionAppSyncFunction21981BA6",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdatePortfoliopreAuth0FunctionMutationupdatePortfoliopreAuth0FunctionAppSyncFunctionA3CAE805",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdatePortfolioauth0FunctionMutationupdatePortfolioauth0FunctionAppSyncFunction5FE35B14",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdatePortfoliopostAuth0FunctionMutationupdatePortfoliopostAuth0FunctionAppSyncFunction06F7699F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationUpdatePortfolioDataResolverFnMutationUpdatePortfolioDataResolverFnAppSyncFunctionDCB17CBA",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updatePortfolio\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "PortfolioTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/mutationUpdatePortfolioResolver"
+   }
+  },
+  "MutationdeletePortfoliopreAuth0FunctionMutationdeletePortfoliopreAuth0FunctionAppSyncFunction0BA0FE01": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeletePortfoliopreAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a2c0f8a4d76f659d130c8a445801845ae9d33e5cc2c5ecd610edc272d4bd46e3.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationdeletePortfoliopreAuth0Function/MutationdeletePortfoliopreAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeletePortfolioauth0FunctionMutationdeletePortfolioauth0FunctionAppSyncFunction5D242C3A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PortfolioDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeletePortfolioauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a2e520432c6d8a9562684f27a08dd77f9ffa9c89f6607dca7128622ce4c97af4.vtl"
+    }
+   },
+   "DependsOn": [
+    "PortfolioDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationdeletePortfolioauth0Function/MutationdeletePortfolioauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeletePortfoliopostAuth0FunctionMutationdeletePortfoliopostAuth0FunctionAppSyncFunctionE7F9C5FA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeletePortfoliopostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationdeletePortfoliopostAuth0Function/MutationdeletePortfoliopostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationDeletePortfolioDataResolverFnMutationDeletePortfolioDataResolverFnAppSyncFunction95AB3ADD": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "PortfolioDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationDeletePortfolioDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f7907d1209a2c9953a0c053df402c634e359546d70c7cc5c2e8e21ea734880f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "PortfolioDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationDeletePortfolioDataResolverFn/MutationDeletePortfolioDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DeletePortfolioResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "FieldName": "deletePortfolio",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeletePortfoliopreAuth0FunctionMutationdeletePortfoliopreAuth0FunctionAppSyncFunction0BA0FE01",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeletePortfolioauth0FunctionMutationdeletePortfolioauth0FunctionAppSyncFunction5D242C3A",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeletePortfoliopostAuth0FunctionMutationdeletePortfoliopostAuth0FunctionAppSyncFunctionE7F9C5FA",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationDeletePortfolioDataResolverFnMutationDeletePortfolioDataResolverFnAppSyncFunction95AB3ADD",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deletePortfolio\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "PortfolioTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/mutationDeletePortfolioResolver"
+   }
+  },
+  "SubscriptiononCreatePortfolioauth0FunctionSubscriptiononCreatePortfolioauth0FunctionAppSyncFunction43012634": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreatePortfolioauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/15280eef569babaeeee5f837ecf7400c728eec6ca2f4c0437bcbddfcb67fe27b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononCreatePortfolioauth0Function/SubscriptiononCreatePortfolioauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreatePortfoliopostAuth0FunctionSubscriptiononCreatePortfoliopostAuth0FunctionAppSyncFunctionB69A8829": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreatePortfoliopostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononCreatePortfoliopostAuth0Function/SubscriptiononCreatePortfoliopostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnCreatePortfolioDataResolverFnSubscriptionOnCreatePortfolioDataResolverFnAppSyncFunctionB646BDFC": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnCreatePortfolioDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptionOnCreatePortfolioDataResolverFn/SubscriptionOnCreatePortfolioDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreatePortfolioResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "FieldName": "onCreatePortfolio",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreatePortfolioauth0FunctionSubscriptiononCreatePortfolioauth0FunctionAppSyncFunction43012634",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreatePortfoliopostAuth0FunctionSubscriptiononCreatePortfoliopostAuth0FunctionAppSyncFunctionB69A8829",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnCreatePortfolioDataResolverFnSubscriptionOnCreatePortfolioDataResolverFnAppSyncFunctionB646BDFC",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreatePortfolio\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/subscriptionOnCreatePortfolioResolver"
+   }
+  },
+  "SubscriptiononUpdatePortfolioauth0FunctionSubscriptiononUpdatePortfolioauth0FunctionAppSyncFunctionC3F51663": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdatePortfolioauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/15280eef569babaeeee5f837ecf7400c728eec6ca2f4c0437bcbddfcb67fe27b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononUpdatePortfolioauth0Function/SubscriptiononUpdatePortfolioauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdatePortfoliopostAuth0FunctionSubscriptiononUpdatePortfoliopostAuth0FunctionAppSyncFunction4BC76FE4": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdatePortfoliopostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononUpdatePortfoliopostAuth0Function/SubscriptiononUpdatePortfoliopostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnUpdatePortfolioDataResolverFnSubscriptionOnUpdatePortfolioDataResolverFnAppSyncFunction72A7724B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnUpdatePortfolioDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptionOnUpdatePortfolioDataResolverFn/SubscriptionOnUpdatePortfolioDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdatePortfolioResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "FieldName": "onUpdatePortfolio",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdatePortfolioauth0FunctionSubscriptiononUpdatePortfolioauth0FunctionAppSyncFunctionC3F51663",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdatePortfoliopostAuth0FunctionSubscriptiononUpdatePortfoliopostAuth0FunctionAppSyncFunction4BC76FE4",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnUpdatePortfolioDataResolverFnSubscriptionOnUpdatePortfolioDataResolverFnAppSyncFunction72A7724B",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdatePortfolio\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/subscriptionOnUpdatePortfolioResolver"
+   }
+  },
+  "SubscriptiononDeletePortfolioauth0FunctionSubscriptiononDeletePortfolioauth0FunctionAppSyncFunctionCEF3A805": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeletePortfolioauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/15280eef569babaeeee5f837ecf7400c728eec6ca2f4c0437bcbddfcb67fe27b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononDeletePortfolioauth0Function/SubscriptiononDeletePortfolioauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeletePortfoliopostAuth0FunctionSubscriptiononDeletePortfoliopostAuth0FunctionAppSyncFunctionCD5F99D4": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeletePortfoliopostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononDeletePortfoliopostAuth0Function/SubscriptiononDeletePortfoliopostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnDeletePortfolioDataResolverFnSubscriptionOnDeletePortfolioDataResolverFnAppSyncFunction02F7747E": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnDeletePortfolioDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptionOnDeletePortfolioDataResolverFn/SubscriptionOnDeletePortfolioDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeletePortfolioResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "FieldName": "onDeletePortfolio",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeletePortfolioauth0FunctionSubscriptiononDeletePortfolioauth0FunctionAppSyncFunctionCEF3A805",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeletePortfoliopostAuth0FunctionSubscriptiononDeletePortfoliopostAuth0FunctionAppSyncFunctionCD5F99D4",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnDeletePortfolioDataResolverFnSubscriptionOnDeletePortfolioDataResolverFnAppSyncFunction02F7747E",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeletePortfolio\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/subscriptionOnDeletePortfolioResolver"
+   }
+  },
+  "PortfolioOwnerDataResolverFnPortfolioOwnerDataResolverFnAppSyncFunction35CFB56C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "PortfolioOwnerDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/041534e5fd916595f752318f161512d7c7f83b9f2cf32d0f0be381c12253ff68.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/064303962e481067b44300212516363b99aaee539b6bafaf756fdd83ff0b60f0.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioOwnerDataResolverFn/PortfolioOwnerDataResolverFn.AppSyncFunction"
+   }
+  },
+  "PortfolioownerResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+    },
+    "FieldName": "owner",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "PortfolioOwnerDataResolverFnPortfolioOwnerDataResolverFnAppSyncFunction35CFB56C",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Portfolio\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"owner\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Portfolio"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/portfolioOwnerResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WQQU/DMAyFfwv31GyFC0fWiiOgjvvkJm6VtU2q2Bmaqv53kg4NcXr+5Cf72SWU+xfYPeA3F9oMxWhbWN6JhcxRUA+q6twnBpxIKGSovDNWrHeqIfYxaFJVZPHTH3buXqexp8VcHU7etPCF7UgHZFIWJ1gaP97cSVeF88xXp2GpN3vd1ih4vI/8T2/R6RwipelsHwNuiX43jxcKq+KnEzKTMLxmSQyHqAeSHGDN3o8ocxS1tdOxvXX9qpw3BGd+vJTPsN+lz5zZ2iJEJ3YiaG76A4/MzgI2AQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "GetAttPortfolioTableStreamArn": {
+   "Description": "Your DynamoDB table StreamArn.",
+   "Value": {
+    "Fn::GetAtt": [
+     "PortfolioTable",
+     "TableStreamArn"
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "GetAtt:PortfolioTable:StreamArn"
+      ]
+     ]
+    }
+   }
+  },
+  "GetAttPortfolioTableName": {
+   "Description": "Your DynamoDB table name.",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "Portfolio-",
+      {
+       "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+      },
+      "-NONE"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+       },
+       "GetAtt:PortfolioTable:Name"
+      ]
+     ]
+    }
+   }
+  }
+ }
+}

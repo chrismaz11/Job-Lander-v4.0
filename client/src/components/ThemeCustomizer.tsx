@@ -79,11 +79,11 @@ export default function ThemeCustomizer({
             {activeThemes.map(theme => (
               <SelectItem key={theme.id} value={theme.id}>
                 <div className="flex items-center gap-2">
-                  {theme.preview && (
+                  {(theme as any).preview?.primaryColor && (theme as any).preview?.backgroundColor && (
                     <div 
                       className="w-4 h-4 rounded-full border"
                       style={{ 
-                        background: `linear-gradient(135deg, ${theme.preview.primaryColor}, ${theme.preview.backgroundColor})`
+                        background: `linear-gradient(135deg, ${(theme as any).preview.primaryColor}, ${(theme as any).preview.backgroundColor})`
                       }}
                     />
                   )}
@@ -110,7 +110,7 @@ export default function ThemeCustomizer({
               <SelectItem 
                 key={font.id} 
                 value={font.id}
-                style={{ fontFamily: font.family }}
+                style={{ fontFamily: (font as any).family || 'inherit' }}
               >
                 {font.name}
               </SelectItem>

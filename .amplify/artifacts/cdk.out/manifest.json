@@ -1,0 +1,3627 @@
+{
+  "version": "48.0.0",
+  "artifacts": {
+    "amplify-joblanderv4-christopher-sandbox-c7b0b32068.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "amplify-joblanderv4-christopher-sandbox-c7b0b32068.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "amplify-joblanderv4-christopher-sandbox-c7b0b32068": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "amplify-joblanderv4-christopher-sandbox-c7b0b32068.template.json",
+        "terminationProtection": false,
+        "tags": {
+          "amplify:deployment-type": "sandbox",
+          "created-by": "amplify"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/69ce3aff19f273098128ce7f0af07ad7049a4f3fc7dfe6d901c8da67f275cfb8.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "amplify-joblanderv4-christopher-sandbox-c7b0b32068.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "amplify-joblanderv4-christopher-sandbox-c7b0b32068.assets"
+      ],
+      "metadata": {
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "amplify:deployment-type",
+                "Value": "sandbox"
+              },
+              {
+                "Key": "created-by",
+                "Value": "amplify"
+              }
+            ]
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/deploymentType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deploymentType"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/region": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "region"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyAuth/UserPool/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPool4BA7F805"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyAuth/UserPoolAppClient/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPoolAppClient2626C6F8"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyAuth/IdentityPool": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthIdentityPool3FDE84CC"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyAuth/authenticatedUserRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthauthenticatedUserRoleD8DA3689"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyAuth/unauthenticatedUserRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthunauthenticatedUserRole2B524D9E"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyAuth/IdentityPoolRoleAttachment": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthIdentityPoolRoleAttachment045F17C8"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthUserPoolE1438EE7Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthUserPoolE1438EE7Ref"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthUserPoolAppClient5F026DB0Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthUserPoolAppClient5F026DB0Ref"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth/amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/auth.NestedStack/auth.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "auth179371D7"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/userPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userPoolId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/webClientId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "webClientId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/identityPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "identityPoolId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/authRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "authRegion"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/allowUnauthenticatedIdentities": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "allowUnauthenticatedIdentities"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/signupAttributes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "signupAttributes"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/usernameAttributes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "usernameAttributes"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/verificationMechanisms": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "verificationMechanisms"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/passwordPolicyMinLength": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "passwordPolicyMinLength"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/passwordPolicyRequirements": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "passwordPolicyRequirements"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/mfaConfiguration": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "mfaConfiguration"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/mfaTypes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "mfaTypes"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/socialProviders": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "socialProviders"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/oauthCognitoDomain": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthCognitoDomain"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/oauthScope": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthScope"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/oauthRedirectSignIn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthRedirectSignIn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/oauthRedirectSignOut": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthRedirectSignOut"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/oauthResponseType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthResponseType"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/oauthClientId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthClientId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/groups": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "groups"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/GraphQLAPI/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPI42A6FA33"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/GraphQLAPI/TransformerSchema": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPITransformerSchemaFF50A789"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/GraphQLAPI/DefaultApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPIDefaultApiKey1C8ED374"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/GraphQLAPI/NONE_DS": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "NONE_DS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/GraphQLAPI/NONE_DS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPINONEDS684BF699"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "NONE_DS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/AmplifyManagedTableIsCompleteRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableIsCompleteRoleF825222C"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/AmplifyManagedTableOnEventRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableOnEventRoleB4E71DEA"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/AmplifyManagedTableOnEventRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableOnEventRoleDefaultPolicyF6DABCB6"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/TableManagerCustomProvider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableManagerCustomProviderframeworkonEvent1DFC2ECC"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/TableManagerCustomProvider/framework-isComplete/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableManagerCustomProviderframeworkisComplete2E51021B"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachineRole470BE899"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachineRoleDefaultPolicy89F3836A"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachine060600BC"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager/amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventEFA823BDArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventEFA823BDArn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource86290833"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/ResumeTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Resume"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/ResumeTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResumeTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Resume"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/CustomTableResumeTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Resume"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/GetAttResumeTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttResumeTableStreamArn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/GetAttResumeTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttResumeTableName"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/ResumeIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ResumeIAMRole"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/ResumeIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResumeIAMRole5CE9885A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ResumeIAMRole"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/ResumeDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ResumeTable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/ResumeDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResumeDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ResumeTable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/QuerygetResumepreAuth0Function/QuerygetResumepreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetResumepreAuth0FunctionQuerygetResumepreAuth0FunctionAppSyncFunctionD2482443"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetResumepreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/QuerygetResumeauth0Function/QuerygetResumeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetResumeauth0FunctionQuerygetResumeauth0FunctionAppSyncFunctionC741C4CF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetResumeauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/QuerygetResumepostAuth0Function/QuerygetResumepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetResumepostAuth0FunctionQuerygetResumepostAuth0FunctionAppSyncFunction1890993D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetResumepostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/QueryGetResumeDataResolverFn/QueryGetResumeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetResumeDataResolverFnQueryGetResumeDataResolverFnAppSyncFunctionD4792A66"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetResumeDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/queryGetResumeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetResumeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getResume"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/QuerylistResumespreAuth0Function/QuerylistResumespreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistResumespreAuth0FunctionQuerylistResumespreAuth0FunctionAppSyncFunctionF068DDD2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistResumespreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/QuerylistResumesauth0Function/QuerylistResumesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistResumesauth0FunctionQuerylistResumesauth0FunctionAppSyncFunction3D430F76"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistResumesauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/QuerylistResumespostAuth0Function/QuerylistResumespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistResumespostAuth0FunctionQuerylistResumespostAuth0FunctionAppSyncFunction17330EFD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistResumespostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/QueryListResumesDataResolverFn/QueryListResumesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListResumesDataResolverFnQueryListResumesDataResolverFnAppSyncFunctionE7E3CB7E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListResumesDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/queryListResumesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListResumeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listResumes"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationcreateResumeinit0Function/MutationcreateResumeinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateResumeinit0FunctionMutationcreateResumeinit0FunctionAppSyncFunction3D11484B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateResumeinit0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationcreateResumepreAuth0Function/MutationcreateResumepreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateResumepreAuth0FunctionMutationcreateResumepreAuth0FunctionAppSyncFunctionDB6729D0"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateResumepreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationcreateResumeauth0Function/MutationcreateResumeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateResumeauth0FunctionMutationcreateResumeauth0FunctionAppSyncFunction6E1B39FA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateResumeauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationcreateResumepostAuth0Function/MutationcreateResumepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateResumepostAuth0FunctionMutationcreateResumepostAuth0FunctionAppSyncFunction6272AB36"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateResumepostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationCreateResumeDataResolverFn/MutationCreateResumeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateResumeDataResolverFnMutationCreateResumeDataResolverFnAppSyncFunctionC1606493"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateResumeDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/mutationCreateResumeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateResumeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createResume"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationupdateResumeinit0Function/MutationupdateResumeinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateResumeinit0FunctionMutationupdateResumeinit0FunctionAppSyncFunctionAE327CCA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateResumeinit0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationupdateResumepreAuth0Function/MutationupdateResumepreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateResumepreAuth0FunctionMutationupdateResumepreAuth0FunctionAppSyncFunction2593F6CA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateResumepreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationupdateResumeauth0Function/MutationupdateResumeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateResumeauth0FunctionMutationupdateResumeauth0FunctionAppSyncFunction6F5A4084"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateResumeauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationupdateResumepostAuth0Function/MutationupdateResumepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateResumepostAuth0FunctionMutationupdateResumepostAuth0FunctionAppSyncFunctionA672C075"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateResumepostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationUpdateResumeDataResolverFn/MutationUpdateResumeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateResumeDataResolverFnMutationUpdateResumeDataResolverFnAppSyncFunction12A3BBD5"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateResumeDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/mutationUpdateResumeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateResumeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateResume"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationdeleteResumepreAuth0Function/MutationdeleteResumepreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteResumepreAuth0FunctionMutationdeleteResumepreAuth0FunctionAppSyncFunctionA49B76E6"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteResumepreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationdeleteResumeauth0Function/MutationdeleteResumeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteResumeauth0FunctionMutationdeleteResumeauth0FunctionAppSyncFunction448ECF1D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteResumeauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationdeleteResumepostAuth0Function/MutationdeleteResumepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteResumepostAuth0FunctionMutationdeleteResumepostAuth0FunctionAppSyncFunction4017A857"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteResumepostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/MutationDeleteResumeDataResolverFn/MutationDeleteResumeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteResumeDataResolverFnMutationDeleteResumeDataResolverFnAppSyncFunction5BA91E54"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteResumeDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/mutationDeleteResumeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteResumeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteResume"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/SubscriptiononCreateResumeauth0Function/SubscriptiononCreateResumeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateResumeauth0FunctionSubscriptiononCreateResumeauth0FunctionAppSyncFunction1F124268"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateResumeauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/SubscriptiononCreateResumepostAuth0Function/SubscriptiononCreateResumepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateResumepostAuth0FunctionSubscriptiononCreateResumepostAuth0FunctionAppSyncFunction57263B8D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateResumepostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/SubscriptionOnCreateResumeDataResolverFn/SubscriptionOnCreateResumeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateResumeDataResolverFnSubscriptionOnCreateResumeDataResolverFnAppSyncFunctionB4C97BB0"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateResumeDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/subscriptionOnCreateResumeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateResumeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateResume"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/SubscriptiononUpdateResumeauth0Function/SubscriptiononUpdateResumeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateResumeauth0FunctionSubscriptiononUpdateResumeauth0FunctionAppSyncFunction2CFF0D2B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateResumeauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/SubscriptiononUpdateResumepostAuth0Function/SubscriptiononUpdateResumepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateResumepostAuth0FunctionSubscriptiononUpdateResumepostAuth0FunctionAppSyncFunction3AD01365"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateResumepostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/SubscriptionOnUpdateResumeDataResolverFn/SubscriptionOnUpdateResumeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateResumeDataResolverFnSubscriptionOnUpdateResumeDataResolverFnAppSyncFunctionDCC695C7"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateResumeDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/subscriptionOnUpdateResumeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateResumeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateResume"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/SubscriptiononDeleteResumeauth0Function/SubscriptiononDeleteResumeauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteResumeauth0FunctionSubscriptiononDeleteResumeauth0FunctionAppSyncFunction801C0942"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteResumeauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/SubscriptiononDeleteResumepostAuth0Function/SubscriptiononDeleteResumepostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteResumepostAuth0FunctionSubscriptiononDeleteResumepostAuth0FunctionAppSyncFunction166F4928"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteResumepostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/SubscriptionOnDeleteResumeDataResolverFn/SubscriptionOnDeleteResumeDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteResumeDataResolverFnSubscriptionOnDeleteResumeDataResolverFnAppSyncFunctionEAC0DB80"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteResumeDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/subscriptionOnDeleteResumeResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteResumeResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteResume"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/ResumeOwnerDataResolverFn/ResumeOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResumeOwnerDataResolverFnResumeOwnerDataResolverFnAppSyncFunction5603FB01"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ResumeOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/resumeOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ResumeownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Resume.owner"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC83B5771Outputs.amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventEFA823BDArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC83B5771Outputsamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTable60CDC9E4"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Resume.NestedStack/Resume.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataResumeNestedStackResumeNestedStackResource7789F223"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/JobApplicationTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "JobApplication"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/JobApplicationTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "JobApplicationTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "JobApplication"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/CustomTableJobApplicationTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "JobApplication"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/GetAttJobApplicationTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttJobApplicationTableStreamArn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/GetAttJobApplicationTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttJobApplicationTableName"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/JobApplicationIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "JobApplicationIAMRole"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/JobApplicationIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "JobApplicationIAMRoleEDE58850"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "JobApplicationIAMRole"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/JobApplicationDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "JobApplicationTable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/JobApplicationDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "JobApplicationDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "JobApplicationTable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/QuerygetJobApplicationpreAuth0Function/QuerygetJobApplicationpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetJobApplicationpreAuth0FunctionQuerygetJobApplicationpreAuth0FunctionAppSyncFunction68FFE932"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetJobApplicationpreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/QuerygetJobApplicationauth0Function/QuerygetJobApplicationauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetJobApplicationauth0FunctionQuerygetJobApplicationauth0FunctionAppSyncFunction4FBF54CA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetJobApplicationauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/QuerygetJobApplicationpostAuth0Function/QuerygetJobApplicationpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetJobApplicationpostAuth0FunctionQuerygetJobApplicationpostAuth0FunctionAppSyncFunction880E7715"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetJobApplicationpostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/QueryGetJobApplicationDataResolverFn/QueryGetJobApplicationDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetJobApplicationDataResolverFnQueryGetJobApplicationDataResolverFnAppSyncFunctionF9E47A8A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetJobApplicationDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/queryGetJobApplicationResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetJobApplicationResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getJobApplication"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/QuerylistJobApplicationspreAuth0Function/QuerylistJobApplicationspreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistJobApplicationspreAuth0FunctionQuerylistJobApplicationspreAuth0FunctionAppSyncFunctionB2987C26"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistJobApplicationspreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/QuerylistJobApplicationsauth0Function/QuerylistJobApplicationsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistJobApplicationsauth0FunctionQuerylistJobApplicationsauth0FunctionAppSyncFunction0CCCA52D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistJobApplicationsauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/QuerylistJobApplicationspostAuth0Function/QuerylistJobApplicationspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistJobApplicationspostAuth0FunctionQuerylistJobApplicationspostAuth0FunctionAppSyncFunction876515C3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistJobApplicationspostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/QueryListJobApplicationsDataResolverFn/QueryListJobApplicationsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListJobApplicationsDataResolverFnQueryListJobApplicationsDataResolverFnAppSyncFunctionD9D561BA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListJobApplicationsDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/queryListJobApplicationsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListJobApplicationResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listJobApplications"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationcreateJobApplicationinit0Function/MutationcreateJobApplicationinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateJobApplicationinit0FunctionMutationcreateJobApplicationinit0FunctionAppSyncFunction048EB386"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateJobApplicationinit0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationcreateJobApplicationpreAuth0Function/MutationcreateJobApplicationpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateJobApplicationpreAuth0FunctionMutationcreateJobApplicationpreAuth0FunctionAppSyncFunction5EB06519"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateJobApplicationpreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationcreateJobApplicationauth0Function/MutationcreateJobApplicationauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateJobApplicationauth0FunctionMutationcreateJobApplicationauth0FunctionAppSyncFunctionE000357D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateJobApplicationauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationcreateJobApplicationpostAuth0Function/MutationcreateJobApplicationpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateJobApplicationpostAuth0FunctionMutationcreateJobApplicationpostAuth0FunctionAppSyncFunctionED2BEA15"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateJobApplicationpostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationCreateJobApplicationDataResolverFn/MutationCreateJobApplicationDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateJobApplicationDataResolverFnMutationCreateJobApplicationDataResolverFnAppSyncFunctionCE575253"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateJobApplicationDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/mutationCreateJobApplicationResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateJobApplicationResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createJobApplication"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationupdateJobApplicationinit0Function/MutationupdateJobApplicationinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateJobApplicationinit0FunctionMutationupdateJobApplicationinit0FunctionAppSyncFunction97656839"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateJobApplicationinit0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationupdateJobApplicationpreAuth0Function/MutationupdateJobApplicationpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateJobApplicationpreAuth0FunctionMutationupdateJobApplicationpreAuth0FunctionAppSyncFunctionDF371ECE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateJobApplicationpreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationupdateJobApplicationauth0Function/MutationupdateJobApplicationauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateJobApplicationauth0FunctionMutationupdateJobApplicationauth0FunctionAppSyncFunction0D9B94DF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateJobApplicationauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationupdateJobApplicationpostAuth0Function/MutationupdateJobApplicationpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateJobApplicationpostAuth0FunctionMutationupdateJobApplicationpostAuth0FunctionAppSyncFunction51EFD4CB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateJobApplicationpostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationUpdateJobApplicationDataResolverFn/MutationUpdateJobApplicationDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateJobApplicationDataResolverFnMutationUpdateJobApplicationDataResolverFnAppSyncFunction98F1546B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateJobApplicationDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/mutationUpdateJobApplicationResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateJobApplicationResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateJobApplication"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationdeleteJobApplicationpreAuth0Function/MutationdeleteJobApplicationpreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteJobApplicationpreAuth0FunctionMutationdeleteJobApplicationpreAuth0FunctionAppSyncFunction9D769EB4"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteJobApplicationpreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationdeleteJobApplicationauth0Function/MutationdeleteJobApplicationauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteJobApplicationauth0FunctionMutationdeleteJobApplicationauth0FunctionAppSyncFunctionB355039E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteJobApplicationauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationdeleteJobApplicationpostAuth0Function/MutationdeleteJobApplicationpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteJobApplicationpostAuth0FunctionMutationdeleteJobApplicationpostAuth0FunctionAppSyncFunction38F7898D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteJobApplicationpostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/MutationDeleteJobApplicationDataResolverFn/MutationDeleteJobApplicationDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteJobApplicationDataResolverFnMutationDeleteJobApplicationDataResolverFnAppSyncFunction56E58254"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteJobApplicationDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/mutationDeleteJobApplicationResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteJobApplicationResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteJobApplication"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/SubscriptiononCreateJobApplicationauth0Function/SubscriptiononCreateJobApplicationauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateJobApplicationauth0FunctionSubscriptiononCreateJobApplicationauth0FunctionAppSyncFunctionE3962DB8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateJobApplicationauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/SubscriptiononCreateJobApplicationpostAuth0Function/SubscriptiononCreateJobApplicationpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateJobApplicationpostAuth0FunctionSubscriptiononCreateJobApplicationpostAuth0FunctionAppSyncFunction170E11EB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateJobApplicationpostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/SubscriptionOnCreateJobApplicationDataResolverFn/SubscriptionOnCreateJobApplicationDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateJobApplicationDataResolverFnSubscriptionOnCreateJobApplicationDataResolverFnAppSyncFunction0BD7533F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateJobApplicationDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/subscriptionOnCreateJobApplicationResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateJobApplicationResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateJobApplication"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/SubscriptiononUpdateJobApplicationauth0Function/SubscriptiononUpdateJobApplicationauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateJobApplicationauth0FunctionSubscriptiononUpdateJobApplicationauth0FunctionAppSyncFunction3AA32C08"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateJobApplicationauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/SubscriptiononUpdateJobApplicationpostAuth0Function/SubscriptiononUpdateJobApplicationpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateJobApplicationpostAuth0FunctionSubscriptiononUpdateJobApplicationpostAuth0FunctionAppSyncFunction8334D5F4"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateJobApplicationpostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/SubscriptionOnUpdateJobApplicationDataResolverFn/SubscriptionOnUpdateJobApplicationDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateJobApplicationDataResolverFnSubscriptionOnUpdateJobApplicationDataResolverFnAppSyncFunctionE82A6D02"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateJobApplicationDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/subscriptionOnUpdateJobApplicationResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateJobApplicationResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateJobApplication"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/SubscriptiononDeleteJobApplicationauth0Function/SubscriptiononDeleteJobApplicationauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteJobApplicationauth0FunctionSubscriptiononDeleteJobApplicationauth0FunctionAppSyncFunctionD06B27BF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteJobApplicationauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/SubscriptiononDeleteJobApplicationpostAuth0Function/SubscriptiononDeleteJobApplicationpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteJobApplicationpostAuth0FunctionSubscriptiononDeleteJobApplicationpostAuth0FunctionAppSyncFunctionEBBD4956"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteJobApplicationpostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/SubscriptionOnDeleteJobApplicationDataResolverFn/SubscriptionOnDeleteJobApplicationDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteJobApplicationDataResolverFnSubscriptionOnDeleteJobApplicationDataResolverFnAppSyncFunctionCE2D63F5"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteJobApplicationDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/subscriptionOnDeleteJobApplicationResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteJobApplicationResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteJobApplication"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/JobApplicationOwnerDataResolverFn/JobApplicationOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "JobApplicationOwnerDataResolverFnJobApplicationOwnerDataResolverFnAppSyncFunction92C24AB3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "JobApplicationOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/jobApplicationOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "JobApplicationownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "JobApplication.owner"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC83B5771Outputs.amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventEFA823BDArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC83B5771Outputsamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTable60CDC9E4"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/JobApplication.NestedStack/JobApplication.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataJobApplicationNestedStackJobApplicationNestedStackResourceC7583158"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Portfolio"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PortfolioTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Portfolio"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/CustomTablePortfolioTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Portfolio"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/GetAttPortfolioTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttPortfolioTableStreamArn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/GetAttPortfolioTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttPortfolioTableName"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "PortfolioIAMRole"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PortfolioIAMRole2C9B04B7"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "PortfolioIAMRole"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "PortfolioTable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PortfolioDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "PortfolioTable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerygetPortfoliopreAuth0Function/QuerygetPortfoliopreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetPortfoliopreAuth0FunctionQuerygetPortfoliopreAuth0FunctionAppSyncFunction91FDCB53"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetPortfoliopreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerygetPortfolioauth0Function/QuerygetPortfolioauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetPortfolioauth0FunctionQuerygetPortfolioauth0FunctionAppSyncFunction3A4998DA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetPortfolioauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerygetPortfoliopostAuth0Function/QuerygetPortfoliopostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetPortfoliopostAuth0FunctionQuerygetPortfoliopostAuth0FunctionAppSyncFunctionD1CDDB0B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetPortfoliopostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QueryGetPortfolioDataResolverFn/QueryGetPortfolioDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetPortfolioDataResolverFnQueryGetPortfolioDataResolverFnAppSyncFunction693B75DD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetPortfolioDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/queryGetPortfolioResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetPortfolioResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getPortfolio"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerylistPortfoliospreAuth0Function/QuerylistPortfoliospreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistPortfoliospreAuth0FunctionQuerylistPortfoliospreAuth0FunctionAppSyncFunction7E0D2EA0"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistPortfoliospreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerylistPortfoliosauth0Function/QuerylistPortfoliosauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistPortfoliosauth0FunctionQuerylistPortfoliosauth0FunctionAppSyncFunctionB1573F65"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistPortfoliosauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QuerylistPortfoliospostAuth0Function/QuerylistPortfoliospostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistPortfoliospostAuth0FunctionQuerylistPortfoliospostAuth0FunctionAppSyncFunction1018B6A5"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistPortfoliospostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/QueryListPortfoliosDataResolverFn/QueryListPortfoliosDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListPortfoliosDataResolverFnQueryListPortfoliosDataResolverFnAppSyncFunctionA92C81FB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListPortfoliosDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/queryListPortfoliosResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListPortfolioResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listPortfolios"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationcreatePortfolioinit0Function/MutationcreatePortfolioinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreatePortfolioinit0FunctionMutationcreatePortfolioinit0FunctionAppSyncFunction02596DB6"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreatePortfolioinit0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationcreatePortfoliopreAuth0Function/MutationcreatePortfoliopreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreatePortfoliopreAuth0FunctionMutationcreatePortfoliopreAuth0FunctionAppSyncFunction31AD1BC8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreatePortfoliopreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationcreatePortfolioauth0Function/MutationcreatePortfolioauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreatePortfolioauth0FunctionMutationcreatePortfolioauth0FunctionAppSyncFunction892B59C1"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreatePortfolioauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationcreatePortfoliopostAuth0Function/MutationcreatePortfoliopostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreatePortfoliopostAuth0FunctionMutationcreatePortfoliopostAuth0FunctionAppSyncFunction89813A10"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreatePortfoliopostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationCreatePortfolioDataResolverFn/MutationCreatePortfolioDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreatePortfolioDataResolverFnMutationCreatePortfolioDataResolverFnAppSyncFunction4FC234DD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreatePortfolioDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/mutationCreatePortfolioResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreatePortfolioResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createPortfolio"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationupdatePortfolioinit0Function/MutationupdatePortfolioinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdatePortfolioinit0FunctionMutationupdatePortfolioinit0FunctionAppSyncFunction21981BA6"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdatePortfolioinit0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationupdatePortfoliopreAuth0Function/MutationupdatePortfoliopreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdatePortfoliopreAuth0FunctionMutationupdatePortfoliopreAuth0FunctionAppSyncFunctionA3CAE805"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdatePortfoliopreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationupdatePortfolioauth0Function/MutationupdatePortfolioauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdatePortfolioauth0FunctionMutationupdatePortfolioauth0FunctionAppSyncFunction5FE35B14"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdatePortfolioauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationupdatePortfoliopostAuth0Function/MutationupdatePortfoliopostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdatePortfoliopostAuth0FunctionMutationupdatePortfoliopostAuth0FunctionAppSyncFunction06F7699F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdatePortfoliopostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationUpdatePortfolioDataResolverFn/MutationUpdatePortfolioDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdatePortfolioDataResolverFnMutationUpdatePortfolioDataResolverFnAppSyncFunctionDCB17CBA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdatePortfolioDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/mutationUpdatePortfolioResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdatePortfolioResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updatePortfolio"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationdeletePortfoliopreAuth0Function/MutationdeletePortfoliopreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeletePortfoliopreAuth0FunctionMutationdeletePortfoliopreAuth0FunctionAppSyncFunction0BA0FE01"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeletePortfoliopreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationdeletePortfolioauth0Function/MutationdeletePortfolioauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeletePortfolioauth0FunctionMutationdeletePortfolioauth0FunctionAppSyncFunction5D242C3A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeletePortfolioauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationdeletePortfoliopostAuth0Function/MutationdeletePortfoliopostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeletePortfoliopostAuth0FunctionMutationdeletePortfoliopostAuth0FunctionAppSyncFunctionE7F9C5FA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeletePortfoliopostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/MutationDeletePortfolioDataResolverFn/MutationDeletePortfolioDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeletePortfolioDataResolverFnMutationDeletePortfolioDataResolverFnAppSyncFunction95AB3ADD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeletePortfolioDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/mutationDeletePortfolioResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeletePortfolioResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deletePortfolio"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononCreatePortfolioauth0Function/SubscriptiononCreatePortfolioauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreatePortfolioauth0FunctionSubscriptiononCreatePortfolioauth0FunctionAppSyncFunction43012634"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreatePortfolioauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononCreatePortfoliopostAuth0Function/SubscriptiononCreatePortfoliopostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreatePortfoliopostAuth0FunctionSubscriptiononCreatePortfoliopostAuth0FunctionAppSyncFunctionB69A8829"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreatePortfoliopostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptionOnCreatePortfolioDataResolverFn/SubscriptionOnCreatePortfolioDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreatePortfolioDataResolverFnSubscriptionOnCreatePortfolioDataResolverFnAppSyncFunctionB646BDFC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreatePortfolioDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/subscriptionOnCreatePortfolioResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreatePortfolioResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreatePortfolio"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononUpdatePortfolioauth0Function/SubscriptiononUpdatePortfolioauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdatePortfolioauth0FunctionSubscriptiononUpdatePortfolioauth0FunctionAppSyncFunctionC3F51663"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdatePortfolioauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononUpdatePortfoliopostAuth0Function/SubscriptiononUpdatePortfoliopostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdatePortfoliopostAuth0FunctionSubscriptiononUpdatePortfoliopostAuth0FunctionAppSyncFunction4BC76FE4"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdatePortfoliopostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptionOnUpdatePortfolioDataResolverFn/SubscriptionOnUpdatePortfolioDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdatePortfolioDataResolverFnSubscriptionOnUpdatePortfolioDataResolverFnAppSyncFunction72A7724B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdatePortfolioDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/subscriptionOnUpdatePortfolioResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdatePortfolioResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdatePortfolio"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononDeletePortfolioauth0Function/SubscriptiononDeletePortfolioauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeletePortfolioauth0FunctionSubscriptiononDeletePortfolioauth0FunctionAppSyncFunctionCEF3A805"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeletePortfolioauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptiononDeletePortfoliopostAuth0Function/SubscriptiononDeletePortfoliopostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeletePortfoliopostAuth0FunctionSubscriptiononDeletePortfoliopostAuth0FunctionAppSyncFunctionCD5F99D4"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeletePortfoliopostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/SubscriptionOnDeletePortfolioDataResolverFn/SubscriptionOnDeletePortfolioDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeletePortfolioDataResolverFnSubscriptionOnDeletePortfolioDataResolverFnAppSyncFunction02F7747E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeletePortfolioDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/subscriptionOnDeletePortfolioResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeletePortfolioResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeletePortfolio"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/PortfolioOwnerDataResolverFn/PortfolioOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PortfolioOwnerDataResolverFnPortfolioOwnerDataResolverFnAppSyncFunction35CFB56C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "PortfolioOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/portfolioOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PortfolioownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Portfolio.owner"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC83B5771Outputs.amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventEFA823BDArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC83B5771Outputsamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTable60CDC9E4"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/Portfolio.NestedStack/Portfolio.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataPortfolioNestedStackPortfolioNestedStackResourceFC59232A"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/UserSettingsTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/UserSettingsTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserSettingsTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/CustomTableUserSettingsTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/GetAttUserSettingsTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttUserSettingsTableStreamArn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/GetAttUserSettingsTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttUserSettingsTableName"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/UserSettingsIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserSettingsIAMRole"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/UserSettingsIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserSettingsIAMRole7769F4DC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserSettingsIAMRole"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/UserSettingsDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserSettingsTable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/UserSettingsDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserSettingsDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserSettingsTable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/QuerygetUserSettingspreAuth0Function/QuerygetUserSettingspreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetUserSettingspreAuth0FunctionQuerygetUserSettingspreAuth0FunctionAppSyncFunctionE5E7EDAC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetUserSettingspreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/QuerygetUserSettingsauth0Function/QuerygetUserSettingsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetUserSettingsauth0FunctionQuerygetUserSettingsauth0FunctionAppSyncFunctionCB124A5E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetUserSettingsauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/QuerygetUserSettingspostAuth0Function/QuerygetUserSettingspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetUserSettingspostAuth0FunctionQuerygetUserSettingspostAuth0FunctionAppSyncFunctionB6368852"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetUserSettingspostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/QueryGetUserSettingsDataResolverFn/QueryGetUserSettingsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetUserSettingsDataResolverFnQueryGetUserSettingsDataResolverFnAppSyncFunction729EAB4D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetUserSettingsDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/queryGetUserSettingsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetUserSettingsResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getUserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/QuerylistUserSettingspreAuth0Function/QuerylistUserSettingspreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistUserSettingspreAuth0FunctionQuerylistUserSettingspreAuth0FunctionAppSyncFunctionEBD6BB7E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistUserSettingspreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/QuerylistUserSettingsauth0Function/QuerylistUserSettingsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistUserSettingsauth0FunctionQuerylistUserSettingsauth0FunctionAppSyncFunctionC42AE7E9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistUserSettingsauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/QuerylistUserSettingspostAuth0Function/QuerylistUserSettingspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistUserSettingspostAuth0FunctionQuerylistUserSettingspostAuth0FunctionAppSyncFunction39A1BBAB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistUserSettingspostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/QueryListUserSettingsDataResolverFn/QueryListUserSettingsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListUserSettingsDataResolverFnQueryListUserSettingsDataResolverFnAppSyncFunctionD340E7D2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListUserSettingsDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/queryListUserSettingsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListUserSettingsResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listUserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationcreateUserSettingsinit0Function/MutationcreateUserSettingsinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserSettingsinit0FunctionMutationcreateUserSettingsinit0FunctionAppSyncFunction3EC19BD1"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserSettingsinit0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationcreateUserSettingspreAuth0Function/MutationcreateUserSettingspreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserSettingspreAuth0FunctionMutationcreateUserSettingspreAuth0FunctionAppSyncFunction52BF747E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserSettingspreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationcreateUserSettingsauth0Function/MutationcreateUserSettingsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserSettingsauth0FunctionMutationcreateUserSettingsauth0FunctionAppSyncFunction2AFAC382"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserSettingsauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationcreateUserSettingspostAuth0Function/MutationcreateUserSettingspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserSettingspostAuth0FunctionMutationcreateUserSettingspostAuth0FunctionAppSyncFunction75287A3A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserSettingspostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationCreateUserSettingsDataResolverFn/MutationCreateUserSettingsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateUserSettingsDataResolverFnMutationCreateUserSettingsDataResolverFnAppSyncFunction330AE38E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateUserSettingsDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/mutationCreateUserSettingsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateUserSettingsResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createUserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationupdateUserSettingsinit0Function/MutationupdateUserSettingsinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateUserSettingsinit0FunctionMutationupdateUserSettingsinit0FunctionAppSyncFunction022229F3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateUserSettingsinit0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationupdateUserSettingspreAuth0Function/MutationupdateUserSettingspreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateUserSettingspreAuth0FunctionMutationupdateUserSettingspreAuth0FunctionAppSyncFunction9BD02E91"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateUserSettingspreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationupdateUserSettingsauth0Function/MutationupdateUserSettingsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateUserSettingsauth0FunctionMutationupdateUserSettingsauth0FunctionAppSyncFunctionD6F46573"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateUserSettingsauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationupdateUserSettingspostAuth0Function/MutationupdateUserSettingspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateUserSettingspostAuth0FunctionMutationupdateUserSettingspostAuth0FunctionAppSyncFunction2AD2371F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateUserSettingspostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationUpdateUserSettingsDataResolverFn/MutationUpdateUserSettingsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateUserSettingsDataResolverFnMutationUpdateUserSettingsDataResolverFnAppSyncFunctionFF4E5BC9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateUserSettingsDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/mutationUpdateUserSettingsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateUserSettingsResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateUserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationdeleteUserSettingspreAuth0Function/MutationdeleteUserSettingspreAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteUserSettingspreAuth0FunctionMutationdeleteUserSettingspreAuth0FunctionAppSyncFunction173E6535"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteUserSettingspreAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationdeleteUserSettingsauth0Function/MutationdeleteUserSettingsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteUserSettingsauth0FunctionMutationdeleteUserSettingsauth0FunctionAppSyncFunction817593F9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteUserSettingsauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationdeleteUserSettingspostAuth0Function/MutationdeleteUserSettingspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteUserSettingspostAuth0FunctionMutationdeleteUserSettingspostAuth0FunctionAppSyncFunctionCD9E3923"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteUserSettingspostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/MutationDeleteUserSettingsDataResolverFn/MutationDeleteUserSettingsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteUserSettingsDataResolverFnMutationDeleteUserSettingsDataResolverFnAppSyncFunction42CB2A92"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteUserSettingsDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/mutationDeleteUserSettingsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteUserSettingsResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteUserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/SubscriptiononCreateUserSettingsauth0Function/SubscriptiononCreateUserSettingsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateUserSettingsauth0FunctionSubscriptiononCreateUserSettingsauth0FunctionAppSyncFunction002F271E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateUserSettingsauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/SubscriptiononCreateUserSettingspostAuth0Function/SubscriptiononCreateUserSettingspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateUserSettingspostAuth0FunctionSubscriptiononCreateUserSettingspostAuth0FunctionAppSyncFunctionE86B2FF8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateUserSettingspostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/SubscriptionOnCreateUserSettingsDataResolverFn/SubscriptionOnCreateUserSettingsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateUserSettingsDataResolverFnSubscriptionOnCreateUserSettingsDataResolverFnAppSyncFunctionF9F004DD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateUserSettingsDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/subscriptionOnCreateUserSettingsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateUserSettingsResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateUserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/SubscriptiononUpdateUserSettingsauth0Function/SubscriptiononUpdateUserSettingsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateUserSettingsauth0FunctionSubscriptiononUpdateUserSettingsauth0FunctionAppSyncFunctionB73FB458"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateUserSettingsauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/SubscriptiononUpdateUserSettingspostAuth0Function/SubscriptiononUpdateUserSettingspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateUserSettingspostAuth0FunctionSubscriptiononUpdateUserSettingspostAuth0FunctionAppSyncFunction96FD9462"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateUserSettingspostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/SubscriptionOnUpdateUserSettingsDataResolverFn/SubscriptionOnUpdateUserSettingsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateUserSettingsDataResolverFnSubscriptionOnUpdateUserSettingsDataResolverFnAppSyncFunctionDADF7192"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateUserSettingsDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/subscriptionOnUpdateUserSettingsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateUserSettingsResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateUserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/SubscriptiononDeleteUserSettingsauth0Function/SubscriptiononDeleteUserSettingsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteUserSettingsauth0FunctionSubscriptiononDeleteUserSettingsauth0FunctionAppSyncFunction31A27217"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteUserSettingsauth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/SubscriptiononDeleteUserSettingspostAuth0Function/SubscriptiononDeleteUserSettingspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteUserSettingspostAuth0FunctionSubscriptiononDeleteUserSettingspostAuth0FunctionAppSyncFunction4DD03104"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteUserSettingspostAuth0Function"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/SubscriptionOnDeleteUserSettingsDataResolverFn/SubscriptionOnDeleteUserSettingsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteUserSettingsDataResolverFnSubscriptionOnDeleteUserSettingsDataResolverFnAppSyncFunctionA778755F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteUserSettingsDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/subscriptionOnDeleteUserSettingsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteUserSettingsResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteUserSettings"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/UserSettingsOwnerDataResolverFn/UserSettingsOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserSettingsOwnerDataResolverFnUserSettingsOwnerDataResolverFnAppSyncFunction781B1E42"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserSettingsOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/userSettingsOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserSettingsownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserSettings.owner"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC83B5771Outputs.amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventEFA823BDArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResourceC83B5771Outputsamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyTableManagerTable60CDC9E4"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPINONEDS7465CE06Name"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/UserSettings.NestedStack/UserSettings.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataUserSettingsNestedStackUserSettingsNestedStackResource288C9BA3"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucket9CCB4ACA"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucketPolicyF1C1C548"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucketAutoDeleteObjectsCustomResource437F26F5"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentAwsCliLayerE322F905"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/CustomResource-1536MiB/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB21775929"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/LatestNodeRuntimeMap": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LatestNodeRuntimeMap"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+            "data": true
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBServiceRoleA41FC8C2"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBServiceRoleDefaultPolicyFF1C635B"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBC5D8AB21"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/modelIntrospectionSchemaBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketF566B665"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/modelIntrospectionSchemaBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketPolicy4DAB0D15"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/modelIntrospectionSchemaBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketAutoDeleteObjectsCustomResourceFE57309F"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/modelIntrospectionSchemaBucketDeployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketDeploymentAwsCliLayer13C432F7"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/modelIntrospectionSchemaBucketDeployment/CustomResource-1536MiB/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketDeploymentCustomResource1536MiB104B97EC"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/AMPLIFY_DATA_GRAPHQL_ENDPOINTParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAGRAPHQLENDPOINTParameter1C2CBB16"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAMODELINTROSPECTIONSCHEMABUCKETNAMEParameter47BF4F44"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEYParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAMODELINTROSPECTIONSCHEMAKEYParameterB6AEAE8A"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/AMPLIFY_DATA_DEFAULT_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATADEFAULTNAMEParameterE7C23CC4"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthUserPoolE1438EE7Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthUserPoolE1438EE7Ref"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthunauthenticatedUserRole9B33BEDERef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthIdentityPool10B5653CRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463ApiId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463GraphQLUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPI6B8AB463GraphQLUrl"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB93A8FF21DestinationBucketArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB93A8FF21DestinationBucketArn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data/amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPIDefaultApiKey0EAE3DDCApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068dataamplifyDataGraphQLAPIDefaultApiKey0EAE3DDCApiKey"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/data.NestedStack/data.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "data7552DF31"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/awsAppsyncApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiId"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/awsAppsyncApiEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiEndpoint"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/awsAppsyncAuthenticationType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncAuthenticationType"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/awsAppsyncRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncRegion"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/amplifyApiModelSchemaS3Uri": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyApiModelSchemaS3Uri"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/awsAppsyncApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiKey"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/awsAppsyncAdditionalAuthenticationTypes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncAdditionalAuthenticationTypes"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/jobLanderStorage/Bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "jobLanderStorageBucket26742562"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/jobLanderStorage/Bucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "jobLanderStorageBucketPolicyCFC0DA70"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/jobLanderStorage/Bucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "jobLanderStorageBucketAutoDeleteObjectsCustomResourceAC4B6501"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/LatestNodeRuntimeMap": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LatestNodeRuntimeMap"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+            "data": true
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/JOB_LANDER_STORAGE_BUCKET_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "JOBLANDERSTORAGEBUCKETNAMEParameter9E503D9E"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/amplify-joblanderv4-christopher-sandbox-c7b0b32068--storageAccess4/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068storageAccess46C253DF5"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputs.amplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068authNestedStackauthNestedStackResource63E4E7C7Outputsamplifyjoblanderv4christophersandboxc7b0b32068authamplifyAuthauthenticatedUserRoleBE12CABCRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/amplifyjoblanderv4christophersandboxc7b0b32068storagejobLanderStorageBucketF80FB057Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068storagejobLanderStorageBucketF80FB057Arn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage/amplifyjoblanderv4christophersandboxc7b0b32068storagejobLanderStorageBucketF80FB057Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068storagejobLanderStorageBucketF80FB057Ref"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storage.NestedStack/storage.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "storage0EC3F24A"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/resume-parser-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "resumeparserlambdaServiceRole7DB94490"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/resume-parser-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "resumeparserlambdaServiceRoleDefaultPolicyCA8F97F0"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/resume-parser-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "resumeparserlambdaA76AD411"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/ai-service-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "aiservicelambdaServiceRole17B0ACAC"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/ai-service-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "aiservicelambdaServiceRoleDefaultPolicyE448877A"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/ai-service-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "aiservicelambda5FA705C3"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/blockchain-service-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "blockchainservicelambdaServiceRoleA2AC643D"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/blockchain-service-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "blockchainservicelambdaServiceRoleDefaultPolicy9CBB4648"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/blockchain-service-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "blockchainservicelambdaF7014A73"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/reference-to-amplifyjoblanderv4christophersandboxc7b0b32068storageNestedStackstorageNestedStackResource5FC4BBE4Outputs.amplifyjoblanderv4christophersandboxc7b0b32068storagejobLanderStorageBucketF80FB057Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyjoblanderv4christophersandboxc7b0b32068storageNestedStackstorageNestedStackResource5FC4BBE4Outputsamplifyjoblanderv4christophersandboxc7b0b32068storagejobLanderStorageBucketF80FB057Arn"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/amplifyjoblanderv4christophersandboxc7b0b32068functionresumeparserlambda64017034Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068functionresumeparserlambda64017034Ref"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/amplifyjoblanderv4christophersandboxc7b0b32068functionaiservicelambda97338B9DRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068functionaiservicelambda97338B9DRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function/amplifyjoblanderv4christophersandboxc7b0b32068functionblockchainservicelambda6F8468DFRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyjoblanderv4christophersandboxc7b0b32068functionblockchainservicelambda6F8468DFRef"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/function.NestedStack/function.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "function1351588B"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/definedFunctions": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "definedFunctions"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/storageRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "storageRegion"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/bucketName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bucketName"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/buckets": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "buckets"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/amplify-joblanderv4-christopher-sandbox-c7b0b32068/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "amplify-joblanderv4-christopher-sandbox-c7b0b32068"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "aws-cdk-lib/feature-flag-report": {
+      "type": "cdk:feature-flag-report",
+      "properties": {
+        "module": "aws-cdk-lib",
+        "flags": {
+          "@aws-cdk/aws-signer:signingProfileNamePassedToCfn": {
+            "recommendedValue": true,
+            "explanation": "Pass signingProfileName to CfnSigningProfile"
+          },
+          "@aws-cdk/core:newStyleStackSynthesis": {
+            "recommendedValue": true,
+            "explanation": "Switch to new stack synthesis method which enables CI/CD",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:stackRelativeExports": {
+            "recommendedValue": true,
+            "explanation": "Name exports based on the construct paths relative to the stack, rather than the global construct path",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-ecs-patterns:secGroupsDisablesImplicitOpenListener": {
+            "recommendedValue": true,
+            "explanation": "Disable implicit openListener when custom security groups are provided"
+          },
+          "@aws-cdk/aws-rds:lowercaseDbIdentifier": {
+            "recommendedValue": true,
+            "explanation": "Force lowercasing of RDS Cluster names in CDK",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": {
+            "recommendedValue": true,
+            "explanation": "Allow adding/removing multiple UsagePlanKeys independently",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-lambda:recognizeVersionProps": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to opt in to the updated logical id calculation for Lambda Version created using the  `fn.currentVersion`.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-lambda:recognizeLayerVersion": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to opt in to the updated logical id calculation for Lambda Version created using the `fn.currentVersion`."
+          },
+          "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to have cloudfront distributions use the security policy TLSv1.2_2021 by default.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:checkSecretUsage": {
+            "recommendedValue": true,
+            "explanation": "Enable this flag to make it impossible to accidentally use SecretValues in unsafe locations"
+          },
+          "@aws-cdk/core:target-partitions": {
+            "recommendedValue": [
+              "aws",
+              "aws-cn"
+            ],
+            "explanation": "What regions to include in lookup tables of environment agnostic stacks"
+          },
+          "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": {
+            "recommendedValue": true,
+            "explanation": "ECS extensions will automatically add an `awslogs` driver if no logging is specified"
+          },
+          "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to have Launch Templates generated by the `InstanceRequireImdsv2Aspect` use unique names."
+          },
+          "@aws-cdk/aws-ecs:arnFormatIncludesClusterName": {
+            "recommendedValue": true,
+            "explanation": "ARN format used by ECS. In the new ARN format, the cluster name is part of the resource ID."
+          },
+          "@aws-cdk/aws-iam:minimizePolicies": {
+            "recommendedValue": true,
+            "explanation": "Minimize IAM policies by combining Statements"
+          },
+          "@aws-cdk/core:validateSnapshotRemovalPolicy": {
+            "recommendedValue": true,
+            "explanation": "Error on snapshot removal policies on resources that do not support it."
+          },
+          "@aws-cdk/aws-codepipeline:crossAccountKeyAliasStackSafeResourceName": {
+            "recommendedValue": true,
+            "explanation": "Generate key aliases that include the stack name"
+          },
+          "@aws-cdk/aws-s3:createDefaultLoggingPolicy": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to create an S3 bucket policy by default in cases where an AWS service would automatically create the Policy if one does not exist."
+          },
+          "@aws-cdk/aws-sns-subscriptions:restrictSqsDescryption": {
+            "recommendedValue": true,
+            "explanation": "Restrict KMS key policy for encrypted Queues a bit more"
+          },
+          "@aws-cdk/aws-apigateway:disableCloudWatchRole": {
+            "recommendedValue": true,
+            "explanation": "Make default CloudWatch Role behavior safe for multiple API Gateways in one environment"
+          },
+          "@aws-cdk/core:enablePartitionLiterals": {
+            "recommendedValue": true,
+            "explanation": "Make ARNs concrete if AWS partition is known"
+          },
+          "@aws-cdk/aws-events:eventsTargetQueueSameAccount": {
+            "recommendedValue": true,
+            "explanation": "Event Rules may only push to encrypted SQS queues in the same account"
+          },
+          "@aws-cdk/aws-ecs:disableExplicitDeploymentControllerForCircuitBreaker": {
+            "recommendedValue": true,
+            "explanation": "Avoid setting the \"ECS\" deployment controller when adding a circuit breaker"
+          },
+          "@aws-cdk/aws-iam:importedRoleStackSafeDefaultPolicyName": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature to by default create default policy names for imported roles that depend on the stack the role is in."
+          },
+          "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": {
+            "recommendedValue": true,
+            "explanation": "Use S3 Bucket Policy instead of ACLs for Server Access Logging"
+          },
+          "@aws-cdk/aws-route53-patters:useCertificate": {
+            "recommendedValue": true,
+            "explanation": "Use the official `Certificate` resource instead of `DnsValidatedCertificate`"
+          },
+          "@aws-cdk/customresources:installLatestAwsSdkDefault": {
+            "recommendedValue": false,
+            "explanation": "Whether to install the latest SDK by default in AwsCustomResource"
+          },
+          "@aws-cdk/aws-rds:databaseProxyUniqueResourceName": {
+            "recommendedValue": true,
+            "explanation": "Use unique resource name for Database Proxy"
+          },
+          "@aws-cdk/aws-codedeploy:removeAlarmsFromDeploymentGroup": {
+            "recommendedValue": true,
+            "explanation": "Remove CloudWatch alarms from deployment group"
+          },
+          "@aws-cdk/aws-apigateway:authorizerChangeDeploymentLogicalId": {
+            "recommendedValue": true,
+            "explanation": "Include authorizer configuration in the calculation of the API deployment logical ID."
+          },
+          "@aws-cdk/aws-ec2:launchTemplateDefaultUserData": {
+            "recommendedValue": true,
+            "explanation": "Define user data for a launch template by default when a machine image is provided."
+          },
+          "@aws-cdk/aws-secretsmanager:useAttachedSecretResourcePolicyForSecretTargetAttachments": {
+            "recommendedValue": true,
+            "explanation": "SecretTargetAttachments uses the ResourcePolicy of the attached Secret."
+          },
+          "@aws-cdk/aws-redshift:columnId": {
+            "recommendedValue": true,
+            "explanation": "Whether to use an ID to track Redshift column changes"
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:enableEmrServicePolicyV2": {
+            "recommendedValue": true,
+            "explanation": "Enable AmazonEMRServicePolicy_v2 managed policies"
+          },
+          "@aws-cdk/aws-ec2:restrictDefaultSecurityGroup": {
+            "recommendedValue": true,
+            "explanation": "Restrict access to the VPC default security group"
+          },
+          "@aws-cdk/aws-apigateway:requestValidatorUniqueId": {
+            "recommendedValue": true,
+            "explanation": "Generate a unique id for each RequestValidator added to a method"
+          },
+          "@aws-cdk/aws-kms:aliasNameRef": {
+            "recommendedValue": true,
+            "explanation": "KMS Alias name and keyArn will have implicit reference to KMS Key"
+          },
+          "@aws-cdk/aws-kms:applyImportedAliasPermissionsToPrincipal": {
+            "recommendedValue": true,
+            "explanation": "Enable grant methods on Aliases imported by name to use kms:ResourceAliases condition"
+          },
+          "@aws-cdk/aws-autoscaling:generateLaunchTemplateInsteadOfLaunchConfig": {
+            "recommendedValue": true,
+            "explanation": "Generate a launch template when creating an AutoScalingGroup"
+          },
+          "@aws-cdk/core:includePrefixInUniqueNameGeneration": {
+            "recommendedValue": true,
+            "explanation": "Include the stack prefix in the stack name generation process"
+          },
+          "@aws-cdk/aws-efs:denyAnonymousAccess": {
+            "recommendedValue": true,
+            "explanation": "EFS denies anonymous clients accesses"
+          },
+          "@aws-cdk/aws-opensearchservice:enableOpensearchMultiAzWithStandby": {
+            "recommendedValue": true,
+            "explanation": "Enables support for Multi-AZ with Standby deployment for opensearch domains"
+          },
+          "@aws-cdk/aws-lambda-nodejs:useLatestRuntimeVersion": {
+            "recommendedValue": true,
+            "explanation": "Enables aws-lambda-nodejs.Function to use the latest available NodeJs runtime as the default"
+          },
+          "@aws-cdk/aws-efs:mountTargetOrderInsensitiveLogicalId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, mount targets will have a stable logicalId that is linked to the associated subnet."
+          },
+          "@aws-cdk/aws-rds:auroraClusterChangeScopeOfInstanceParameterGroupWithEachParameters": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a scope of InstanceParameterGroup for AuroraClusterInstance with each parameters will change."
+          },
+          "@aws-cdk/aws-appsync:useArnForSourceApiAssociationIdentifier": {
+            "recommendedValue": true,
+            "explanation": "When enabled, will always use the arn for identifiers for CfnSourceApiAssociation in the GraphqlApi construct rather than id."
+          },
+          "@aws-cdk/aws-rds:preventRenderingDeprecatedCredentials": {
+            "recommendedValue": true,
+            "explanation": "When enabled, creating an RDS database cluster from a snapshot will only render credentials for snapshot credentials."
+          },
+          "@aws-cdk/aws-codepipeline-actions:useNewDefaultBranchForCodeCommitSource": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the CodeCommit source action is using the default branch name 'main'."
+          },
+          "@aws-cdk/aws-cloudwatch-actions:changeLambdaPermissionLogicalIdForLambdaAction": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the logical ID of a Lambda permission for a Lambda action includes an alarm ID."
+          },
+          "@aws-cdk/aws-codepipeline:crossAccountKeysDefaultValueToFalse": {
+            "recommendedValue": true,
+            "explanation": "Enables Pipeline to set the default value for crossAccountKeys to false."
+          },
+          "@aws-cdk/aws-codepipeline:defaultPipelineTypeToV2": {
+            "recommendedValue": true,
+            "explanation": "Enables Pipeline to set the default pipeline type to V2."
+          },
+          "@aws-cdk/aws-kms:reduceCrossAccountRegionPolicyScope": {
+            "recommendedValue": true,
+            "explanation": "When enabled, IAM Policy created from KMS key grant will reduce the resource scope to this key only."
+          },
+          "@aws-cdk/pipelines:reduceAssetRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "Remove the root account principal from PipelineAssetsFileRole trust policy",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-eks:nodegroupNameAttribute": {
+            "recommendedValue": true,
+            "explanation": "When enabled, nodegroupName attribute of the provisioned EKS NodeGroup will not have the cluster name prefix."
+          },
+          "@aws-cdk/aws-ec2:ebsDefaultGp3Volume": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default volume type of the EBS volume will be GP3"
+          },
+          "@aws-cdk/aws-ecs:removeDefaultDeploymentAlarm": {
+            "recommendedValue": true,
+            "explanation": "When enabled, remove default deployment alarm settings"
+          },
+          "@aws-cdk/custom-resources:logApiResponseDataPropertyTrueDefault": {
+            "recommendedValue": false,
+            "explanation": "When enabled, the custom resource used for `AwsCustomResource` will configure the `logApiResponseData` property as true by default"
+          },
+          "@aws-cdk/aws-s3:keepNotificationInImportedBucket": {
+            "recommendedValue": false,
+            "explanation": "When enabled, Adding notifications to a bucket in the current stack will not remove notification from imported stack."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:useNewS3UriParametersForBedrockInvokeModelTask": {
+            "recommendedValue": true,
+            "explanation": "When enabled, use new props for S3 URI field in task definition of state machine for bedrock invoke model.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:explicitStackTags": {
+            "recommendedValue": true,
+            "explanation": "When enabled, stack tags need to be assigned explicitly on a Stack."
+          },
+          "@aws-cdk/aws-ecs:enableImdsBlockingDeprecatedFeature": {
+            "recommendedValue": false,
+            "explanation": "When set to true along with canContainersAccessInstanceRole=false in ECS cluster, new updated commands will be added to UserData to block container accessing IMDS. **Applicable to Linux only. IMPORTANT: See [details.](#aws-cdkaws-ecsenableImdsBlockingDeprecatedFeature)**"
+          },
+          "@aws-cdk/aws-ecs:disableEcsImdsBlocking": {
+            "recommendedValue": true,
+            "explanation": "When set to true, CDK synth will throw exception if canContainersAccessInstanceRole is false. **IMPORTANT: See [details.](#aws-cdkaws-ecsdisableEcsImdsBlocking)**"
+          },
+          "@aws-cdk/aws-ecs:reduceEc2FargateCloudWatchPermissions": {
+            "recommendedValue": true,
+            "explanation": "When enabled, we will only grant the necessary permissions when users specify cloudwatch log group through logConfiguration"
+          },
+          "@aws-cdk/aws-dynamodb:resourcePolicyPerReplica": {
+            "recommendedValue": true,
+            "explanation": "When enabled will allow you to specify a resource policy per replica, and not copy the source table policy to all replicas"
+          },
+          "@aws-cdk/aws-ec2:ec2SumTImeoutEnabled": {
+            "recommendedValue": true,
+            "explanation": "When enabled, initOptions.timeout and resourceSignalTimeout values will be summed together."
+          },
+          "@aws-cdk/aws-appsync:appSyncGraphQLAPIScopeLambdaPermission": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a Lambda authorizer Permission created when using GraphqlApi will be properly scoped with a SourceArn."
+          },
+          "@aws-cdk/aws-rds:setCorrectValueForDatabaseInstanceReadReplicaInstanceResourceId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the value of property `instanceResourceId` in construct `DatabaseInstanceReadReplica` will be set to the correct value which is `DbiResourceId` instead of currently `DbInstanceArn`"
+          },
+          "@aws-cdk/core:cfnIncludeRejectComplexResourceUpdateCreatePolicyIntrinsics": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CFN templates added with `cfn-include` will error if the template contains Resource Update or Create policies with CFN Intrinsics that include non-primitive values."
+          },
+          "@aws-cdk/aws-lambda-nodejs:sdkV3ExcludeSmithyPackages": {
+            "recommendedValue": true,
+            "explanation": "When enabled, both `@aws-sdk` and `@smithy` packages will be excluded from the Lambda Node.js 18.x runtime to prevent version mismatches in bundled applications."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:fixRunEcsTaskPolicy": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the resource of IAM Run Ecs policy generated by SFN EcsRunTask will reference the definition, instead of constructing ARN."
+          },
+          "@aws-cdk/aws-ec2:bastionHostUseAmazonLinux2023ByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the BastionHost construct will use the latest Amazon Linux 2023 AMI, instead of Amazon Linux 2."
+          },
+          "@aws-cdk/core:aspectStabilization": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a stabilization loop will be run when invoking Aspects during synthesis.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-route53-targets:userPoolDomainNameMethodWithoutCustomResource": {
+            "recommendedValue": true,
+            "explanation": "When enabled, use a new method for DNS Name of user pool domain target without creating a custom resource."
+          },
+          "@aws-cdk/aws-elasticloadbalancingV2:albDualstackWithoutPublicIpv4SecurityGroupRulesDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default security group ingress rules will allow IPv6 ingress from anywhere"
+          },
+          "@aws-cdk/aws-iam:oidcRejectUnauthorizedConnections": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default behaviour of OIDC provider will reject unauthorized connections"
+          },
+          "@aws-cdk/core:enableAdditionalMetadataCollection": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK will expand the scope of usage data collected to better inform CDK development and improve communication for security concerns and emerging issues."
+          },
+          "@aws-cdk/aws-lambda:createNewPoliciesWithAddToRolePolicy": {
+            "recommendedValue": false,
+            "explanation": "[Deprecated] When enabled, Lambda will create new inline policies with AddToRolePolicy instead of adding to the Default Policy Statement"
+          },
+          "@aws-cdk/aws-s3:setUniqueReplicationRoleName": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK will automatically generate a unique role name that is used for s3 object replication."
+          },
+          "@aws-cdk/pipelines:reduceStageRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "Remove the root account principal from Stage addActions trust policy",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-events:requireEventBusPolicySid": {
+            "recommendedValue": true,
+            "explanation": "When enabled, grantPutEventsTo() will use resource policies with Statement IDs for service principals."
+          },
+          "@aws-cdk/core:aspectPrioritiesMutating": {
+            "recommendedValue": true,
+            "explanation": "When set to true, Aspects added by the construct library on your behalf will be given a priority of MUTATING."
+          },
+          "@aws-cdk/aws-dynamodb:retainTableReplica": {
+            "recommendedValue": true,
+            "explanation": "When enabled, table replica will be default to the removal policy of source table unless specified otherwise."
+          },
+          "@aws-cdk/cognito:logUserPoolClientSecretValue": {
+            "recommendedValue": false,
+            "explanation": "When disabled, the value of the user pool client secret will not be logged in the custom resource lambda function logs."
+          },
+          "@aws-cdk/pipelines:reduceCrossAccountActionRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "When enabled, scopes down the trust policy for the cross-account action role",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-stepfunctions:useDistributedMapResultWriterV2": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the resultWriterV2 property of DistributedMap will be used insted of resultWriter"
+          },
+          "@aws-cdk/s3-notifications:addS3TrustKeyPolicyForSnsSubscriptions": {
+            "recommendedValue": true,
+            "explanation": "Add an S3 trust policy to a KMS key resource policy for SNS subscriptions."
+          },
+          "@aws-cdk/aws-ec2:requirePrivateSubnetsForEgressOnlyInternetGateway": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the EgressOnlyGateway resource is only created if private subnets are defined in the dual-stack VPC."
+          },
+          "@aws-cdk/aws-ec2-alpha:useResourceIdForVpcV2Migration": {
+            "recommendedValue": false,
+            "explanation": "When enabled, use resource IDs for VPC V2 migration"
+          },
+          "@aws-cdk/aws-s3:publicAccessBlockedByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, setting any combination of options for BlockPublicAccess will automatically set true for any options not defined."
+          },
+          "@aws-cdk/aws-lambda:useCdkManagedLogGroup": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK creates and manages loggroup for the lambda function"
+          }
+        }
+      }
+    }
+  },
+  "minimumCliVersion": "2.1030.0"
+}

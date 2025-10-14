@@ -13,7 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Resume } from '@/shared/schema';
+import { Resume } from '@shared/schema';
 
 interface PortfolioOptions {
   theme: string;
@@ -65,10 +65,7 @@ export default function Portfolio() {
   // Generate portfolio mutation
   const generatePortfolioMutation = useMutation({
     mutationFn: (data: { resumeId: string; options: PortfolioOptions }) =>
-      apiRequest('/api/generate-portfolio', {
-        method: 'POST',
-        body: JSON.stringify(data)
-      }),
+      apiRequest('POST', '/api/generate-portfolio', data),
     onSuccess: () => {
       toast({
         title: 'Portfolio Generated',
@@ -87,10 +84,7 @@ export default function Portfolio() {
   // Export portfolio mutation
   const exportPortfolioMutation = useMutation({
     mutationFn: (data: { resumeId: string; options: PortfolioOptions }) =>
-      apiRequest('/api/portfolio/export', {
-        method: 'POST',
-        body: JSON.stringify(data)
-      }),
+      apiRequest('POST', '/api/portfolio/export', data),
     onSuccess: (data: ExportPackage) => {
       setExportData(data);
       setShowInstructions(true);

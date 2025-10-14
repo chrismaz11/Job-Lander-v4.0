@@ -64,10 +64,7 @@ export default function CoverLetterPage() {
   const generateMutation = useMutation({
     mutationFn: async (data: FormData) => {
       setIsGenerating(true);
-      const response = await apiRequest("/api/generate-coverletter", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
+      const response = await apiRequest("POST", "/api/generate-coverletter", data);
       return response;
     },
     onSuccess: (data) => {
@@ -162,7 +159,7 @@ export default function CoverLetterPage() {
                             ) : (
                               resumes.map((resume) => (
                                 <SelectItem key={resume.id} value={resume.id}>
-                                  {resume.personalInfo.fullName} - {new Date(resume.createdAt).toLocaleDateString()}
+                                  {resume.personalInfo.fullName} - {resume.createdAt ? new Date(resume.createdAt).toLocaleDateString() : 'No Date'}
                                 </SelectItem>
                               ))
                             )}
