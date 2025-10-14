@@ -45,6 +45,8 @@ export default function CreateResume() {
   const [newSkill, setNewSkill] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [resumeId, setResumeId] = useState<string | null>(null);
+  const [generatedHtml, setGeneratedHtml] = useState<string | null>(null);
+  const [generatedCss, setGeneratedCss] = useState<string | null>(null);
   
   const { toast } = useToast();
 
@@ -133,9 +135,10 @@ export default function CreateResume() {
       };
       return apiRequest("POST", "/api/generate-resume", data);
     },
-    onSuccess: (response) => {
-      const data = response as ParsedResumeResponse;
-      setResumeId(data.id || null);
+    onSuccess: (response: any) => {
+      setResumeId(response.resumeRecord?.id || null);
+      setGeneratedHtml(response.preview?.html || null);
+      setGeneratedCss(response.preview?.css || null);
       toast({
         title: "Resume Generated!",
         description: "Your professional resume is ready to download.",

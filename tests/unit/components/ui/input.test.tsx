@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Input } from '@/components/ui/input';
 
 describe('Input Component', () => {
+  const user = userEvent.setup();
+
   it('renders input element', () => {
     render(<Input />);
     
@@ -16,20 +18,11 @@ describe('Input Component', () => {
     
     const input = screen.getByRole('textbox');
     expect(input).toHaveClass(
-      'flex',
-      'h-10',
-      'w-full',
-      'rounded-md',
-      'border',
-      'border-input',
-      'bg-background',
-      'px-3',
-      'py-2'
+      'flex', 'h-9', 'w-full', 'rounded-md', 'border', 'border-input', 'bg-background', 'px-3', 'py-2'
     );
   });
 
   it('handles text input', async () => {
-    const user = userEvent.setup();
     render(<Input placeholder="Enter text" />);
     
     const input = screen.getByPlaceholderText('Enter text');
@@ -39,8 +32,7 @@ describe('Input Component', () => {
   });
 
   it('handles change events', async () => {
-    const handleChange = vitest.fn();
-    const user = userEvent.setup();
+    const handleChange = vi.fn();
     
     render(<Input onChange={handleChange} />);
     
@@ -148,9 +140,8 @@ describe('Input Component', () => {
   });
 
   it('handles focus and blur events', async () => {
-    const handleFocus = vitest.fn();
-    const handleBlur = vitest.fn();
-    const user = userEvent.setup();
+    const handleFocus = vi.fn();
+    const handleBlur = vi.fn();
     
     render(<Input onFocus={handleFocus} onBlur={handleBlur} />);
     
@@ -164,7 +155,6 @@ describe('Input Component', () => {
   });
 
   it('supports email validation', async () => {
-    const user = userEvent.setup();
     render(<Input type="email" />);
     
     const input = screen.getByRole('textbox');

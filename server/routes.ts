@@ -17,6 +17,7 @@ import {
   type PortfolioOptions 
 } from "./services/portfolioGenerator";
 import { createPortfolioExportPackage } from "./services/vercelExport";
+import { generateResume } from "./services/htmlGenerator";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -48,18 +49,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let rawText = "";
       const mimeType = req.file.mimetype;
 
+      console.log('=== JOB LANDER DEBUG ===');
+      console.log('File details:', {
+        name: req.file.originalname,
+        type: req.file.mimetype,
+        size: req.file.size
+      });
+
       // Step 1: Library-based text extraction
-      if (mimeType === "application/pdf") {
-        const pdfParse = await import("pdf-parse");
-        const pdfData = await pdfParse(req.file.buffer);
-        rawText = pdfData.text;
-      } else if (
-        mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      ) {
-        const result = await mammoth.extractRawText({ buffer: req.file.buffer });
-        rawText = result.value;
-      } else {
-        return res.status(400).json({ error: "Unsupported file type" });
+      try {
+        if (mimeType === "application/pdf") {
+          const pdfParse = await import("pdf-parse");
+          const pdfData = await pdfParse(req.file.buffer);
+          rawText = pdfData.text;
+          console.log('Extracted text length (pdf-parse):', rawText.length);
+          console.log('First 200 chars:', rawText.substring(0, 200));
+        } else if (
+          mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        ) {
+          const result = await mammoth.extractRawText({ buffer: req.file.buffer });
+          rawText = result.value;
+          console.log('Extracted text length (mammoth):', rawText.length);
+          console.log('First 200 chars:', rawText.substring(0, 200));
+        } else {
+          console.error('Unsupported file type:', mimeType);
+          return res.status(400).json({ error: "Unsupported file type" });
+        }
+      } catch (extractionError) {
+        console.error('Text extraction failed:', extractionError);
+        // We can still attempt OCR even if library extraction fails
+        rawText = ''; 
       }
 
       // Step 2: Hybrid extraction (OCR for scanned documents)
@@ -94,30 +113,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       const enhanced = JSON.parse(enhancedContent);
-
-      // Create Canva design if template selected
-      let canvaDesignId = null;
-      let pdfUrl = null;
-
-      if (templateId) {
-        const design = await createCanvaDesign(templateId, enhanced, req.user?.claims?.sub || 'anonymous');
-        canvaDesignId = design.designId;
-        pdfUrl = await exportCanvaDesign(design.designId, 'pdf', req.user?.claims?.sub || 'anonymous');
-      }
-
-      // Save to storage with userId
-      const resume = await storage.createResume({
+      const finalData = {
         userId,
         personalInfo: enhanced.personalInfo || personalInfo,
         experience: enhanced.experience || experience,
         education: enhanced.education || education,
         skills: enhanced.skills || skills,
         templateId,
-        canvaDesignId,
-        pdfUrl: typeof pdfUrl === 'string' ? pdfUrl : pdfUrl?.url || null,
-      });
+      };
 
-      res.json(resume);
+      // Save to storage with userId, without Canva fields
+      const resumeRecord = await storage.createResume(finalData);
+
+      // Generate HTML preview using the new generator
+      const templateKey = templateId || 'modern';
+      const preview = generateResume({
+        name: finalData.personalInfo?.fullName,
+        email: finalData.personalInfo?.email,
+        phone: finalData.personalInfo?.phone,
+        ...finalData
+      }, templateKey);
+
+      // Return both the DB record and the HTML preview
+      res.json({ resumeRecord, preview });
+
     } catch (error: any) {
       console.error("Generate resume error:", error);
       res.status(500).json({ error: error.message });

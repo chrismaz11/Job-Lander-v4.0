@@ -148,7 +148,7 @@
     "@vitejs/plugin-react": "^4.7.0",
     "@vitest/ui": "^3.2.4",
     "autoprefixer": "^10.4.20",
-    "drizzle-kit": "^0.18.1",
+    "drizzle-kit": "^0.31.5",
     "esbuild": "^0.25.0",
     "jsdom": "^27.0.0",
     "k6": "^0.0.0",

@@ -4,3 +4,17 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+
+# Local environment variables
+.env
+*.log
+
+# SSH keys
+ssh_new
+ssh_new.pub
+
+# Test reports
+tests/reports/
+
+# Drizzle-kit output
+drizzle-kit/

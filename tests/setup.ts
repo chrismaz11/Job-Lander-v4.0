@@ -67,13 +67,13 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock Clipboard API
-Object.defineProperty(navigator, 'clipboard', {
-  writable: true,
-  value: {
-    writeText: vitest.fn(() => Promise.resolve()),
-    readText: vitest.fn(() => Promise.resolve('')),
-  },
-});
+// Object.defineProperty(navigator, 'clipboard', {
+//   writable: true,
+//   value: {
+//     writeText: vitest.fn(() => Promise.resolve()),
+//     readText: vitest.fn(() => Promise.resolve('')),
+//   },
+// });
 
 // Mock window.location
 delete (window as any).location;
