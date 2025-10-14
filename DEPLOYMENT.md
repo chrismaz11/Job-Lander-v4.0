@@ -75,8 +75,6 @@ Ensure your `.env` file has:
 ```
 DATABASE_URL="postgresql://postgres:password@localhost:5432/joblander"
 PORT=3000
-REPLIT_DOMAINS="localhost:3000"
-REPL_ID="demo-repl-id-for-development"
 NODE_ENV="development"
 ```
 
@@ -92,8 +90,6 @@ The application will be available at http://localhost:3000.
 
 ### Required Variables
 - `DATABASE_URL`: PostgreSQL connection string
-- `REPLIT_DOMAINS`: Comma-separated list of allowed domains
-- `REPL_ID`: Client ID for authentication
 - `SESSION_SECRET`: Secret key for session management
 
 ### Optional API Keys (Demo values provided)

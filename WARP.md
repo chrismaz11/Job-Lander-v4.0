@@ -129,7 +129,6 @@ interface Resume {
 
 ### Authentication & Authorization
 
-- Replit Auth integration for user management
 - Protected routes use `isAuthenticated` middleware
 - User context available in authenticated requests as `req.user.claims.sub`
 
