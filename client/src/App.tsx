@@ -14,6 +14,7 @@ Amplify.configure(amplifyConfig);
 import Home from "@/pages/home";
 import CreateResume from "@/pages/create-resume";
 import Templates from "@/pages/templates";
+import TestTemplates from "@/pages/test-templates";
 import Verify from "@/pages/verify";
 import Jobs from "@/pages/jobs";
 import Dashboard from "@/pages/dashboard";
@@ -32,6 +33,7 @@ function Router() {
       <Route path="/create-resume" component={CreateResume} />
       <Route path="/cover-letter" component={CoverLetter} />
       <Route path="/templates" component={Templates} />
+      <Route path="/test-templates" component={TestTemplates} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/verify" component={Verify} />
       <Route path="/jobs" component={Jobs} />

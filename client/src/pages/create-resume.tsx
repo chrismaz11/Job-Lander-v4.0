@@ -17,6 +17,8 @@ import { personalInfoSchema, experienceSchema, educationSchema, type PersonalInf
 import { Upload, Sparkles, FileText, Download, Loader2, Plus, Trash2, CheckCircle, AlertTriangle, Shield } from "lucide-react";
 import { nanoid } from "nanoid";
 import { ParsedResumeReview } from "@/components/ParsedResumeReview";
+import EnhancedTemplateSelector from '@/components/EnhancedTemplateSelector';
+import { parseResumeClient } from "@/utils/parsing";
 
 // Type for parsed resume response with confidence scores
 interface ParsedResumeResponse {
@@ -67,62 +69,6 @@ export default function CreateResume() {
     },
   });
 
-  // Parse resume mutation
-  const parseResumeMutation = useMutation({
-    mutationFn: async (file: File) => {
-      setParseStatus("parsing");
-      const formData = new FormData();
-      formData.append("file", file);
-      return apiRequest("POST", "/api/parse-resume", formData);
-    },
-    onSuccess: (response) => {
-      const data = response as ParsedResumeResponse;
-      setParseStatus("success");
-      setParsedData(data);
-      
-      // Check if we should show review based on confidence
-      const hasLowConfidence = data.confidence && 
-        (data.confidence.overall === "low" || 
-         Object.values(data.confidence.fields || {}).some((level) => level === "low"));
-      
-      if (hasLowConfidence || data.confidence) {
-        // Show review interface for confidence-enabled responses
-        setShowReview(true);
-        setCurrentStep(1);
-      } else {
-        // Legacy path for responses without confidence
-        if (data.personalInfo) {
-          personalForm.reset(data.personalInfo);
-        }
-        if (data.experience) {
-          setExperiences(data.experience);
-        }
-        if (data.education) {
-          setEducations(data.education);
-        }
-        if (data.skills) {
-          setSkills(data.skills);
-        }
-        toast({
-          title: "Resume Parsed Successfully",
-          description: "Your resume has been analyzed by AI. Review and edit the extracted information.",
-        });
-        setCurrentStep(1);
-      }
-    },
-    onError: (error) => {
-      setParseStatus("error");
-      toast({
-        variant: "destructive",
-        title: "Parse Failed",
-        description: "Failed to parse resume. You can try again or enter information manually.",
-      });
-      // Still allow manual entry
-      setShowReview(false);
-      setCurrentStep(1);
-    },
-  });
-
   // Generate resume mutation
   const generateResumeMutation = useMutation({
     mutationFn: async () => {
@@ -153,22 +99,20 @@ export default function CreateResume() {
     },
   });
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Validate file type
-      const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      if (!validTypes.includes(file.type)) {
+      const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain', 'application/msword'];
+      if (!validTypes.includes(file.type) && !file.name.endsWith('.docx')) {
         toast({
           variant: "destructive",
           title: "Invalid File Type",
-          description: "Please upload a PDF or DOCX file.",
+          description: "Please upload a PDF, DOCX or TXT file.",
         });
         return;
       }
-      
-      // Validate file size (10MB max)
-      if (file.size > 10 * 1024 * 1024) {
+
+      if (file.size > 10 * 1024 * 1024) { // 10MB limit
         toast({
           variant: "destructive",
           title: "File Too Large",
@@ -176,9 +120,76 @@ export default function CreateResume() {
         });
         return;
       }
-      
+
       setUploadedFile(file);
-      parseResumeMutation.mutate(file);
+      setParseStatus("parsing");
+
+      try {
+        const parsed = await parseResumeClient(file);
+        
+        const adaptedData: ParsedResumeResponse = {
+          personalInfo: {
+            fullName: parsed.name || "",
+            email: parsed.email || "",
+            phone: parsed.phone || "",
+            location: '',
+            linkedin: '',
+            website: '',
+            summary: ''
+          },
+          experience: parsed.experience?.map(exp => ({
+            id: nanoid(),
+            company: "",
+            position: "",
+            startDate: "",
+            endDate: "",
+            current: false,
+            description: exp,
+          })) || [],
+          education: parsed.education?.map(edu => ({
+            id: nanoid(),
+            institution: "",
+            degree: edu,
+            field: "",
+            startDate: "",
+            endDate: "",
+            current: false,
+          })) || [],
+          skills: parsed.skills || [],
+        };
+
+        setParseStatus("success");
+        setParsedData(adaptedData);
+
+        if (adaptedData.personalInfo) {
+          personalForm.reset(adaptedData.personalInfo);
+        }
+        if (adaptedData.experience) {
+          setExperiences(adaptedData.experience);
+        }
+        if (adaptedData.education) {
+          setEducations(adaptedData.education);
+        }
+        if (adaptedData.skills) {
+          setSkills(adaptedData.skills);
+        }
+
+        toast({
+          title: "Resume Parsed Successfully",
+          description: "Your resume has been analyzed. Review and edit the extracted information.",
+        });
+        setCurrentStep(1);
+
+      } catch (error) {
+        setParseStatus("error");
+        toast({
+          variant: "destructive",
+          title: "Parse Failed",
+          description: "Failed to parse resume. You can try again or enter information manually.",
+        });
+        setShowReview(false);
+        setCurrentStep(1);
+      }
     }
   };
 
@@ -782,22 +793,7 @@ export default function CreateResume() {
 
           {/* Right Side - Preview */}
           <div>
-            <Card className="p-6 sticky top-24">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold">Live Preview</h3>
-                <Badge variant="outline" className="gap-2">
-                  <Sparkles className="h-3 w-3" />
-                  AI Enhanced
-                </Badge>
-              </div>
-
-              <div className="aspect-[8.5/11] bg-muted rounded-lg flex items-center justify-center border-2 border-dashed border-border">
-                <div className="text-center text-muted-foreground">
-                  <FileText className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                  <p>Resume preview will appear here</p>
-                </div>
-              </div>
-            </Card>
+            <EnhancedTemplateSelector parsedData={parsedData} />
           </div>
         </div>
       </div>
