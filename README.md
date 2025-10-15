@@ -2,7 +2,20 @@
 
 > AI-Powered Resume Builder with Blockchain Verification
 
-Job-Lander is a modern, full-stack web application that helps job seekers create professional resumes using AI-powered content generation, stunning Canva templates, and blockchain-verified credentials.
+## 📜 License Notice
+
+**🚨 IMPORTANT: This project is NOT open source for commercial use.**
+
+- ✅ **Educational Use**: Feel free to study and learn from the code
+- ✅ **Personal Projects**: Use for non-commercial personal projects  
+- ✅ **Contributions**: Bug reports and improvements are welcome
+- ❌ **Commercial Use**: Prohibited without explicit written permission
+- ❌ **Competing Services**: Cannot create competing commercial services
+
+**For commercial licensing, please contact the author.**
+
+See [LICENSE](LICENSE) for full terms.
+
 
 ## ✨ Features
 
@@ -13,7 +26,6 @@ Job-Lander is a modern, full-stack web application that helps job seekers create
 - Smart job matching with AI-powered scoring
 
 ### 🎨 Professional Templates
-- 50+ professional resume templates powered by Canva
 - Multiple categories: Modern, Classic, Creative, Professional, Minimalist
 - Real-time preview and customization
 - One-click template application
@@ -34,7 +46,6 @@ Job-Lander is a modern, full-stack web application that helps job seekers create
 - Beautiful dark mode support
 - Responsive design for all devices
 - Smooth animations and transitions
-- Canva-inspired clean interface
 
 ## 🛠️ Technology Stack
 
@@ -49,7 +60,6 @@ Job-Lander is a modern, full-stack web application that helps job seekers create
 ### Backend
 - **Node.js** with **Express**
 - **Gemini AI** (Google) for content generation
-- **Canva Connect API** for template management
 - **ethers.js** for blockchain integration
 - **Multer** for file uploads
 - **pdf-parse** & **mammoth** for document parsing
@@ -65,7 +75,6 @@ Job-Lander is a modern, full-stack web application that helps job seekers create
 - Node.js 18+ installed
 - API keys for:
   - Gemini AI
-  - Canva Connect
   - JSearch (RapidAPI)
   - Polygon Mumbai RPC (Alchemy/Infura)
 
@@ -89,7 +98,6 @@ Job-Lander is a modern, full-stack web application that helps job seekers create
    
    Edit `.env` and add your API keys:
    - `GEMINI_API_KEY`: Get from https://aistudio.google.com/apikey
-   - `CANVA_CLIENT_ID` & `CANVA_CLIENT_SECRET`: Get from https://www.canva.com/developers
    - `WEB3_RPC_URL`: Get from https://www.alchemy.com/ or https://infura.io/
    - `JSEARCH_API_KEY`: Get from https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch
    - `SESSION_SECRET`: Any random string
@@ -117,7 +125,6 @@ job-lander/
 │   ├── services/         # Business logic
 │   │   ├── gemini.ts     # AI content generation
 │   │   ├── blockchain.ts # Blockchain verification
-│   │   ├── canva.ts      # Template management
 │   │   └── jobs.ts       # Job search
 │   ├── routes.ts         # API routes
 │   └── storage.ts        # Data persistence
@@ -146,10 +153,6 @@ job-lander/
 ### Job Search
 - `GET /api/find-jobs?query=...&location=...` - Search jobs
 
-### Canva Templates
-- `GET /api/canva/templates` - Get available templates
-- `POST /api/canva/create-template` - Create design from template
-- `POST /api/canva/export-pdf` - Export design as PDF
 
 ## 🔐 Blockchain Smart Contract
 
@@ -259,7 +262,6 @@ This project is licensed under the MIT License.
 ## 🙏 Acknowledgments
 
 - **Gemini AI** by Google for powerful content generation
-- **Canva** for beautiful design templates
 - **Polygon** for blockchain infrastructure
 - **Shadcn UI** for component library
 - **JSearch API** for job listings
