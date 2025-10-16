@@ -3,7 +3,7 @@ name: Deploy JobLander API to AWS
 on:
   push:
     branches:
-      - main  # change this if your main branch has a different name
+      - main  # change this if your main branch is called something else (like "master")
 
 jobs:
   deploy:
