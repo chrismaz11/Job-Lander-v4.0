@@ -86,14 +86,7 @@ export function CoverLetterEditor({
     
     toast({
       title: "Downloaded",
-      description: "Cover letter saved as text file. For PDF, use the Canva designer.",
-    });
-  };
-
-  const designWithCanva = () => {
-    toast({
-      title: "Canva Designer",
-      description: "Canva integration will open your cover letter in a professional template.",
+      description: "Cover letter downloaded successfully.",
     });
   };
 
@@ -238,13 +231,6 @@ export function CoverLetterEditor({
             >
               <Download className="w-4 h-4 mr-2" />
               Download
-            </Button>
-            <Button
-              onClick={designWithCanva}
-              data-testid="button-canva"
-            >
-              <Palette className="w-4 h-4 mr-2" />
-              Design with Canva
             </Button>
           </div>
         </div>

@@ -230,7 +230,6 @@ class DatabaseMigrator {
       userId: doc.userId || doc.user_id || 'unknown',
       content: JSON.stringify(doc.content || doc),
       templateId: doc.templateId,
-      canvaDesignId: doc.canvaDesignId,
       pdfUrl: doc.pdfUrl,
       blockchainHash: doc.blockchainHash,
       verifiedAt: doc.verifiedAt ? new Date(doc.verifiedAt).toISOString() : undefined,

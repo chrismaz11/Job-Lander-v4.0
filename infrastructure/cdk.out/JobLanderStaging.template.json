@@ -676,11 +676,9 @@
        },
        {
         "Name": "CANVA_CLIENT_ID",
-        "ValueFrom": "arn:aws:secretsmanager:us-east-1:817977749885:secret:job-lander/canva-client-id-staging"
        },
        {
         "Name": "CANVA_CLIENT_SECRET",
-        "ValueFrom": "arn:aws:secretsmanager:us-east-1:817977749885:secret:job-lander/canva-client-secret-staging"
        },
        {
         "Name": "JSEARCH_API_KEY",
@@ -780,8 +778,6 @@
        ],
        "Effect": "Allow",
        "Resource": [
-        "arn:aws:secretsmanager:us-east-1:817977749885:secret:job-lander/canva-client-id-staging-??????",
-        "arn:aws:secretsmanager:us-east-1:817977749885:secret:job-lander/canva-client-secret-staging-??????",
         "arn:aws:secretsmanager:us-east-1:817977749885:secret:job-lander/gemini-api-key-staging-??????",
         "arn:aws:secretsmanager:us-east-1:817977749885:secret:job-lander/jsearch-api-key-staging-??????",
         "arn:aws:secretsmanager:us-east-1:817977749885:secret:job-lander/private-key-staging-??????",

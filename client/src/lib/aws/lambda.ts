@@ -1,1 +1,162 @@
-import { post } from 'aws-amplify/api';\n\n// Lambda function utilities\nexport const lambdaService = {\n  // Parse resume using Lambda function\n  parseResume: async (file: File) => {\n    try {\n      // Convert file to base64\n      const base64Data = await new Promise<string>((resolve, reject) => {\n        const reader = new FileReader();\n        reader.onload = () => {\n          const result = reader.result as string;\n          // Remove data:mime/type;base64, prefix\n          const base64 = result.split(',')[1];\n          resolve(base64);\n        };\n        reader.onerror = reject;\n        reader.readAsDataURL(file);\n      });\n\n      // Determine document type\n      const documentType = file.type.includes('image') ? 'image' : \n                          file.type.includes('pdf') && file.size > 1000000 ? 'scanned-pdf' : 'text';\n\n      // Call the Lambda function\n      const operation = post({\n        apiName: 'resumeParserApi',\n        path: '/parse-resume',\n        options: {\n          body: {\n            documentContent: base64Data,\n            documentType,\n            fileName: file.name,\n            fileType: file.type,\n          },\n        },\n      });\n\n      const response = await operation.response;\n      const data = await response.body.json();\n\n      if (data.success) {\n        return {\n          success: true,\n          data: data.data,\n          extractedText: data.extractedText,\n        };\n      } else {\n        return {\n          success: false,\n          error: data.error || 'Resume parsing failed',\n        };\n      }\n    } catch (error: any) {\n      console.error('Resume parsing error:', error);\n      return {\n        success: false,\n        error: error.message || 'Resume parsing failed',\n      };\n    }\n  },\n\n  // Generate enhanced resume content using AI\n  enhanceResume: async (resumeData: any, targetJob?: string) => {\n    try {\n      const operation = post({\n        apiName: 'resumeParserApi',\n        path: '/enhance-resume',\n        options: {\n          body: {\n            resumeData,\n            targetJob,\n          },\n        },\n      });\n\n      const response = await operation.response;\n      const data = await response.body.json();\n\n      if (data.success) {\n        return {\n          success: true,\n          data: data.data,\n        };\n      } else {\n        return {\n          success: false,\n          error: data.error || 'Resume enhancement failed',\n        };\n      }\n    } catch (error: any) {\n      return {\n        success: false,\n        error: error.message || 'Resume enhancement failed',\n      };\n    }\n  },\n\n  // Generate cover letter using AI\n  generateCoverLetter: async (resumeData: any, jobDescription: string, tone: 'professional' | 'friendly' | 'confident' = 'professional') => {\n    try {\n      const operation = post({\n        apiName: 'resumeParserApi',\n        path: '/generate-cover-letter',\n        options: {\n          body: {\n            resumeData,\n            jobDescription,\n            tone,\n          },\n        },\n      });\n\n      const response = await operation.response;\n      const data = await response.body.json();\n\n      if (data.success) {\n        return {\n          success: true,\n          data: data.data,\n        };\n      } else {\n        return {\n          success: false,\n          error: data.error || 'Cover letter generation failed',\n        };\n      }\n    } catch (error: any) {\n      return {\n        success: false,\n        error: error.message || 'Cover letter generation failed',\n      };\n    }\n  },\n\n  // Analyze job match score\n  analyzeJobMatch: async (resumeData: any, jobDescription: string) => {\n    try {\n      const operation = post({\n        apiName: 'resumeParserApi',\n        path: '/analyze-job-match',\n        options: {\n          body: {\n            resumeData,\n            jobDescription,\n          },\n        },\n      });\n\n      const response = await operation.response;\n      const data = await response.body.json();\n\n      if (data.success) {\n        return {\n          success: true,\n          data: data.data,\n        };\n      } else {\n        return {\n          success: false,\n          error: data.error || 'Job match analysis failed',\n        };\n      }\n    } catch (error: any) {\n      return {\n        success: false,\n        error: error.message || 'Job match analysis failed',\n      };\n    }\n  },\n\n  // Health check for Lambda functions\n  healthCheck: async () => {\n    try {\n      const operation = post({\n        apiName: 'resumeParserApi',\n        path: '/health',\n        options: {\n          body: {},\n        },\n      });\n\n      const response = await operation.response;\n      const data = await response.body.json();\n\n      return {\n        success: data.success,\n        status: data.status,\n        timestamp: data.timestamp,\n      };\n    } catch (error: any) {\n      return {\n        success: false,\n        error: error.message || 'Health check failed',\n      };\n    }\n  },\n};
+import { post } from 'aws-amplify/api';
+
+// Lambda function utilities
+export const lambdaService = {
+  // Parse resume using Lambda function
+  parseResume: async (file: File) => {
+    try {
+      // Convert file to base64
+      const base64Data = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          // Remove data:mime/type;base64, prefix
+          const base64 = result.split(',')[1];
+          resolve(base64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      // Determine document type
+      const documentType = file.type.includes('image') ? 'image' : 
+                          file.type.includes('pdf') && file.size > 1000000 ? 'scanned-pdf' : 'text';
+
+      // Call the Lambda function
+      const operation = post({
+        apiName: 'resumeParserApi',
+        path: '/parse-resume',
+        options: {
+          body: {
+            documentContent: base64Data,
+            documentType,
+            fileName: file.name,
+            fileType: file.type,
+          },
+        },
+      });
+
+      const response = await operation.response;
+      const data = await response.body.json();
+
+      if (data.success) {
+        return {
+          success: true,
+          data: data.data,
+          extractedText: data.extractedText,
+        };
+      } else {
+        return {
+          success: false,
+          error: data.error || 'Resume parsing failed',
+        };
+      }
+    } catch (error: any) {
+      console.error('Resume parsing error:', error);
+      return {
+        success: false,
+        error: error.message || 'Resume parsing failed',
+      };
+    }
+  },
+
+  // Generate enhanced resume content using AI
+  enhanceResume: async (resumeData: any, targetJob?: string) => {
+    try {
+      const operation = post({
+        apiName: 'resumeParserApi',
+        path: '/enhance-resume',
+        options: {
+          body: {
+            resumeData,
+            targetJob,
+          },
+        },
+      });
+
+      const response = await operation.response;
+      const data = await response.body.json();
+
+      if (data.success) {
+        return {
+          success: true,
+          data: data.data,
+        };
+      } else {
+        return {
+          success: false,
+          error: data.error || 'Resume enhancement failed',
+        };
+      }
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message || 'Resume enhancement failed',
+      };
+    }
+  },
+
+  // Generate cover letter using AI
+  generateCoverLetter: async (resumeData: any, jobDescription: string, tone: 'professional' | 'friendly' | 'confident' = 'professional') => {
+    try {
+      const operation = post({
+        apiName: 'resumeParserApi',
+        path: '/generate-cover-letter',
+        options: {
+          body: {
+            resumeData,
+            jobDescription,
+            tone,
+          },
+        },
+      });
+
+      const response = await operation.response;
+      const data = await response.body.json();
+
+      if (data.success) {
+        return {
+          success: true,
+          data: data.data,
+        };
+      } else {
+        return {
+          success: false,
+          error: data.error || 'Cover letter generation failed',
+        };
+      }
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message || 'Cover letter generation failed',
+      };
+    }
+  },
+
+  // Health check for Lambda functions
+  healthCheck: async () => {
+    try {
+      const operation = post({
+        apiName: 'resumeParserApi',
+        path: '/health',
+        options: {
+          body: {},
+        },
+      });
+
+      const response = await operation.response;
+      const data = await response.body.json();
+
+      return {
+        success: data.success,
+        status: data.status,
+        timestamp: data.timestamp,
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message || 'Health check failed',
+      };
+    }
+  },
+};

@@ -47,7 +47,6 @@ STAGE=development bash scripts/deploy-to-aws.sh
 You'll need these API keys (get them from `.env` file or API providers):
 
 - **GEMINI_API_KEY**: https://aistudio.google.com/app/apikey
-- **CANVA_CLIENT_ID/SECRET**: https://www.canva.com/developers
 - **JSEARCH_API_KEY**: https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch
 - **WEB3_RPC_URL**: Alchemy, Infura, or QuickNode
 - **PRIVATE_KEY**: Your blockchain wallet private key (testnet)

@@ -3,7 +3,6 @@ type Resume @aws_iam @aws_cognito_user_pools {
   userId: String!
   content: AWSJSON!
   templateId: String
-  canvaDesignId: String
   pdfUrl: String
   blockchainHash: String
   verifiedAt: AWSDateTime
@@ -231,7 +230,6 @@ input ModelResumeFilterInput {
   userId: ModelStringInput
   content: ModelStringInput
   templateId: ModelStringInput
-  canvaDesignId: ModelStringInput
   pdfUrl: ModelStringInput
   blockchainHash: ModelStringInput
   verifiedAt: ModelStringInput
@@ -258,7 +256,6 @@ input ModelResumeConditionInput {
   userId: ModelStringInput
   content: ModelStringInput
   templateId: ModelStringInput
-  canvaDesignId: ModelStringInput
   pdfUrl: ModelStringInput
   blockchainHash: ModelStringInput
   verifiedAt: ModelStringInput
@@ -275,7 +272,6 @@ input CreateResumeInput {
   userId: String!
   content: AWSJSON!
   templateId: String
-  canvaDesignId: String
   pdfUrl: String
   blockchainHash: String
   verifiedAt: AWSDateTime
@@ -288,7 +284,6 @@ input UpdateResumeInput {
   userId: String
   content: AWSJSON
   templateId: String
-  canvaDesignId: String
   pdfUrl: String
   blockchainHash: String
   verifiedAt: AWSDateTime
@@ -320,7 +315,6 @@ input ModelSubscriptionResumeFilterInput {
   userId: ModelSubscriptionStringInput
   content: ModelSubscriptionStringInput
   templateId: ModelSubscriptionStringInput
-  canvaDesignId: ModelSubscriptionStringInput
   pdfUrl: ModelSubscriptionStringInput
   blockchainHash: ModelSubscriptionStringInput
   verifiedAt: ModelSubscriptionStringInput

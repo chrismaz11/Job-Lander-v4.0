@@ -1,5 +1,4 @@
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
 export class PDFGenerator {
   static async generateFromElement(element, options = {}) {
@@ -16,12 +15,9 @@ export class PDFGenerator {
     try {
       console.log('🔄 Starting PDF generation...');
       
-      const canvas = await html2canvas(element, defaultOptions);
-      const imgData = canvas.toDataURL('image/png');
       
       const imgWidth = 210;
       const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight;
       
       const pdf = new jsPDF('p', 'mm', 'a4');

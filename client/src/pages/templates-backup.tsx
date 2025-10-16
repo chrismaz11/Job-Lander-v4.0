@@ -30,7 +30,6 @@ export default function Templates() {
   const [previewOpen, setPreviewOpen] = useState(false);
 
   const { data: templatesData, isLoading } = useQuery<Template[]>({
-    queryKey: ["/api/canva/templates"],
   });
 
   const templates: Template[] = templatesData || [];
@@ -75,7 +74,6 @@ export default function Templates() {
             Choose Your Perfect Resume Template
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Select from our collection of professionally designed templates powered by Canva. 
             Each template is optimized for ATS systems and recruiter preferences.
           </p>
         </div>
@@ -243,7 +241,6 @@ export default function Templates() {
                     )}
                   </DialogTitle>
                   <DialogDescription className="mt-2">
-                    {selectedTemplate?.description || `${selectedTemplate?.category} template - Professional resume design powered by Canva`}
                   </DialogDescription>
                 </div>
                 <Badge 

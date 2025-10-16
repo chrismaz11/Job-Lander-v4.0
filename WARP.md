@@ -4,11 +4,9 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-Job-Lander is an AI-powered resume builder with blockchain verification capabilities. It combines AI content generation, professional Canva templates, and Web3 verification to create a comprehensive job search platform.
 
 **Core Features:**
 - AI resume parsing and content enhancement using Gemini AI
-- Professional resume templates via Canva API integration
 - Blockchain verification using Polygon Mumbai testnet
 - Job search with AI-powered matching scores
 - Cover letter generation with multiple tone variants
@@ -92,7 +90,6 @@ curl -X POST http://localhost:5000/api/verify-on-chain \
 - `prompts/`: Structured prompt templates
 
 **External Integrations:**
-- `canva.ts`: Canva API for template management and PDF export
 - `jobs.ts`: JSearch API for job listings with AI ranking
 - `blockchain.ts`: Web3 integration for resume verification
 - `ocrParser.ts`: Hybrid OCR + AI document parsing
@@ -112,7 +109,6 @@ interface Resume {
   education: Education[];
   skills: string[];
   templateId?: string;
-  canvaDesignId?: string;
   pdfUrl?: string;
   blockchainHash?: string;
   verifiedAt?: Date;
@@ -124,7 +120,6 @@ interface Resume {
 2. OCR fallback for scanned documents
 3. AI content extraction and structuring
 4. Professional enhancement suggestions
-5. Template application via Canva
 6. Blockchain verification
 
 ### Authentication & Authorization
@@ -143,7 +138,6 @@ Copy `.env.example` to `.env` and configure:
 - LLM caching and metrics automatically configured
 
 **External APIs:**
-- `CANVA_CLIENT_ID`, `CANVA_CLIENT_SECRET`: Canva Connect API
 - `JSEARCH_API_KEY`: RapidAPI job search integration
 
 **Blockchain (Polygon Mumbai):**

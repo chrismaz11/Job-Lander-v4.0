@@ -94,7 +94,6 @@ The application will be available at http://localhost:3000.
 
 ### Optional API Keys (Demo values provided)
 - `GEMINI_API_KEY`: Google AI API key for content generation
-- `CANVA_CLIENT_ID` & `CANVA_CLIENT_SECRET`: Canva API credentials
 - `JSEARCH_API_KEY`: Job search API key
 - `PRIVATE_KEY` & `CONTRACT_ADDRESS`: Blockchain verification (testnet)
 

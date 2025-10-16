@@ -98,11 +98,9 @@ if [ -n "$GEMINI_API_KEY" ]; then
 fi
 
 if [ -n "$CANVA_CLIENT_ID" ]; then
-    create_secret "job-lander/canva-client-id-${STAGE}" "$CANVA_CLIENT_ID" "Canva Client ID for Job-Lander ${STAGE}"
 fi
 
 if [ -n "$CANVA_CLIENT_SECRET" ]; then
-    create_secret "job-lander/canva-client-secret-${STAGE}" "$CANVA_CLIENT_SECRET" "Canva Client Secret for Job-Lander ${STAGE}"
 fi
 
 if [ -n "$JSEARCH_API_KEY" ]; then

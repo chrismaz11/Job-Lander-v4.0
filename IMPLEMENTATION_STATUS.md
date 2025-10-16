@@ -38,7 +38,6 @@
 ### Dependencies Installed
 ```bash
 ✅ jspdf - PDF generation
-✅ html2canvas - HTML to canvas conversion
 ✅ react-color - Color picker component
 ✅ pdf-parse - PDF text extraction
 ✅ mammoth - DOCX text extraction

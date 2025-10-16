@@ -9,7 +9,6 @@ export const createResume = async (resumeData: {
   userId: string;
   content: any;
   templateId?: string;
-  canvaDesignId?: string;
 }) => {
   const { data } = await client.models.Resume.create(resumeData);
   return data;
@@ -34,7 +33,6 @@ export const listResumes = async (userId: string) => {
 export const updateResume = async (id: string, updates: Partial<{
   content: any;
   templateId: string;
-  canvaDesignId: string;
   pdfUrl: string;
   blockchainHash: string;
   verifiedAt: string;

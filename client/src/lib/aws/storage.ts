@@ -1,1 +1,91 @@
-import { uploadData, downloadData, remove, list } from 'aws-amplify/storage';\n\n// S3 Storage utilities\nexport const storageService = {\n  // Upload file to S3\n  uploadFile: async (key: string, file: File, options?: {\n    level?: 'guest' | 'protected' | 'private';\n    contentType?: string;\n    onProgress?: (progress: { transferredBytes: number; totalBytes?: number }) => void;\n  }) => {\n    try {\n      const result = await uploadData({\n        key,\n        data: file,\n        options: {\n          accessLevel: options?.level || 'private',\n          contentType: options?.contentType || file.type,\n          onProgress: options?.onProgress,\n        },\n      }).result;\n\n      return {\n        success: true,\n        key: result.key,\n        url: `https://amplify-joblanderv4-chris-joblanderstoragebucket26-hzjb92i7sfbm.s3.amazonaws.com/${result.key}`,\n      };\n    } catch (error: any) {\n      return {\n        success: false,\n        error: error.message || 'Upload failed',\n      };\n    }\n  },\n\n  // Upload resume file\n  uploadResume: async (userId: string, file: File) => {\n    const timestamp = Date.now();\n    const key = `resumes/${userId}/${timestamp}-${file.name}`;\n    return storageService.uploadFile(key, file, {\n      contentType: file.type,\n    });\n  },\n\n  // Upload portfolio file\n  uploadPortfolio: async (userId: string, file: File) => {\n    const timestamp = Date.now();\n    const key = `portfolios/${userId}/${timestamp}-${file.name}`;\n    return storageService.uploadFile(key, file, {\n      contentType: file.type,\n    });\n  },\n\n  // Upload temporary file\n  uploadTempFile: async (userId: string, file: File) => {\n    const timestamp = Date.now();\n    const key = `temp-uploads/${userId}/${timestamp}-${file.name}`;\n    return storageService.uploadFile(key, file, {\n      contentType: file.type,\n    });\n  },\n\n  // Download file from S3\n  downloadFile: async (key: string, options?: {\n    level?: 'guest' | 'protected' | 'private';\n  }) => {\n    try {\n      const result = await downloadData({\n        key,\n        options: {\n          accessLevel: options?.level || 'private',\n        },\n      }).result;\n\n      return {\n        success: true,\n        data: result.body,\n        contentType: result.contentType,\n      };\n    } catch (error: any) {\n      return {\n        success: false,\n        error: error.message || 'Download failed',\n      };\n    }\n  },\n\n  // Get download URL for a file\n  getFileUrl: async (key: string, options?: {\n    level?: 'guest' | 'protected' | 'private';\n    expiresIn?: number; // seconds\n  }) => {\n    try {\n      // For now, return direct S3 URL\n      // In production, you might want to use signed URLs for security\n      return {\n        success: true,\n        url: `https://amplify-joblanderv4-chris-joblanderstoragebucket26-hzjb92i7sfbm.s3.amazonaws.com/${key}`,\n      };\n    } catch (error: any) {\n      return {\n        success: false,\n        error: error.message || 'Failed to get file URL',\n      };\n    }\n  },\n\n  // List files in a directory\n  listFiles: async (prefix: string, options?: {\n    level?: 'guest' | 'protected' | 'private';\n    maxKeys?: number;\n  }) => {\n    try {\n      const result = await list({\n        prefix,\n        options: {\n          accessLevel: options?.level || 'private',\n          listAll: true,\n        },\n      });\n\n      return {\n        success: true,\n        files: result.items,\n      };\n    } catch (error: any) {\n      return {\n        success: false,\n        error: error.message || 'Failed to list files',\n      };\n    }\n  },\n\n  // Delete file from S3\n  deleteFile: async (key: string, options?: {\n    level?: 'guest' | 'protected' | 'private';\n  }) => {\n    try {\n      await remove({\n        key,\n        options: {\n          accessLevel: options?.level || 'private',\n        },\n      });\n\n      return {\n        success: true,\n      };\n    } catch (error: any) {\n      return {\n        success: false,\n        error: error.message || 'Delete failed',\n      };\n    }\n  },\n\n  // List user resumes\n  listUserResumes: async (userId: string) => {\n    return storageService.listFiles(`resumes/${userId}/`);\n  },\n\n  // List user portfolios\n  listUserPortfolios: async (userId: string) => {\n    return storageService.listFiles(`portfolios/${userId}/`);\n  },\n\n  // Delete user resume\n  deleteUserResume: async (userId: string, filename: string) => {\n    return storageService.deleteFile(`resumes/${userId}/${filename}`);\n  },\n\n  // Delete user portfolio\n  deleteUserPortfolio: async (userId: string, filename: string) => {\n    return storageService.deleteFile(`portfolios/${userId}/${filename}`);\n  },\n};
+import { uploadData, downloadData, remove, list } from 'aws-amplify/storage';
+
+// S3 Storage utilities
+export const storageService = {
+  // Upload file to S3
+  uploadFile: async (key: string, file: File, options?: {
+    level?: 'guest' | 'protected' | 'private';
+    contentType?: string;
+    onProgress?: (progress: { transferredBytes: number; totalBytes?: number }) => void;
+  }) => {
+    try {
+      const result = await uploadData({
+        key,
+        data: file,
+        options: {
+          accessLevel: options?.level || 'private',
+          contentType: options?.contentType || file.type,
+          onProgress: options?.onProgress,
+        },
+      }).result;
+
+      return {
+        success: true,
+        key: result.key,
+        url: `https://amplify-joblanderv4-chris-joblanderstoragebucket26-hzjb92i7sfbm.s3.amazonaws.com/${result.key}`,
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message || 'Upload failed',
+      };
+    }
+  },
+
+  // Upload resume file
+  uploadResume: async (userId: string, file: File) => {
+    const timestamp = Date.now();
+    const key = `resumes/${userId}/${timestamp}-${file.name}`;
+    return storageService.uploadFile(key, file, {
+      contentType: file.type,
+    });
+  },
+
+  // Download file from S3
+  downloadFile: async (key: string, options?: {
+    level?: 'guest' | 'protected' | 'private';
+  }) => {
+    try {
+      const result = await downloadData({
+        key,
+        options: {
+          accessLevel: options?.level || 'private',
+        },
+      }).result;
+
+      return {
+        success: true,
+        data: result.body,
+        contentType: result.contentType,
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message || 'Download failed',
+      };
+    }
+  },
+
+  // Delete file from S3
+  deleteFile: async (key: string, options?: {
+    level?: 'guest' | 'protected' | 'private';
+  }) => {
+    try {
+      await remove({
+        key,
+        options: {
+          accessLevel: options?.level || 'private',
+        },
+      });
+
+      return {
+        success: true,
+      };
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message || 'Delete failed',
+      };
+    }
+  },
+};

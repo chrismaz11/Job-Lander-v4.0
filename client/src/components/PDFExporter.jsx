@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { PDFGenerator, PDFTemplateConfigs } from '../utils/pdfGenerator';
+import { PDFGenerator, PDFTemplateConfigs } from '../utils/pdfGenerator.ts';
 import './PDFExporter.css';
 
 const PDFExporter = ({ children, templateType = 'modern', filename = 'resume' }) => {

@@ -1,5 +1,4 @@
 // SaaS Pricing Strategy - Job-Lander Pro
-// Competitive analysis: Resume.io ($2.95-5.95), CV-Lite ($9.99), Canva ($15), Zety ($5.95-17.95)
 
 export interface PricingTier {
   id: string;

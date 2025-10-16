@@ -162,8 +162,6 @@ AMPLIFY_APP_ID=d1234567890abcdef      # Amplify app ID
 #### API Keys
 ```bash
 GEMINI_API_KEY=your_gemini_key        # Google AI API key
-CANVA_CLIENT_ID=your_canva_id         # Canva API credentials
-CANVA_CLIENT_SECRET=your_canva_secret
 JSEARCH_API_KEY=your_jsearch_key      # Job search API
 ```
 

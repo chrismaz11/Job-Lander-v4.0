@@ -1,20 +1,19 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { Pool } from 'pg';
-import * as schema from "../shared/schema.js";
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+import * as schema from '../shared/schema';
 
-// Construct DATABASE_URL from individual parameters if available
-let connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:5432/job_lander';
 
-if (!connectionString && process.env.DB_HOST) {
-  const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD } = process.env;
-  connectionString = `postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+const client = postgres(connectionString);
+export const db = drizzle(client, { schema });
+
+export async function testConnection() {
+  try {
+    await client`SELECT 1`;
+    console.log('✅ Database connected successfully');
+    return true;
+  } catch (error) {
+    console.error('❌ Database connection failed:', error);
+    return false;
+  }
 }
-
-if (!connectionString) {
-  throw new Error(
-    "DATABASE_URL or individual DB parameters (DB_HOST, DB_PORT, etc.) must be set. Did you forget to provision a database?",
-  );
-}
-
-export const pool = new Pool({ connectionString });
-export const db = drizzle(pool, { schema });

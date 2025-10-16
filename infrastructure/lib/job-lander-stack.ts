@@ -181,15 +181,11 @@ export class JobLanderStack extends cdk.Stack {
         CANVA_CLIENT_ID: ecs.Secret.fromSecretsManager(
           secretsmanager.Secret.fromSecretNameV2(
             this,
-            'CanvaClientId',
-            `job-lander/canva-client-id-${stage}`
           )
         ),
         CANVA_CLIENT_SECRET: ecs.Secret.fromSecretsManager(
           secretsmanager.Secret.fromSecretNameV2(
             this,
-            'CanvaClientSecret',
-            `job-lander/canva-client-secret-${stage}`
           )
         ),
         JSEARCH_API_KEY: ecs.Secret.fromSecretsManager(

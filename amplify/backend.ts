@@ -6,6 +6,8 @@ import { storage } from './storage/resource';
 import { resumeParserFunction } from './functions/resume-parser/resource';
 import { aiServiceFunction } from './functions/ai-service/resource';
 import { blockchainServiceFunction } from './functions/blockchain-service/resource';
+import { jobSearchFunction } from './functions/job-search/resource';
+import { pdfGeneratorFunction } from './functions/pdf-generator/resource';
 
 /**
  * @see https://docs.amplify.aws/react/build-a-backend/ to add more resources
@@ -17,6 +19,8 @@ export const backend = defineBackend({
   resumeParserFunction,
   aiServiceFunction,
   blockchainServiceFunction,
+  jobSearchFunction,
+  pdfGeneratorFunction,
 });
 
 // Add Bedrock permissions to Lambda functions
@@ -125,3 +129,11 @@ backend.blockchainServiceFunction.resources.lambda.addToRolePolicy(kmsPolicy);
 backend.blockchainServiceFunction.resources.lambda.addToRolePolicy(secretsManagerPolicy);
 backend.blockchainServiceFunction.resources.lambda.addToRolePolicy(cloudWatchPolicy);
 backend.blockchainServiceFunction.resources.lambda.addToRolePolicy(s3Policy);
+
+// Apply policies to job search function
+backend.jobSearchFunction.resources.lambda.addToRolePolicy(secretsManagerPolicy);
+backend.jobSearchFunction.resources.lambda.addToRolePolicy(cloudWatchPolicy);
+
+// Apply policies to PDF generator function
+backend.pdfGeneratorFunction.resources.lambda.addToRolePolicy(s3Policy);
+backend.pdfGeneratorFunction.resources.lambda.addToRolePolicy(cloudWatchPolicy);

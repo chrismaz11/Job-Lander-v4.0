@@ -147,8 +147,6 @@ bash scripts/setup-aws-secrets.sh
 
 The script will prompt you for:
 - `GEMINI_API_KEY`: Google Gemini AI API key
-- `CANVA_CLIENT_ID`: Canva API client ID
-- `CANVA_CLIENT_SECRET`: Canva API client secret
 - `JSEARCH_API_KEY`: Job search API key
 - `WEB3_RPC_URL`: Blockchain RPC endpoint
 - `PRIVATE_KEY`: Blockchain private key

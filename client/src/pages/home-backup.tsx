@@ -21,7 +21,6 @@ export default function Home() {
   const [hoveredTemplate, setHoveredTemplate] = useState<string | null>(null);
 
   const { data: templatesData } = useQuery<Template[]>({
-    queryKey: ["/api/canva/templates"],
   });
 
   // Get featured templates (first 6 from different categories)
@@ -56,7 +55,6 @@ export default function Home() {
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
             Create professional resumes and cover letters in minutes using AI. 
-            Choose from stunning Canva templates and verify authenticity with blockchain technology.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -115,7 +113,6 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold mb-4">Professional Templates</h3>
               <p className="text-muted-foreground">
-                Access 50+ stunning resume templates powered by Canva. Choose from modern, classic, creative, and professional designs.
               </p>
             </Card>
 
@@ -291,7 +288,6 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-bold mb-3">Choose Template</h3>
               <p className="text-muted-foreground">
-                Select from 50+ professional Canva templates
               </p>
             </div>
 

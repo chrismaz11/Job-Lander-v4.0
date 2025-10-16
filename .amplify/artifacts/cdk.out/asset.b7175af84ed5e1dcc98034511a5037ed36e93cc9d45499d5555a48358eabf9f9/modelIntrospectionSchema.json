@@ -32,8 +32,6 @@
                     "isRequired": false,
                     "attributes": []
                 },
-                "canvaDesignId": {
-                    "name": "canvaDesignId",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,

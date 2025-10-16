@@ -5,7 +5,6 @@ type Resume @model @auth(rules: [{allow: owner, operations: [create, read, updat
   userId: String!
   content: AWSJSON!
   templateId: String
-  canvaDesignId: String
   pdfUrl: String
   blockchainHash: String
   verifiedAt: AWSDateTime

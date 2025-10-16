@@ -7,8 +7,9 @@ import { parseResumeWithAI, generateResumeContent, generateCoverLetter, generate
 import { hybridTextExtraction, parseResumeWithHybridAI } from "./services/ocrParser";
 import { generateResumeHash, verifyOnChain, checkVerification, estimateVerificationGas, batchVerifyOnChain } from "./services/blockchain";
 import { searchJobs, getAvailableCities, getJobStatistics, type JobSearchFilters } from "./services/jobs";
-import { getCanvaTemplates, createCanvaDesign, exportCanvaDesign } from "./services/canva";
 import { setupAuth, isAuthenticated } from "./simpleAuth";
+import { checkUserUsage, getUserTier, incrementUserUsage, canCreateResume, getTierLimits } from "./services/tierEnforcement";
+import { testConnection } from "./db";
 import { 
   generatePortfolioHTML, 
   getAvailableThemes, 
@@ -28,13 +29,136 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Setup authentication
   await setupAuth(app);
 
+  // Auth routes for AWS Amplify
+  app.get("/api/user/profile", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader) {
+        return res.status(401).json({ error: "No authorization header" });
+      }
+
+      // For now, return mock user data - you'll replace this with actual JWT verification
+      const mockUser = {
+        id: "user-123",
+        email: "user@example.com",
+        firstName: "John",
+        lastName: "Doe",
+        tier: "free"
+      };
+      
+      res.json(mockUser);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/user/create", async (req, res) => {
+    try {
+      const { id, email, firstName, lastName } = req.body;
+      
+      // For now, return the created user - you'll replace this with actual database operations
+      const newUser = {
+        id,
+        email,
+        firstName,
+        lastName,
+        tier: "free",
+        createdAt: new Date().toISOString()
+      };
+
+      res.json(newUser);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Stripe payment routes
+  app.post("/api/create-subscription", async (req, res) => {
+    try {
+      const { email, priceId, userId } = req.body;
+      
+      const { createCustomer, createSubscription, PRICING_PLANS } = await import("./services/stripe");
+      
+      // Create Stripe customer
+      const customer = await createCustomer(email);
+      
+      // Create subscription
+      const subscription = await createSubscription(customer.id, priceId);
+      
+      res.json({
+        subscriptionId: subscription.id,
+        clientSecret: subscription.latest_invoice?.payment_intent?.client_secret,
+        customerId: customer.id
+      });
+    } catch (error: any) {
+      console.error("Create subscription error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/cancel-subscription", async (req, res) => {
+    try {
+      const { subscriptionId } = req.body;
+      const { cancelSubscription } = await import("./services/stripe");
+      
+      const subscription = await cancelSubscription(subscriptionId);
+      res.json({ success: true, subscription });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/stripe-webhook", async (req, res) => {
+    try {
+      const { stripe } = await import("./services/stripe");
+      const sig = req.headers['stripe-signature'];
+      
+      const event = stripe.webhooks.constructEvent(
+        req.body,
+        sig!,
+        process.env.STRIPE_WEBHOOK_SECRET!
+      );
+
+      switch (event.type) {
+        case 'customer.subscription.created':
+        case 'customer.subscription.updated':
+          const subscription = event.data.object as any;
+          // Update user tier in database
+          console.log('Subscription updated:', subscription.id);
+          break;
+        case 'customer.subscription.deleted':
+          const deletedSub = event.data.object as any;
+          // Downgrade user to free tier
+          console.log('Subscription cancelled:', deletedSub.id);
+          break;
+      }
+
+      res.json({ received: true });
+    } catch (error: any) {
+      console.error("Webhook error:", error);
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/pricing-plans", async (req, res) => {
+    try {
+      const { PRICING_PLANS } = await import("./services/stripe");
+      res.json(PRICING_PLANS);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   // Health check endpoint
-  app.get('/api/health', (req, res) => {
+  app.get('/api/health', async (req, res) => {
+    const dbConnected = await testConnection();
+    
     res.json({ 
       status: 'healthy', 
       timestamp: new Date().toISOString(),
       environment: process.env.NODE_ENV,
-      version: '1.0.0'
+      version: '1.0.0',
+      database: dbConnected ? 'connected' : 'disconnected'
     });
   });
 
@@ -98,11 +222,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Generate resume (protected route)
+  // Generate resume (protected route with tier enforcement)
   app.post("/api/generate-resume", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
       const { personalInfo, experience, education, skills, templateId } = req.body;
+
+      // Check user tier and usage limits
+      const userUsage = await checkUserUsage(userId);
+      const userTier = await getUserTier(userId);
+      
+      if (!canCreateResume(userTier, userUsage.resumesThisMonth)) {
+        return res.status(403).json({ 
+          error: 'Resume limit reached', 
+          upgradeRequired: true,
+          currentUsage: userUsage.resumesThisMonth,
+          limit: getTierLimits(userTier).resumesPerMonth
+        });
+      }
 
       // Enhance content with AI
       const enhancedContent = await generateResumeContent({
@@ -122,10 +259,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         templateId,
       };
 
-      // Save to storage with userId, without Canva fields
+      // Save to storage with userId
       const resumeRecord = await storage.createResume(finalData);
 
-      // Generate HTML preview using the new generator
+      // Track usage
+      await incrementUserUsage(userId, 'resume_created');
+
+      // Generate HTML preview
       const templateKey = templateId || 'modern';
       const preview = generateResume({
         name: finalData.personalInfo?.fullName,
@@ -134,7 +274,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...finalData
       }, templateKey);
 
-      // Return both the DB record and the HTML preview
       res.json({ resumeRecord, preview });
 
     } catch (error: any) {
@@ -384,51 +523,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(stats);
     } catch (error: any) {
       console.error("Get job stats error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  // Get Canva templates
-  app.get("/api/canva/templates", async (req, res) => {
-    try {
-      const templates = await getCanvaTemplates();
-      res.json(templates);
-    } catch (error: any) {
-      console.error("Get templates error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  // Create Canva design
-  app.post("/api/canva/create-template", async (req, res) => {
-    try {
-      const { templateId, data } = req.body;
-
-      if (!templateId || !data) {
-        return res.status(400).json({ error: "Missing required fields" });
-      }
-
-      const design = await createCanvaDesign(templateId, data, req.user?.claims?.sub || 'anonymous');
-      res.json(design);
-    } catch (error: any) {
-      console.error("Create template error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  // Export Canva design as PDF
-  app.post("/api/canva/export-pdf", async (req, res) => {
-    try {
-      const { designId } = req.body;
-
-      if (!designId) {
-        return res.status(400).json({ error: "Design ID required" });
-      }
-
-      const pdfUrl = await exportCanvaDesign(designId, 'pdf', req.user?.claims?.sub || 'anonymous');
-      res.json({ pdfUrl });
-    } catch (error: any) {
-      console.error("Export PDF error:", error);
       res.status(500).json({ error: error.message });
     }
   });

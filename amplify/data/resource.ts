@@ -13,7 +13,6 @@ const schema = a.schema({
       userId: a.string().required(),
       content: a.json().required(), // Store complete resume as JSON
       templateId: a.string(),
-      canvaDesignId: a.string(),
       pdfUrl: a.string(),
       blockchainHash: a.string(),
       verifiedAt: a.datetime(),

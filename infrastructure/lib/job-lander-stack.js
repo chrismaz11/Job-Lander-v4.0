@@ -133,8 +133,6 @@ class JobLanderStack extends cdk.Stack {
                 DB_PASSWORD: ecs.Secret.fromSecretsManager(dbSecret, 'password'),
                 GEMINI_API_KEY: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'GeminiSecret', `job-lander/gemini-api-key-${stage}`)),
                 SESSION_SECRET: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'SessionSecret', `job-lander/session-secret-${stage}`)),
-                CANVA_CLIENT_ID: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'CanvaClientId', `job-lander/canva-client-id-${stage}`)),
-                CANVA_CLIENT_SECRET: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'CanvaClientSecret', `job-lander/canva-client-secret-${stage}`)),
                 JSEARCH_API_KEY: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'JSearchApiKey', `job-lander/jsearch-api-key-${stage}`)),
                 WEB3_RPC_URL: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'Web3RpcUrl', `job-lander/web3-rpc-url-${stage}`)),
                 PRIVATE_KEY: ecs.Secret.fromSecretsManager(secretsmanager.Secret.fromSecretNameV2(this, 'PrivateKey', `job-lander/private-key-${stage}`)),

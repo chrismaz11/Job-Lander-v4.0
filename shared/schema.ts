@@ -19,8 +19,33 @@ export const users = pgTable("users", {
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
+  tier: varchar("tier").default("free"),
+  stripeCustomerId: varchar("stripe_customer_id"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Subscriptions table
+export const subscriptions = pgTable("subscriptions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id),
+  stripeSubscriptionId: varchar("stripe_subscription_id").unique(),
+  status: varchar("status").notNull(),
+  tier: varchar("tier").notNull(),
+  currentPeriodStart: timestamp("current_period_start"),
+  currentPeriodEnd: timestamp("current_period_end"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Usage tracking table
+export const usageTracking = pgTable("usage_tracking", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id),
+  action: varchar("action").notNull(),
+  count: text("count").default("1"),
+  resetDate: timestamp("reset_date"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export type UpsertUser = typeof users.$inferInsert;
@@ -140,6 +165,8 @@ export type CoverLetter = typeof coverLetters.$inferSelect;
 export type Job = typeof jobs.$inferSelect;
 export type Template = typeof templates.$inferSelect;
 export type InsertTemplate = z.infer<typeof insertTemplateSchema>;
+export type Subscription = typeof subscriptions.$inferSelect;
+export type UsageTracking = typeof usageTracking.$inferSelect;
 
 // Form validation schemas
 export const personalInfoSchema = z.object({

@@ -2,10 +2,8 @@
 
 ## Design Approach
 
-**Reference-Based Approach**: Drawing inspiration from Canva's clean, professional aesthetic while adapting for job application context. The application balances marketing appeal (landing) with utility focus (tools).
 
 **Primary References**: 
-- Canva (clean UI, template galleries, professional feel)
 - Notion (intuitive editing, preview modes)
 - Linear (crisp typography, organized workflows)
 
@@ -74,7 +72,6 @@
 
 ## Page-Specific Guidelines
 
-### Landing Page (Canva-Inspired)
 
 **Hero Section** (h-screen or min-h-[90vh]):
 - Large hero image: Professional workspace scene with resume mockups (abstract, modern)
@@ -85,7 +82,6 @@
 
 **Features Section** (3-column grid on desktop):
 - AI Content Generation (icon + title + description)
-- Professional Templates (Canva integration highlight)
 - Blockchain Verification (unique differentiator)
 Each card: p-8, rounded-2xl, hover:scale-105 transition
 
@@ -127,7 +123,6 @@ Each card: p-8, rounded-2xl, hover:scale-105 transition
 - Upload zone: Dashed border, drag-drop enabled, lg:h-48
 
 **Preview Panel**:
-- Canvas-like background (subtle grid pattern)
 - Resume preview at actual scale
 - Floating controls: Download PDF, Save Draft, Verify
 
@@ -229,12 +224,10 @@ Use sparingly, focus on polish:
 
 **Feature Icons**:
 - AI Brain icon for content generation
-- Template grid icon for Canva integration  
 - Shield with checkmark for blockchain verification
 
 **Template Previews**:
 - Professional resume mockups in various styles
-- Show actual template designs from Canva integration
 
 **Social Proof**:
 - User avatars (placeholder or stock professional headshots)

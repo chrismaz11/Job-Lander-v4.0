@@ -42,11 +42,9 @@
         },
         {
           "name": "CANVA_CLIENT_ID",
-          "valueFrom": "arn:aws:ssm:YOUR_REGION:YOUR_ACCOUNT_ID:parameter/job-lander/canva-client-id"
         },
         {
           "name": "CANVA_CLIENT_SECRET",
-          "valueFrom": "arn:aws:ssm:YOUR_REGION:YOUR_ACCOUNT_ID:parameter/job-lander/canva-client-secret"
         },
         {
           "name": "JSEARCH_API_KEY",
