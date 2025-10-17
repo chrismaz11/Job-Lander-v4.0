@@ -87,55 +87,17 @@ export default function CreateResumeSimple() {
     setParseStatus("parsing");
     
     try {
-      // For now, we'll simulate parsing with a simple text extraction
-      // In the next step, we'll connect this to the AI backend
+      // Import the API function
+      const { parseResumeFile } = await import("@/lib/api");
       
-      const formData = new FormData();
-      formData.append('file', file);
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Mock parsed data - in reality this would come from your AI service
-      const mockParsedData = {
-        personalInfo: {
-          firstName: "John",
-          lastName: "Doe", 
-          email: "john.doe@example.com",
-          phone: "(555) 123-4567",
-          location: "New York, NY",
-          linkedin: "linkedin.com/in/johndoe",
-          website: "johndoe.com"
-        },
-        experiences: [
-          {
-            id: "1",
-            company: "Tech Corp",
-            position: "Software Engineer",
-            startDate: "2022-01",
-            endDate: "2024-01",
-            current: false,
-            description: "Developed web applications using React and Node.js. Led a team of 3 developers and improved system performance by 40%."
-          }
-        ],
-        educations: [
-          {
-            id: "1",
-            institution: "University of Technology",
-            degree: "Bachelor of Science",
-            field: "Computer Science",
-            graduationDate: "2022-05",
-            gpa: "3.8"
-          }
-        ],
-        skills: ["JavaScript", "React", "Node.js", "Python", "SQL", "Git"]
-      };
+      // Call the real API
+      const parsedData = await parseResumeFile(file);
       
       // Fill the form with parsed data
-      setPersonalInfo(mockParsedData.personalInfo);
-      setExperiences(mockParsedData.experiences);
-      setEducations(mockParsedData.educations);
-      setSkills(mockParsedData.skills);
+      setPersonalInfo(parsedData.personalInfo);
+      setExperiences(parsedData.experiences);
+      setEducations(parsedData.educations);
+      setSkills(parsedData.skills);
       
       setParseStatus("success");
       
@@ -146,7 +108,15 @@ export default function CreateResumeSimple() {
       
     } catch (error) {
       console.error('Resume parsing error:', error);
-      setParseError("Failed to parse resume. Please try again or fill out the form manually.");
+      
+      // Check if it's a network error (backend not available)
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      if (errorMessage.includes('fetch') || errorMessage.includes('network') || errorMessage.includes('Failed to fetch')) {
+        setParseError("Backend server is not running. Please start your backend server or fill out the form manually.");
+      } else {
+        setParseError(errorMessage || "Failed to parse resume. Please try again or fill out the form manually.");
+      }
+      
       setParseStatus("error");
     }
   };
@@ -207,9 +177,29 @@ export default function CreateResumeSimple() {
     setSkills(skills.filter(s => s !== skill));
   };
 
-  const generateResume = () => {
-    // For now, just show an alert - we'll connect this to the backend later
-    alert("Resume generation will be connected to AI backend in the next step!");
+  const generateResume = async () => {
+    try {
+      // Import the API function
+      const { generateResumeWithAI } = await import("@/lib/api");
+      
+      // Prepare resume data
+      const resumeData = {
+        personalInfo,
+        experiences,
+        educations,
+        skills,
+      };
+      
+      // Call the real API to generate resume
+      const generatedHtml = await generateResumeWithAI(resumeData);
+      
+      // For now, show success message - later we'll add PDF generation
+      alert("Resume generated successfully! PDF generation will be added next.");
+      
+    } catch (error) {
+      console.error('Resume generation error:', error);
+      alert("Resume generation failed. Please check your backend connection.");
+    }
   };
 
   return (
