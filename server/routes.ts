@@ -327,59 +327,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Verify resume on blockchain
   app.post("/api/verify-on-chain", upload.single("file"), enforceBlockchainAccess, async (req, res) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({ error: "No file uploaded" });
-      }
-
-      // Generate hash from file
-      const resumeHash = generateResumeHash(req.file.buffer);
-
-      // Create metadata
-      const metadata = {
-        fileName: req.file.originalname,
-        fileSize: req.file.size,
-        mimeType: req.file.mimetype,
-        timestamp: new Date().toISOString(),
-      };
-
-      // Verify on blockchain
-      const result = await verifyOnChain(resumeHash, metadata);
-
-      if (result.success) {
-        res.json({
-          verified: true,
-          hash: resumeHash,
-          transactionHash: result.transactionHash,
-          blockNumber: result.blockNumber,
-          timestamp: result.timestamp,
-          network: "Polygon Mumbai Testnet",
-          explorerUrl: `https://mumbai.polygonscan.com/tx/${result.transactionHash}`,
-        });
-      } else {
-        res.status(500).json({ error: result.error || "Verification failed" });
-      }
-    } catch (error: any) {
-      console.error("Blockchain verification error:", error);
-      res.status(500).json({ error: error.message });
-    }
+    res.status(503).json({ 
+      error: "Blockchain verification is coming soon",
+      message: "This feature is currently in development and will be available soon for Professional users.",
+      comingSoon: true,
+      requiredTier: "professional"
+    });
   });
 
   // Check if resume is verified
   app.post("/api/verify-resume", upload.single("file"), async (req, res) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({ error: "No file uploaded" });
-      }
-
-      const resumeHash = generateResumeHash(req.file.buffer);
-      const result = await checkVerification(resumeHash);
-
-      res.json(result);
-    } catch (error: any) {
-      console.error("Resume verification check error:", error);
-      res.status(500).json({ error: error.message });
-    }
+    res.status(503).json({ 
+      error: "Resume verification check is coming soon",
+      message: "Blockchain verification is currently in development.",
+      comingSoon: true
+    });
   });
 
   // Estimate gas for verification
