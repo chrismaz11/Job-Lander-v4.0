@@ -10,7 +10,7 @@ applications:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: dist/public  # 👈 Output folder from your build
+        baseDirectory: dist/public  # 👈 Output directory
         files:
           - '**/*'
       cache:
@@ -26,10 +26,10 @@ applications:
         preTest:
           commands:
             - echo "Skipping tests"
-    artifacts:
-      baseDirectory: dist/public
-      files:
-        - '**/*'
+      artifacts:   # 👈 required even if empty
+        baseDirectory: dist/public
+        files:
+          - '**/*'
     customHeaders:
       # Enforce HTTPS
       - pattern: '**/*'
@@ -37,7 +37,7 @@ applications:
           - key: 'Strict-Transport-Security'
             value: 'max-age=31536000; includeSubDomains; preload'
 
-      # Disable caching for HTML to avoid stale content
+      # Disable caching for HTML
       - pattern: '**/*.html'
         headers:
           - key: 'Cache-Control'
@@ -47,7 +47,7 @@ applications:
           - key: 'Expires'
             value: '0'
 
-      # Enable caching for static assets (CSS, JS, images)
+      # Enable caching for static assets
       - pattern: '**/*.@(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf)'
         headers:
           - key: 'Cache-Control'
