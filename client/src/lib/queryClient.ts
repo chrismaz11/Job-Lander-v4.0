@@ -1,4 +1,5 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+import { createFallbackQueryFn } from "./api-fallback";
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
@@ -68,10 +69,16 @@ export const getQueryFn: <T>(options: {
     return await res.json();
   };
 
+// Create the original query function
+const originalQueryFn = getQueryFn({ on401: "throw" });
+
+// Create fallback query function
+const fallbackQueryFn = createFallbackQueryFn(originalQueryFn);
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      queryFn: getQueryFn({ on401: "throw" }),
+      queryFn: fallbackQueryFn,
       refetchInterval: false,
       refetchOnWindowFocus: false,
       staleTime: Infinity,

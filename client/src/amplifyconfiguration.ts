@@ -32,6 +32,20 @@ const amplifyConfig: ResourcesConfig = {
       defaultAuthMode: 'userPool',
       apiKey: 'da2-2ph2eluoungwjjsj776zaqekum',
     },
+    REST: {
+      resumeParserApi: {
+        endpoint: 'https://your-lambda-function-url.lambda-url.us-east-1.on.aws',
+        region: 'us-east-1',
+      },
+      jobSearchApi: {
+        endpoint: 'https://your-job-search-function-url.lambda-url.us-east-1.on.aws',
+        region: 'us-east-1',
+      },
+      blockchainApi: {
+        endpoint: 'https://your-blockchain-function-url.lambda-url.us-east-1.on.aws',
+        region: 'us-east-1',
+      },
+    },
   },
   Storage: {
     S3: {

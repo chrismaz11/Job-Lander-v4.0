@@ -16,6 +16,7 @@ const schema = a.schema({
       pdfUrl: a.string(),
       blockchainHash: a.string(),
       verifiedAt: a.datetime(),
+      aiSummary: a.string(), 
       createdAt: a.datetime(),
       updatedAt: a.datetime(),
     })
@@ -47,7 +48,7 @@ const schema = a.schema({
     .model({
       id: a.id().required(),
       userId: a.string().required(),
-      resumeId: a.id().required(),
+      resumeId: a.id().required(),.ref('Resume'), 
       title: a.string().required(),
       htmlContent: a.string().required(),
       deploymentUrl: a.string(),
@@ -72,7 +73,27 @@ const schema = a.schema({
       allow.owner().to(['create', 'read', 'update', 'delete']),
       allow.publicApiKey().to(['create', 'read', 'update', 'delete']),
     ]),
-});
+ AIAnalysis: a.model({
+   id: a.id().required(),
+   userId: a.string().required(),
+   resumeId: a.id().ref('Resume'),
+   jobId: a.id().ref('JobApplication'),
+   
+   // Core analysis data
+   spellingErrors: a.json(), // array of { word, suggestion }
+   styleSuggestions: a.json(), // array of { sentence, suggestion }
+   atsScore: a.float(), // 0–100 score based on job description
+   matchingKeywords: a.json(), // array of relevant job keywords matched
+   missingKeywords: a.json(), // array of missing skills for better ATS match  
+
+   // Flags and metadata
+   truthful: a.boolean().default(true), // ensures model doesn’t fabricate
+   createdAt: a.datetime(),
+ })
+ .authorization((allow) => [
+   allow.owner().to(['create', 'read', 'update', 'delete']),
+   allow.publicApiKey().to(['read']), // public can view (optional)
+ ]),
 
 export type Schema = ClientSchema<typeof schema>;
 

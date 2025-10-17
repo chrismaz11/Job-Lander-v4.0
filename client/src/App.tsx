@@ -1,5 +1,6 @@
 import { Switch, Route } from "wouter";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@/lib/queryClient";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/header";
 
@@ -13,8 +14,6 @@ import CoverLetter from "@/pages/cover-letter";
 import Dashboard from "@/pages/dashboard";
 import Pricing from "@/pages/pricing";
 import NotFound from "@/pages/not-found";
-
-const queryClient = new QueryClient();
 
 function Router() {
   return (
