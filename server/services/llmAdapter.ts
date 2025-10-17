@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedrock-runtime";
 import { llmConfig } from "../config/llm.config";
 import { llmCache } from "./llmCache";
 import { llmMetrics } from "./llmMetrics";
@@ -519,13 +520,113 @@ export class ClaudeAdapter extends LLMAdapter {
 }
 
 /**
+ * AWS Bedrock Adapter Implementation
+ */
+export class BedrockAdapter extends LLMAdapter {
+  private client: BedrockRuntimeClient;
+
+  constructor(region: string = "us-east-1", model: string = "anthropic.claude-3-sonnet-20240229-v1:0") {
+    super(model, "bedrock");
+    this.client = new BedrockRuntimeClient({ region });
+  }
+
+  async generateText(
+    prompt: string,
+    config?: LLMRequestConfig
+  ): Promise<LLMResponse<string>> {
+    const startTime = Date.now();
+    
+    try {
+      const body = {
+        anthropic_version: "bedrock-2023-05-31",
+        max_tokens: config?.maxTokens || llmConfig.defaultMaxTokens,
+        temperature: config?.temperature || llmConfig.defaultTemperature,
+        top_p: config?.topP || llmConfig.defaultTopP,
+        messages: [
+          {
+            role: "user",
+            content: prompt
+          }
+        ]
+      };
+
+      const command = new InvokeModelCommand({
+        modelId: this.model,
+        body: JSON.stringify(body),
+        contentType: "application/json",
+        accept: "application/json"
+      });
+
+      const response = await this.client.send(command);
+      const responseBody = JSON.parse(new TextDecoder().decode(response.body));
+      
+      const latency = Date.now() - startTime;
+      
+      return {
+        success: true,
+        data: responseBody.content[0].text,
+        confidence: 90,
+        model: this.model,
+        latency,
+        cached: false,
+        provider: this.provider,
+        tokens: {
+          prompt: responseBody.usage?.input_tokens,
+          completion: responseBody.usage?.output_tokens,
+          total: (responseBody.usage?.input_tokens || 0) + (responseBody.usage?.output_tokens || 0)
+        }
+      };
+    } catch (error: any) {
+      const latency = Date.now() - startTime;
+      return {
+        success: false,
+        data: "",
+        confidence: 0,
+        model: this.model,
+        latency,
+        cached: false,
+        provider: this.provider,
+        error: error.message
+      };
+    }
+  }
+
+  async generateJSON(
+    prompt: string,
+    schema: any,
+    config?: LLMRequestConfig
+  ): Promise<LLMResponse<any>> {
+    const jsonPrompt = `${prompt}\n\nPlease respond with valid JSON only. Schema: ${JSON.stringify(schema)}`;
+    const textResponse = await this.generateText(jsonPrompt, config);
+    
+    if (!textResponse.success) {
+      return textResponse as LLMResponse<any>;
+    }
+
+    try {
+      const jsonData = JSON.parse(textResponse.data);
+      return {
+        ...textResponse,
+        data: jsonData
+      };
+    } catch (error) {
+      return {
+        ...textResponse,
+        success: false,
+        error: "Failed to parse JSON response"
+      };
+    }
+  }
+}
+
+/**
  * Factory class to create LLM adapters
  */
 export class LLMFactory {
   private static instances: Map<string, LLMAdapter> = new Map();
 
   static createAdapter(
-    provider: "gemini" | "openai" | "claude" | "mock",
+    provider: "gemini" | "openai" | "claude" | "bedrock" | "mock",
     apiKey?: string,
     model?: string
   ): LLMAdapter {
@@ -547,6 +648,9 @@ export class LLMFactory {
         break;
       case "claude":
         adapter = new ClaudeAdapter(apiKey || process.env.CLAUDE_API_KEY || "", model);
+        break;
+      case "bedrock":
+        adapter = new BedrockAdapter(process.env.AWS_REGION || "us-east-1", model);
         break;
       case "mock":
         adapter = new MockAdapter();

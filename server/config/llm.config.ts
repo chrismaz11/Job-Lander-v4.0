@@ -5,7 +5,7 @@
 
 export interface LLMConfig {
   // Provider settings
-  defaultProvider: "gemini" | "openai" | "claude" | "mock";
+  defaultProvider: "gemini" | "openai" | "claude" | "bedrock" | "mock";
   providers: {
     gemini: {
       enabled: boolean;
@@ -23,6 +23,10 @@ export interface LLMConfig {
       apiKey?: string;
       baseUrl?: string;
     };
+    bedrock: {
+      enabled: boolean;
+      region?: string;
+    };
     mock: {
       enabled: boolean;
     };
@@ -33,6 +37,7 @@ export interface LLMConfig {
     gemini: string;
     openai: string;
     claude: string;
+    bedrock: string;
   };
   
   taskModels: {
@@ -124,7 +129,7 @@ export interface LLMConfig {
  */
 export const llmConfig: LLMConfig = {
   // Provider settings
-  defaultProvider: (process.env.LLM_PROVIDER as any) || "gemini",
+  defaultProvider: (process.env.LLM_PROVIDER as any) || "bedrock",
   providers: {
     gemini: {
       enabled: process.env.GEMINI_ENABLED !== "false",
@@ -142,6 +147,10 @@ export const llmConfig: LLMConfig = {
       apiKey: process.env.CLAUDE_API_KEY,
       baseUrl: process.env.CLAUDE_BASE_URL || "https://api.anthropic.com",
     },
+    bedrock: {
+      enabled: process.env.BEDROCK_ENABLED !== "false",
+      region: process.env.AWS_REGION || "us-east-1",
+    },
     mock: {
       enabled: process.env.NODE_ENV === "test" || process.env.MOCK_LLM === "true",
     },
@@ -152,16 +161,17 @@ export const llmConfig: LLMConfig = {
     gemini: process.env.GEMINI_MODEL || "gemini-2.0-flash-exp",
     openai: process.env.OPENAI_MODEL || "gpt-4-turbo-preview",
     claude: process.env.CLAUDE_MODEL || "claude-3-opus-20240229",
+    bedrock: process.env.BEDROCK_MODEL || "anthropic.claude-3-sonnet-20240229-v1:0",
   },
 
   taskModels: {
-    resumeParsing: "gemini-2.0-flash-exp",
-    coverLetterGeneration: "gemini-2.0-flash-exp",
-    jobMatching: "gemini-2.0-flash-exp",
-    resumeEnhancement: "gemini-2.0-flash-exp",
-    skillsExtraction: "gemini-2.0-flash-exp",
-    citysuggestions: "gemini-2.0-flash-exp",
-    textCleaning: "gemini-2.0-flash-exp",
+    resumeParsing: "anthropic.claude-3-sonnet-20240229-v1:0",
+    coverLetterGeneration: "anthropic.claude-3-sonnet-20240229-v1:0",
+    jobMatching: "anthropic.claude-3-sonnet-20240229-v1:0",
+    resumeEnhancement: "anthropic.claude-3-sonnet-20240229-v1:0",
+    skillsExtraction: "anthropic.claude-3-sonnet-20240229-v1:0",
+    citysuggestions: "anthropic.claude-3-sonnet-20240229-v1:0",
+    textCleaning: "anthropic.claude-3-sonnet-20240229-v1:0",
   },
 
   // Default generation parameters
