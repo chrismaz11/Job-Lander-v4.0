@@ -1,25 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
-import type { User } from "@shared/schema";
-import { isUnauthorizedError } from "@/lib/authUtils";
+import { useContext } from 'react';
+import { AuthContext } from '@/contexts/AuthContext';
 
 export function useAuth() {
-  const { data: user, isLoading, error } = useQuery<User>({
-    queryKey: ["/api/auth/user"],
-    retry: (failureCount, error) => {
-      // Don't retry on 401 Unauthorized
-      if (isUnauthorizedError(error as Error)) {
-        return false;
-      }
-      return failureCount < 3;
-    },
-  });
-
-  // If we got a 401, user is definitely not authenticated
-  const isAuthenticated = !!(user && !isUnauthorizedError(error as Error));
-
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  
   return {
-    user: isAuthenticated ? user : undefined,
-    isLoading,
-    isAuthenticated,
+    user: context.user,
+    loading: context.loading,
+    isAuthenticated: !!context.user,
+    signOut: context.signOut,
+    refreshUser: context.refreshUser,
   };
 }

@@ -2,7 +2,9 @@ import { Switch, Route } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/queryClient";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { Header } from "@/components/header";
+import { Toaster } from "@/components/ui/toaster";
 
 // Pages
 import Home from "@/pages/home";
@@ -35,12 +37,15 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="job-lander-theme">
-        <div className="min-h-screen bg-background text-foreground">
-          <Header />
-          <main>
-            <Router />
-          </main>
-        </div>
+        <AuthProvider>
+          <div className="min-h-screen bg-background text-foreground">
+            <Header />
+            <main>
+              <Router />
+            </main>
+            <Toaster />
+          </div>
+        </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
