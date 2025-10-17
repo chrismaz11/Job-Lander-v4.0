@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Upload, Sparkles, FileText, Download, Plus, Trash2, User, Briefcase, GraduationCap, Award } from "lucide-react";
+import { Upload, Sparkles, FileText, Download, Plus, Trash2, User, Briefcase, GraduationCap, Award, Loader2, CheckCircle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
 interface PersonalInfo {
@@ -41,7 +41,11 @@ interface Education {
 
 export default function CreateResumeSimple() {
   const { user } = useAuth();
-  const [currentStep, setCurrentStep] = useState("personal");
+  const [currentStep, setCurrentStep] = useState("upload");
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [parseStatus, setParseStatus] = useState<"idle" | "parsing" | "success" | "error">("idle");
+  const [parseError, setParseError] = useState<string>("");
+  
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
     firstName: "",
     lastName: "",
@@ -56,6 +60,96 @@ export default function CreateResumeSimple() {
   const [educations, setEducations] = useState<Education[]>([]);
   const [skills, setSkills] = useState<string[]>([]);
   const [newSkill, setNewSkill] = useState("");
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Check file type
+    const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword'];
+    if (!allowedTypes.includes(file.type)) {
+      setParseError("Please upload a PDF or Word document (.pdf, .docx, .doc)");
+      return;
+    }
+
+    // Check file size (10MB limit)
+    if (file.size > 10 * 1024 * 1024) {
+      setParseError("File size must be less than 10MB");
+      return;
+    }
+
+    setUploadedFile(file);
+    setParseError("");
+    await parseResume(file);
+  };
+
+  const parseResume = async (file: File) => {
+    setParseStatus("parsing");
+    
+    try {
+      // For now, we'll simulate parsing with a simple text extraction
+      // In the next step, we'll connect this to the AI backend
+      
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Mock parsed data - in reality this would come from your AI service
+      const mockParsedData = {
+        personalInfo: {
+          firstName: "John",
+          lastName: "Doe", 
+          email: "john.doe@example.com",
+          phone: "(555) 123-4567",
+          location: "New York, NY",
+          linkedin: "linkedin.com/in/johndoe",
+          website: "johndoe.com"
+        },
+        experiences: [
+          {
+            id: "1",
+            company: "Tech Corp",
+            position: "Software Engineer",
+            startDate: "2022-01",
+            endDate: "2024-01",
+            current: false,
+            description: "Developed web applications using React and Node.js. Led a team of 3 developers and improved system performance by 40%."
+          }
+        ],
+        educations: [
+          {
+            id: "1",
+            institution: "University of Technology",
+            degree: "Bachelor of Science",
+            field: "Computer Science",
+            graduationDate: "2022-05",
+            gpa: "3.8"
+          }
+        ],
+        skills: ["JavaScript", "React", "Node.js", "Python", "SQL", "Git"]
+      };
+      
+      // Fill the form with parsed data
+      setPersonalInfo(mockParsedData.personalInfo);
+      setExperiences(mockParsedData.experiences);
+      setEducations(mockParsedData.educations);
+      setSkills(mockParsedData.skills);
+      
+      setParseStatus("success");
+      
+      // Auto-advance to personal info tab after successful parse
+      setTimeout(() => {
+        setCurrentStep("personal");
+      }, 1000);
+      
+    } catch (error) {
+      console.error('Resume parsing error:', error);
+      setParseError("Failed to parse resume. Please try again or fill out the form manually.");
+      setParseStatus("error");
+    }
+  };
 
   const addExperience = () => {
     const newExp: Experience = {
@@ -124,12 +218,16 @@ export default function CreateResumeSimple() {
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-4">Create Your Resume</h1>
           <p className="text-xl text-muted-foreground">
-            Build a professional resume with AI-powered enhancements
+            Upload your existing resume or build from scratch with AI-powered enhancements
           </p>
         </div>
 
         <Tabs value={currentStep} onValueChange={setCurrentStep} className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="upload" className="flex items-center gap-2">
+              <Upload className="w-4 h-4" />
+              Upload
+            </TabsTrigger>
             <TabsTrigger value="personal" className="flex items-center gap-2">
               <User className="w-4 h-4" />
               Personal
@@ -147,6 +245,100 @@ export default function CreateResumeSimple() {
               Skills
             </TabsTrigger>
           </TabsList>
+
+          {/* Upload Resume */}
+          <TabsContent value="upload" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Upload Your Resume</CardTitle>
+                <CardDescription>
+                  Upload your existing resume and we'll automatically extract your information using AI
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
+                  <input
+                    type="file"
+                    id="resume-upload"
+                    accept=".pdf,.doc,.docx"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                    disabled={parseStatus === "parsing"}
+                  />
+                  
+                  {parseStatus === "idle" && (
+                    <label htmlFor="resume-upload" className="cursor-pointer">
+                      <Upload className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                      <h3 className="text-lg font-semibold mb-2">Drop your resume here</h3>
+                      <p className="text-muted-foreground mb-4">
+                        Supports PDF, DOC, and DOCX files up to 10MB
+                      </p>
+                      <Button>Choose File</Button>
+                    </label>
+                  )}
+                  
+                  {parseStatus === "parsing" && (
+                    <div className="space-y-4">
+                      <Loader2 className="w-12 h-12 mx-auto animate-spin text-primary" />
+                      <h3 className="text-lg font-semibold">Parsing your resume...</h3>
+                      <p className="text-muted-foreground">
+                        Our AI is extracting your information. This may take a few seconds.
+                      </p>
+                    </div>
+                  )}
+                  
+                  {parseStatus === "success" && (
+                    <div className="space-y-4">
+                      <CheckCircle className="w-12 h-12 mx-auto text-green-500" />
+                      <h3 className="text-lg font-semibold text-green-700">Resume parsed successfully!</h3>
+                      <p className="text-muted-foreground">
+                        We've extracted your information. Review and edit in the next tabs.
+                      </p>
+                      <Button onClick={() => setCurrentStep("personal")}>
+                        Review Information
+                      </Button>
+                    </div>
+                  )}
+                  
+                  {parseStatus === "error" && (
+                    <div className="space-y-4">
+                      <FileText className="w-12 h-12 mx-auto text-red-500" />
+                      <h3 className="text-lg font-semibold text-red-700">Parsing failed</h3>
+                      <p className="text-muted-foreground">
+                        {parseError || "Unable to parse your resume. Please fill out the form manually."}
+                      </p>
+                      <div className="flex gap-2 justify-center">
+                        <Button variant="outline" onClick={() => setParseStatus("idle")}>
+                          Try Again
+                        </Button>
+                        <Button onClick={() => setCurrentStep("personal")}>
+                          Fill Manually
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                {uploadedFile && (
+                  <Alert>
+                    <FileText className="h-4 w-4" />
+                    <AlertDescription>
+                      Uploaded: {uploadedFile.name} ({(uploadedFile.size / 1024 / 1024).toFixed(2)} MB)
+                    </AlertDescription>
+                  </Alert>
+                )}
+                
+                <div className="text-center">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Don't have a resume to upload?
+                  </p>
+                  <Button variant="outline" onClick={() => setCurrentStep("personal")}>
+                    Start from Scratch
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           {/* Personal Information */}
           <TabsContent value="personal" className="space-y-6">
