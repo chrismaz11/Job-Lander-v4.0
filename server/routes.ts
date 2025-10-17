@@ -9,6 +9,7 @@ import { generateResumeHash, verifyOnChain, checkVerification, estimateVerificat
 import { searchJobs, getAvailableCities, getJobStatistics, type JobSearchFilters } from "./services/jobs";
 import { setupAuth, isAuthenticated } from "./simpleAuth";
 import { checkUserUsage, getUserTier, incrementUserUsage, canCreateResume, getTierLimits } from "./services/tierEnforcement";
+import { enforceResumeLimit, enforceTemplateAccess, enforceCoverLetterAccess, enforceBlockchainAccess } from "./middleware/tierEnforcement";
 import { testConnection } from "./db";
 import { 
   generatePortfolioHTML, 
@@ -164,7 +165,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   
   // Parse resume from PDF/DOCX with hybrid OCR + AI approach
-  app.post("/api/parse-resume", upload.single("file"), async (req, res) => {
+  app.post("/api/parse-resume", upload.single("file"), enforceResumeLimit, async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ error: "No file uploaded" });
@@ -283,7 +284,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Generate cover letter - returns all 3 tone variants
-  app.post("/api/generate-coverletter", async (req, res) => {
+  app.post("/api/generate-coverletter", enforceCoverLetterAccess, async (req, res) => {
     try {
       const { resumeId, companyName, position, jobDescription, tone } = req.body;
 
@@ -325,7 +326,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Verify resume on blockchain
-  app.post("/api/verify-on-chain", upload.single("file"), async (req, res) => {
+  app.post("/api/verify-on-chain", upload.single("file"), enforceBlockchainAccess, async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ error: "No file uploaded" });

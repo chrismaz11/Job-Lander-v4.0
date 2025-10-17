@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { templateData, templateCategories, getTemplatesByCategory } from '../../lib/templateData';
 import { getTemplateImage } from '../../lib/templateImages';
+import { TierGate } from '../TierGate';
 import ModernResumeTemplate from './ModernResumeTemplate';
 import MinimalistResumeTemplate from './MinimalistResumeTemplate';
 import ExecutiveResumeTemplate from './ExecutiveResumeTemplate';
@@ -70,21 +71,55 @@ const TemplateSelector = ({ parsedData }) => {
               {getTemplatesByCategory(selectedCategory).map(template => (
                 <div
                   key={template.id}
-                  className={`template-card ${selectedTemplate === template.id ? 'selected' : ''}`}
-                  onClick={() => setSelectedTemplate(template.id)}
+                  className={`template-card ${selectedTemplate === template.id ? 'selected' : ''} ${template.tier === 'premium' ? 'premium' : ''}`}
+                  onClick={() => {
+                    if (template.tier === 'premium') {
+                      // Check if user has access to premium templates
+                      return;
+                    }
+                    setSelectedTemplate(template.id);
+                  }}
                 >
-                  <div className="template-preview">
-                    <img 
-                      src={getTemplateImage(template.imageId)} 
-                      alt={template.name}
-                      onError={(e) => {
-                        e.target.src = getTemplateImage('modern_resume_template_e5991aaf');
-                      }}
-                    />
-                    {template.tier === 'premium' && (
-                      <div className="premium-badge">✨ Premium</div>
-                    )}
-                  </div>
+                  {template.tier === 'premium' ? (
+                    <TierGate
+                      feature="premium-templates"
+                      requiredTier="pro"
+                      fallback={
+                        <div className="template-preview locked">
+                          <img 
+                            src={getTemplateImage(template.imageId)} 
+                            alt={template.name}
+                            className="opacity-50"
+                          />
+                          <div className="premium-overlay">
+                            <div className="premium-badge">✨ Premium</div>
+                            <div className="upgrade-text">Upgrade Required</div>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="template-preview">
+                        <img 
+                          src={getTemplateImage(template.imageId)} 
+                          alt={template.name}
+                          onError={(e) => {
+                            e.target.src = getTemplateImage('modern_resume_template_e5991aaf');
+                          }}
+                        />
+                        <div className="premium-badge">✨ Premium</div>
+                      </div>
+                    </TierGate>
+                  ) : (
+                    <div className="template-preview">
+                      <img 
+                        src={getTemplateImage(template.imageId)} 
+                        alt={template.name}
+                        onError={(e) => {
+                          e.target.src = getTemplateImage('modern_resume_template_e5991aaf');
+                        }}
+                      />
+                    </div>
+                  )}
                   <div className="template-info">
                     <h3>{template.name}</h3>
                     <p>{template.description}</p>
