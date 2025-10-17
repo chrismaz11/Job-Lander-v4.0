@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { templateData, templateCategories, getTemplatesByCategory } from '../../lib/templateData';
-import { getTemplateImage } from '../../lib/templateImages';
+import { generateTemplatePreview } from '../../lib/templatePreviews';
+import { TemplateCustomizer } from '../TemplateCustomizer';
 import { TierGate } from '../TierGate';
 import ModernResumeTemplate from './ModernResumeTemplate';
 import MinimalistResumeTemplate from './MinimalistResumeTemplate';
@@ -11,12 +12,16 @@ import SalesResumeTemplate from './SalesResumeTemplate';
 import AcademicResumeTemplate from './AcademicResumeTemplate';
 import CoverLetterTemplate from './CoverLetterTemplate';
 import PDFExporter from '../PDFExporter';
+import { Button } from '@/components/ui/button';
+import { Settings } from 'lucide-react';
 import './TemplateSelector.css';
 
 const TemplateSelector = ({ parsedData }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('modern-professional');
   const [selectedCategory, setSelectedCategory] = useState('Modern');
   const [documentType, setDocumentType] = useState('resume');
+  const [showCustomizer, setShowCustomizer] = useState(false);
+  const [customization, setCustomization] = useState(null);
 
   const componentMap = {
     ModernResumeTemplate,
@@ -34,6 +39,10 @@ const TemplateSelector = ({ parsedData }) => {
 
   const currentTemplate = templateData.find(t => t.id === selectedTemplate);
   const TemplateComponent = currentTemplate ? getTemplateComponent(currentTemplate.component) : ModernResumeTemplate;
+
+  const handleCustomizationChange = (newCustomization) => {
+    setCustomization(newCustomization);
+  };
 
   return (
     <div className="template-selector">
@@ -87,7 +96,7 @@ const TemplateSelector = ({ parsedData }) => {
                       fallback={
                         <div className="template-preview locked">
                           <img 
-                            src={getTemplateImage(template.imageId)} 
+                            src={generateTemplatePreview(template.id, template.category)} 
                             alt={template.name}
                             className="opacity-50"
                           />
@@ -100,11 +109,8 @@ const TemplateSelector = ({ parsedData }) => {
                     >
                       <div className="template-preview">
                         <img 
-                          src={getTemplateImage(template.imageId)} 
+                          src={generateTemplatePreview(template.id, template.category)} 
                           alt={template.name}
-                          onError={(e) => {
-                            e.target.src = getTemplateImage('modern_resume_template_e5991aaf');
-                          }}
                         />
                         <div className="premium-badge">✨ Premium</div>
                       </div>
@@ -112,11 +118,8 @@ const TemplateSelector = ({ parsedData }) => {
                   ) : (
                     <div className="template-preview">
                       <img 
-                        src={getTemplateImage(template.imageId)} 
+                        src={generateTemplatePreview(template.id, template.category)} 
                         alt={template.name}
-                        onError={(e) => {
-                          e.target.src = getTemplateImage('modern_resume_template_e5991aaf');
-                        }}
                       />
                     </div>
                   )}
@@ -153,19 +156,44 @@ const TemplateSelector = ({ parsedData }) => {
       <div className="template-preview-section">
         <div className="preview-header">
           <h2>Preview: {currentTemplate?.name || 'Template'}</h2>
-          <PDFExporter 
-            data={parsedData} 
-            templateType={documentType === 'resume' ? selectedTemplate : 'professional'}
-            documentType={documentType}
-          />
+          <div className="preview-controls">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowCustomizer(!showCustomizer)}
+            >
+              <Settings className="w-4 h-4 mr-2" />
+              Customize
+            </Button>
+            <PDFExporter 
+              data={parsedData} 
+              templateType={documentType === 'resume' ? selectedTemplate : 'professional'}
+              documentType={documentType}
+              customization={customization}
+            />
+          </div>
         </div>
         
-        <div className="template-preview-container">
-          {documentType === 'resume' ? (
-            <TemplateComponent data={parsedData} />
-          ) : (
-            <CoverLetterTemplate data={parsedData} />
+        <div className="preview-content">
+          {showCustomizer && (
+            <div className="customizer-panel">
+              <TemplateCustomizer onCustomizationChange={handleCustomizationChange} />
+            </div>
           )}
+          
+          <div className="template-preview-container">
+            {documentType === 'resume' ? (
+              <TemplateComponent 
+                data={parsedData} 
+                customization={customization}
+              />
+            ) : (
+              <CoverLetterTemplate 
+                data={parsedData}
+                customization={customization}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
