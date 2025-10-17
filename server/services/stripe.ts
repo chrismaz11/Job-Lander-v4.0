@@ -6,19 +6,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export const PRICING_PLANS = {
   basic: {
-    priceId: 'price_basic_monthly',
+    priceId: 'price_1SJM4UAUOYpqnROswRbrzOSr',
     amount: 495, // $4.95
     name: 'Basic Pro',
     features: ['5 resumes/month', 'Basic templates', 'PDF export', 'Email support']
   },
   professional: {
-    priceId: 'price_professional_monthly', 
+    priceId: 'price_1SJM5qAUOYpqnROsuhIeFHpu', 
     amount: 995, // $9.95
     name: 'Professional',
     features: ['Unlimited resumes', 'Premium templates', 'Cover letters', 'Priority support']
   },
   enterprise: {
-    priceId: 'price_enterprise_monthly',
+    priceId: 'price_1SJM8OAUOYpqnROs5GNTiDOh',
     amount: 2995, // $29.95
     name: 'Enterprise',
     features: ['Everything in Pro', 'Team management', 'API access', 'Custom branding']
