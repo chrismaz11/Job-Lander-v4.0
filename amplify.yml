@@ -1,6 +1,6 @@
 version: 1
 applications:
-  - appRoot: client
+  - appRoot: .
     frontend:
       phases:
         preBuild:
@@ -10,9 +10,28 @@ applications:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: dist
+        baseDirectory: dist/public  # 👈 where your built files actually are
         files:
           - '**/*'
       cache:
         paths:
           - node_modules/**/*
+    backend:
+      phases:
+        build:
+          commands:
+            - echo "No backend build required"
+    test:
+      phases:
+        preTest:
+          commands:
+            - echo "Skipping tests"
+    artifacts:
+      baseDirectory: dist/public
+      files:
+        - '**/*'
+    customHeaders:
+      - pattern: '**/*'
+        headers:
+          - key: 'Cache-Control'
+            value: 'max-age=0,no-cache,no-store,must-revalidate'
