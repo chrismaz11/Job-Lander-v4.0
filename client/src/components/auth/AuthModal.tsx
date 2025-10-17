@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Loader2, Mail, Lock, User } from 'lucide-react';
 
 interface AuthModalProps {
@@ -98,6 +98,12 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
           <DialogTitle>
             {mode === 'confirm' ? 'Verify Email' : 'Welcome to Job-Lander'}
           </DialogTitle>
+          <DialogDescription>
+            {mode === 'confirm' 
+              ? 'Enter the verification code sent to your email to complete registration'
+              : 'Sign in to your account or create a new one to get started'
+            }
+          </DialogDescription>
         </DialogHeader>
 
         {mode === 'confirm' ? (

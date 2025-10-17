@@ -114,16 +114,22 @@ export default defineConfig(({ command, mode }) => {
           manualPureFunctions: ['console.log', 'console.info'],
         },
         output: {
-          // Optimized manual chunks for better caching
-          manualChunks: {
-            // Keep React core together to prevent bundling issues
-            'react-vendor': ['react', 'react-dom'],
-            // UI libraries
-            'ui-vendor': ['@radix-ui/react-slot', '@radix-ui/react-dialog', 'framer-motion', 'lucide-react'],
-            // Form libraries
-            'form-vendor': ['react-hook-form', '@hookform/resolvers', 'zod'],
-            // Utility libraries
-            'utils-vendor': ['clsx', 'tailwind-merge', 'class-variance-authority'],
+          // Simplified manual chunks to prevent missing files
+          manualChunks: (id) => {
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom')) {
+                return 'react-vendor';
+              }
+              if (id.includes('@radix-ui') || id.includes('lucide-react')) {
+                return 'ui-vendor';
+              }
+              if (id.includes('react-hook-form') || id.includes('zod')) {
+                return 'form-vendor';
+              }
+              if (id.includes('clsx') || id.includes('tailwind-merge')) {
+                return 'utils-vendor';
+              }
+            }
           },
           // Optimize asset filenames for better caching
           assetFileNames: (assetInfo) => {
