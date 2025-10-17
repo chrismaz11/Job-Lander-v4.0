@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 // Pages
 import Home from "@/pages/home";
-import CreateResume from "@/pages/create-resume";
+import CreateResumeSimple from "@/pages/create-resume-simple";
 import Templates from "@/pages/templates";
 import Jobs from "@/pages/jobs";
 import Verify from "@/pages/verify";
@@ -21,7 +21,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/create" component={CreateResume} />
+      <Route path="/create" component={CreateResumeSimple} />
       <Route path="/templates" component={Templates} />
       <Route path="/jobs" component={Jobs} />
       <Route path="/verify" component={Verify} />
