@@ -10,7 +10,7 @@ applications:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: dist/public  # 👈 where your built files actually are
+        baseDirectory: dist/public  # 👈 Output folder from your build
         files:
           - '**/*'
       cache:
@@ -31,7 +31,30 @@ applications:
       files:
         - '**/*'
     customHeaders:
+      # Enforce HTTPS
       - pattern: '**/*'
         headers:
+          - key: 'Strict-Transport-Security'
+            value: 'max-age=31536000; includeSubDomains; preload'
+
+      # Disable caching for HTML to avoid stale content
+      - pattern: '**/*.html'
+        headers:
           - key: 'Cache-Control'
-            value: 'max-age=0,no-cache,no-store,must-revalidate'
+            value: 'no-cache, no-store, must-revalidate'
+          - key: 'Pragma'
+            value: 'no-cache'
+          - key: 'Expires'
+            value: '0'
+
+      # Enable caching for static assets (CSS, JS, images)
+      - pattern: '**/*.@(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf)'
+        headers:
+          - key: 'Cache-Control'
+            value: 'public, max-age=31536000, immutable'
+
+      # Redirect all traffic to HTTPS
+      - pattern: '**'
+        headers:
+          - key: 'Content-Security-Policy'
+            value: "upgrade-insecure-requests"
