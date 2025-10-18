@@ -318,7 +318,9 @@ export default function CreateResume() {
                       onChange={handleFileUpload}
                       className="hidden"
                       id="resume-upload"
+                      name="resume-upload"
                       data-testid="input-resume-upload"
+                      aria-label="Upload resume file"
                     />
                     <label htmlFor="resume-upload" className="cursor-pointer">
                       <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
@@ -389,6 +391,8 @@ export default function CreateResume() {
                       <Label htmlFor="fullName">Full Name *</Label>
                       <Input
                         id="fullName"
+                        name="fullName"
+                        autoComplete="name"
                         {...personalForm.register("fullName")}
                         data-testid="input-fullname"
                       />
@@ -399,7 +403,9 @@ export default function CreateResume() {
                         <Label htmlFor="email">Email *</Label>
                         <Input
                           id="email"
+                          name="email"
                           type="email"
+                          autoComplete="email"
                           {...personalForm.register("email")}
                           data-testid="input-email"
                         />
@@ -408,6 +414,9 @@ export default function CreateResume() {
                         <Label htmlFor="phone">Phone *</Label>
                         <Input
                           id="phone"
+                          name="phone"
+                          type="tel"
+                          autoComplete="tel"
                           {...personalForm.register("phone")}
                           data-testid="input-phone"
                         />
@@ -418,6 +427,8 @@ export default function CreateResume() {
                       <Label htmlFor="location">Location</Label>
                       <Input
                         id="location"
+                        name="location"
+                        autoComplete="address-line1"
                         {...personalForm.register("location")}
                         data-testid="input-location"
                       />
@@ -428,6 +439,9 @@ export default function CreateResume() {
                         <Label htmlFor="linkedin">LinkedIn</Label>
                         <Input
                           id="linkedin"
+                          name="linkedin"
+                          type="url"
+                          autoComplete="url"
                           {...personalForm.register("linkedin")}
                           data-testid="input-linkedin"
                         />
@@ -436,6 +450,9 @@ export default function CreateResume() {
                         <Label htmlFor="website">Website</Label>
                         <Input
                           id="website"
+                          name="website"
+                          type="url"
+                          autoComplete="url"
                           {...personalForm.register("website")}
                           data-testid="input-website"
                         />
@@ -501,36 +518,58 @@ export default function CreateResume() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <Input
-                            placeholder="Company"
-                            value={exp.company}
-                            onChange={(e) => updateExperience(exp.id, "company", e.target.value)}
-                            data-testid={`input-company-${index}`}
-                          />
-                          <Input
-                            placeholder="Position"
-                            value={exp.position}
-                            onChange={(e) => updateExperience(exp.id, "position", e.target.value)}
-                            data-testid={`input-position-${index}`}
-                          />
+                          <div>
+                            <Label htmlFor={`company-${exp.id}`}>Company</Label>
+                            <Input
+                              id={`company-${exp.id}`}
+                              name={`company-${exp.id}`}
+                              autoComplete="organization"
+                              placeholder="Company"
+                              value={exp.company}
+                              onChange={(e) => updateExperience(exp.id, "company", e.target.value)}
+                              data-testid={`input-company-${index}`}
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor={`position-${exp.id}`}>Position</Label>
+                            <Input
+                              id={`position-${exp.id}`}
+                              name={`position-${exp.id}`}
+                              autoComplete="organization-title"
+                              placeholder="Position"
+                              value={exp.position}
+                              onChange={(e) => updateExperience(exp.id, "position", e.target.value)}
+                              data-testid={`input-position-${index}`}
+                            />
+                          </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <Input
-                            type="month"
-                            placeholder="Start Date"
-                            value={exp.startDate}
-                            onChange={(e) => updateExperience(exp.id, "startDate", e.target.value)}
-                            data-testid={`input-start-date-${index}`}
-                          />
-                          <Input
-                            type="month"
-                            placeholder="End Date"
-                            value={exp.endDate}
-                            onChange={(e) => updateExperience(exp.id, "endDate", e.target.value)}
-                            disabled={exp.current}
-                            data-testid={`input-end-date-${index}`}
-                          />
+                          <div>
+                            <Label htmlFor={`start-date-${exp.id}`}>Start Date</Label>
+                            <Input
+                              id={`start-date-${exp.id}`}
+                              name={`start-date-${exp.id}`}
+                              type="month"
+                              placeholder="Start Date"
+                              value={exp.startDate}
+                              onChange={(e) => updateExperience(exp.id, "startDate", e.target.value)}
+                              data-testid={`input-start-date-${index}`}
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor={`end-date-${exp.id}`}>End Date</Label>
+                            <Input
+                              id={`end-date-${exp.id}`}
+                              name={`end-date-${exp.id}`}
+                              type="month"
+                              placeholder="End Date"
+                              value={exp.endDate}
+                              onChange={(e) => updateExperience(exp.id, "endDate", e.target.value)}
+                              disabled={exp.current}
+                              data-testid={`input-end-date-${index}`}
+                            />
+                          </div>
                         </div>
 
                         <Textarea
@@ -597,44 +636,70 @@ export default function CreateResume() {
                           </Button>
                         </div>
 
-                        <Input
-                          placeholder="Institution"
-                          value={edu.institution}
-                          onChange={(e) => updateEducation(edu.id, "institution", e.target.value)}
-                          data-testid={`input-institution-${index}`}
-                        />
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor={`institution-${edu.id}`}>Institution</Label>
                           <Input
-                            placeholder="Degree"
-                            value={edu.degree}
-                            onChange={(e) => updateEducation(edu.id, "degree", e.target.value)}
-                            data-testid={`input-degree-${index}`}
-                          />
-                          <Input
-                            placeholder="Field of Study"
-                            value={edu.field}
-                            onChange={(e) => updateEducation(edu.id, "field", e.target.value)}
-                            data-testid={`input-field-${index}`}
+                            id={`institution-${edu.id}`}
+                            name={`institution-${edu.id}`}
+                            autoComplete="organization"
+                            placeholder="Institution"
+                            value={edu.institution}
+                            onChange={(e) => updateEducation(edu.id, "institution", e.target.value)}
+                            data-testid={`input-institution-${index}`}
                           />
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <Input
-                            type="month"
-                            placeholder="Start Date"
-                            value={edu.startDate}
-                            onChange={(e) => updateEducation(edu.id, "startDate", e.target.value)}
-                            data-testid={`input-edu-start-${index}`}
-                          />
-                          <Input
-                            type="month"
-                            placeholder="End Date"
-                            value={edu.endDate}
-                            onChange={(e) => updateEducation(edu.id, "endDate", e.target.value)}
-                            disabled={edu.current}
-                            data-testid={`input-edu-end-${index}`}
-                          />
+                          <div>
+                            <Label htmlFor={`degree-${edu.id}`}>Degree</Label>
+                            <Input
+                              id={`degree-${edu.id}`}
+                              name={`degree-${edu.id}`}
+                              placeholder="Degree"
+                              value={edu.degree}
+                              onChange={(e) => updateEducation(edu.id, "degree", e.target.value)}
+                              data-testid={`input-degree-${index}`}
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor={`field-${edu.id}`}>Field of Study</Label>
+                            <Input
+                              id={`field-${edu.id}`}
+                              name={`field-${edu.id}`}
+                              placeholder="Field of Study"
+                              value={edu.field}
+                              onChange={(e) => updateEducation(edu.id, "field", e.target.value)}
+                              data-testid={`input-field-${index}`}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <Label htmlFor={`edu-start-${edu.id}`}>Start Date</Label>
+                            <Input
+                              id={`edu-start-${edu.id}`}
+                              name={`edu-start-${edu.id}`}
+                              type="month"
+                              placeholder="Start Date"
+                              value={edu.startDate}
+                              onChange={(e) => updateEducation(edu.id, "startDate", e.target.value)}
+                              data-testid={`input-edu-start-${index}`}
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor={`edu-end-${edu.id}`}>End Date</Label>
+                            <Input
+                              id={`edu-end-${edu.id}`}
+                              name={`edu-end-${edu.id}`}
+                              type="month"
+                              placeholder="End Date"
+                              value={edu.endDate}
+                              onChange={(e) => updateEducation(edu.id, "endDate", e.target.value)}
+                              disabled={edu.current}
+                              data-testid={`input-edu-end-${index}`}
+                            />
+                          </div>
                         </div>
                       </Card>
                     ))}
@@ -672,13 +737,18 @@ export default function CreateResume() {
                   <h2 className="text-2xl font-bold">Skills</h2>
 
                   <div className="flex gap-2">
-                    <Input
-                      placeholder="Add a skill..."
-                      value={newSkill}
-                      onChange={(e) => setNewSkill(e.target.value)}
-                      onKeyPress={(e) => e.key === "Enter" && addSkill()}
-                      data-testid="input-skill"
-                    />
+                    <div className="flex-1">
+                      <Label htmlFor="new-skill" className="sr-only">Add new skill</Label>
+                      <Input
+                        id="new-skill"
+                        name="new-skill"
+                        placeholder="Add a skill..."
+                        value={newSkill}
+                        onChange={(e) => setNewSkill(e.target.value)}
+                        onKeyPress={(e) => e.key === "Enter" && addSkill()}
+                        data-testid="input-skill"
+                      />
+                    </div>
                     <Button onClick={addSkill} data-testid="button-add-skill">
                       <Plus className="h-4 w-4" />
                     </Button>
