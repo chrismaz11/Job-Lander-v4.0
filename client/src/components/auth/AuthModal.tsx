@@ -123,7 +123,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                   <Label htmlFor="code">Verification Code</Label>
                   <Input
                     id="code"
+                    name="confirmationCode"
                     type="text"
+                    autoComplete="one-time-code"
                     value={confirmationCode}
                     onChange={(e) => setConfirmationCode(e.target.value)}
                     placeholder="Enter 6-digit code"
@@ -163,7 +165,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                       <Label htmlFor="signin-email">Email</Label>
                       <Input
                         id="signin-email"
+                        name="email"
                         type="email"
+                        autoComplete="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="your@email.com"
@@ -174,7 +178,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                       <Label htmlFor="signin-password">Password</Label>
                       <Input
                         id="signin-password"
+                        name="password"
                         type="password"
+                        autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
@@ -234,6 +240,8 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                         <Label htmlFor="firstName">First Name</Label>
                         <Input
                           id="firstName"
+                          name="firstName"
+                          autoComplete="given-name"
                           value={firstName}
                           onChange={(e) => setFirstName(e.target.value)}
                           placeholder="John"
@@ -244,6 +252,8 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                         <Label htmlFor="lastName">Last Name</Label>
                         <Input
                           id="lastName"
+                          name="lastName"
+                          autoComplete="family-name"
                           value={lastName}
                           onChange={(e) => setLastName(e.target.value)}
                           placeholder="Doe"
@@ -255,7 +265,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                       <Label htmlFor="signup-email">Email</Label>
                       <Input
                         id="signup-email"
+                        name="email"
                         type="email"
+                        autoComplete="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="your@email.com"
@@ -266,7 +278,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                       <Label htmlFor="signup-password">Password</Label>
                       <Input
                         id="signup-password"
+                        name="password"
                         type="password"
+                        autoComplete="new-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
