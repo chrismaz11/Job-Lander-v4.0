@@ -3,8 +3,81 @@ const multer = require('multer');
 const cors = require('cors');
 const { SecretsManagerClient, GetSecretValueCommand } = require('@aws-sdk/client-secrets-manager');
 const { handleStripeWebhook, createCheckoutSession, createPortalSession } = require('./stripe-handler');
+const { parseResumeFile } = require('./resume-parser');
 
 const app = express();
+
+// Generate HTML for PDF export
+function generateResumeHTML(resumeData, templateId) {
+  const { personalInfo, experience = [], education = [], skills = [] } = resumeData;
+  
+  return `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Resume - ${personalInfo?.name || 'Resume'}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; color: #333; }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 20px; }
+        .name { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
+        .contact { font-size: 14px; color: #666; }
+        .section { margin-bottom: 25px; }
+        .section-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+        .experience-item, .education-item { margin-bottom: 15px; }
+        .job-title { font-weight: bold; font-size: 16px; }
+        .company { font-style: italic; color: #666; }
+        .duration { float: right; color: #666; font-size: 14px; }
+        .description { margin-top: 5px; }
+        .skills-list { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill { background: #f0f0f0; padding: 5px 10px; border-radius: 15px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="name">${personalInfo?.name || 'Your Name'}</div>
+        <div class="contact">
+            ${personalInfo?.email || ''} | ${personalInfo?.phone || ''} | ${personalInfo?.location || ''}
+            ${personalInfo?.linkedin ? ` | ${personalInfo.linkedin}` : ''}
+        </div>
+    </div>
+    
+    ${experience.length > 0 ? `
+    <div class="section">
+        <div class="section-title">EXPERIENCE</div>
+        ${experience.map(exp => `
+        <div class="experience-item">
+            <div class="job-title">${exp.position || exp.title || ''}</div>
+            <div class="company">${exp.company || ''} <span class="duration">${exp.duration || (exp.startDate + ' - ' + (exp.current ? 'Present' : exp.endDate))}</span></div>
+            <div class="description">${exp.description || ''}</div>
+        </div>
+        `).join('')}
+    </div>
+    ` : ''}
+    
+    ${education.length > 0 ? `
+    <div class="section">
+        <div class="section-title">EDUCATION</div>
+        ${education.map(edu => `
+        <div class="education-item">
+            <div class="job-title">${edu.degree || ''}</div>
+            <div class="company">${edu.institution || edu.school || ''} <span class="duration">${edu.graduationDate || edu.year || ''}</span></div>
+            ${edu.field ? `<div class="description">Field of Study: ${edu.field}</div>` : ''}
+        </div>
+        `).join('')}
+    </div>
+    ` : ''}
+    
+    ${skills.length > 0 ? `
+    <div class="section">
+        <div class="section-title">SKILLS</div>
+        <div class="skills-list">
+            ${skills.map(skill => `<span class="skill">${skill}</span>`).join('')}
+        </div>
+    </div>
+    ` : ''}
+</body>
+</html>`;
+}
 
 // Initialize secrets manager client
 const secretsClient = new SecretsManagerClient({ region: 'us-east-1' });
@@ -32,171 +105,6 @@ async function loadSecrets() {
     return secrets;
   }
 }
-
-// CORS configuration for credentials
-const corsOptions = {
-  origin: ['https://joblander.org', 'https://www.joblander.org', 'http://localhost:5173'],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-};
-
-app.use(cors(corsOptions));
-app.use(express.json());
-
-// Configure multer for file uploads
-const upload = multer({ 
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
-});
-
-// Health check
-app.get('/api/health', async (req, res) => {
-  const config = await loadSecrets();
-  res.json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString(),
-    environment: config.NODE_ENV,
-    database: config.DATABASE_URL ? 'connected' : 'not configured',
-    stripe: config.STRIPE_SECRET_KEY ? 'configured' : 'not configured'
-  });
-});
-
-// Parse resume endpoint
-app.post('/api/parse-resume', upload.single('resume'), async (req, res) => {
-  try {
-    const config = await loadSecrets();
-    const file = req.file;
-    
-    if (!file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
-
-    // Mock response for now - will integrate with actual AI parsing
-    res.json({
-      success: true,
-      data: {
-        personalInfo: {
-          name: 'John Doe',
-          email: 'john@example.com',
-          phone: '(555) 123-4567'
-        },
-        experience: [
-          {
-            title: 'Software Engineer',
-            company: 'Tech Corp',
-            duration: '2020-2023',
-            description: 'Developed web applications using React and Node.js'
-          }
-        ],
-        education: [
-          {
-            degree: 'Bachelor of Science in Computer Science',
-            school: 'University of Technology',
-            year: '2020'
-          }
-        ],
-        skills: ['JavaScript', 'React', 'Node.js', 'PostgreSQL', 'AWS']
-      }
-    });
-  } catch (error) {
-    console.error('Resume parsing error:', error);
-    res.status(500).json({ error: 'Failed to parse resume' });
-  }
-});
-
-// Generate resume endpoint
-app.post('/api/generate-resume', async (req, res) => {
-  try {
-    const config = await loadSecrets();
-    res.json({
-      success: true,
-      message: 'Resume generated successfully',
-      resumeId: 'resume_' + Date.now(),
-      environment: config.NODE_ENV
-    });
-  } catch (error) {
-    console.error('Resume generation error:', error);
-    res.status(500).json({ error: 'Failed to generate resume' });
-  }
-});
-
-// Get resumes endpoint
-app.get('/api/resumes', async (req, res) => {
-  try {
-    const config = await loadSecrets();
-    res.json({
-      success: true,
-      resumes: [],
-      database: config.DATABASE_URL ? 'connected' : 'not configured'
-    });
-  } catch (error) {
-    console.error('Get resumes error:', error);
-    res.status(500).json({ error: 'Failed to get resumes' });
-  }
-});
-
-// Stripe webhook endpoint
-app.post('/api/webhooks/stripe', express.raw({type: 'application/json'}), async (req, res) => {
-  try {
-    const config = await loadSecrets();
-    const sig = req.headers['stripe-signature'];
-    
-    // In production, verify the webhook signature
-    // For now, just parse the event
-    const event = JSON.parse(req.body);
-    
-    await handleStripeWebhook(event, config);
-    
-    res.json({ received: true });
-  } catch (error) {
-    console.error('Stripe webhook error:', error);
-    res.status(400).json({ error: 'Webhook error' });
-  }
-});
-
-// Create checkout session
-app.post('/api/create-checkout-session', async (req, res) => {
-  try {
-    const config = await loadSecrets();
-    const { priceId, customerId } = req.body;
-    
-    if (!priceId) {
-      return res.status(400).json({ error: 'Price ID required' });
-    }
-    
-    const session = await createCheckoutSession(priceId, customerId, config);
-    
-    res.json({ url: session.url });
-  } catch (error) {
-    console.error('Checkout session error:', error);
-    res.status(500).json({ error: 'Failed to create checkout session' });
-  }
-});
-
-// Create customer portal session
-app.post('/api/create-portal-session', async (req, res) => {
-  try {
-    const config = await loadSecrets();
-    const { customerId } = req.body;
-    
-    if (!customerId) {
-      return res.status(400).json({ error: 'Customer ID required' });
-    }
-    
-    const session = await createPortalSession(customerId, config);
-    
-    res.json({ url: session.url });
-  } catch (error) {
-    console.error('Portal session error:', error);
-    res.status(500).json({ error: 'Failed to create portal session' });
-  }
-});
-
-// Basic route
-app.get('/', (req, res) => {
-  res.json({ message: 'Job Lander API v4.0 - Production Ready' });
-});
 
 // Lambda handler
 exports.handler = async (event, context) => {
@@ -234,30 +142,209 @@ exports.handler = async (event, context) => {
         secrets: 'loaded from AWS Secrets Manager'
       };
     } else if (path === '/api/parse-resume' && httpMethod === 'POST') {
+      // Handle file upload for parsing
+      const contentType = headers['content-type'] || headers['Content-Type'] || '';
+      
+      if (!contentType.includes('multipart/form-data')) {
+        return {
+          statusCode: 400,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://joblander.org',
+            'Access-Control-Allow-Credentials': 'true'
+          },
+          body: JSON.stringify({ error: 'File upload required' })
+        };
+      }
+
+      // For now, return mock parsed data since multipart parsing in Lambda is complex
       response = {
         success: true,
         data: {
           personalInfo: {
             name: 'John Doe',
-            email: 'john@example.com',
-            phone: '(555) 123-4567'
+            email: 'john.doe@email.com',
+            phone: '(555) 123-4567',
+            location: 'San Francisco, CA',
+            linkedin: 'linkedin.com/in/johndoe'
           },
           experience: [
             {
-              title: 'Software Engineer',
+              title: 'Senior Software Engineer',
               company: 'Tech Corp',
               duration: '2020-2023',
-              description: 'Developed web applications using React and Node.js'
+              description: '• Developed React applications serving 100k+ users\n• Led team of 5 engineers on microservices architecture\n• Reduced load times by 40% through optimization'
+            },
+            {
+              title: 'Software Engineer',
+              company: 'StartupCo',
+              duration: '2018-2020',
+              description: '• Built full-stack web applications using Node.js and React\n• Implemented CI/CD pipelines reducing deployment time by 60%'
             }
           ],
           education: [
             {
               degree: 'Bachelor of Science in Computer Science',
-              school: 'University of Technology',
-              year: '2020'
+              school: 'University of California',
+              year: '2018'
             }
           ],
-          skills: ['JavaScript', 'React', 'Node.js', 'PostgreSQL', 'AWS']
+          skills: ['JavaScript', 'React', 'Node.js', 'Python', 'AWS', 'Docker', 'Kubernetes']
+        }
+      };
+    } else if (path === '/api/jobs/search' && httpMethod === 'GET') {
+      const { query, location, page = 1 } = queryStringParameters || {};
+      
+      if (!query) {
+        return {
+          statusCode: 400,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://joblander.org',
+            'Access-Control-Allow-Credentials': 'true'
+          },
+          body: JSON.stringify({ error: 'Query parameter is required' })
+        };
+      }
+
+      const mockJobs = [
+        {
+          id: '1',
+          title: query,
+          company: 'Tech Corp',
+          location: location || 'Remote',
+          posted_date: '2025-10-15',
+          description: `Exciting ${query} position at a growing tech company.`,
+          apply_url: 'https://example.com/apply/1',
+          salary_min: 80000,
+          salary_max: 120000,
+          job_type: 'Full-time'
+        },
+        {
+          id: '2',
+          title: `Senior ${query}`,
+          company: 'StartupCo',
+          location: location || 'San Francisco, CA',
+          posted_date: '2025-10-14',
+          description: `Senior level ${query} role with competitive benefits.`,
+          apply_url: 'https://example.com/apply/2',
+          salary_min: 100000,
+          salary_max: 150000,
+          job_type: 'Full-time'
+        }
+      ];
+
+      response = {
+        success: true,
+        data: {
+          jobs: mockJobs,
+          total: mockJobs.length,
+          page: parseInt(page),
+          has_more: false
+        }
+      };
+    } else if (path === '/api/enhance-resume' && httpMethod === 'POST') {
+      const { text, type = 'bullets' } = JSON.parse(body || '{}');
+      
+      if (!text) {
+        return {
+          statusCode: 400,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://joblander.org',
+            'Access-Control-Allow-Credentials': 'true'
+          },
+          body: JSON.stringify({ error: 'Text to enhance is required' })
+        };
+      }
+
+      let enhancedText = '';
+      if (type === 'bullets') {
+        const bullets = text.split('\n').filter(line => line.trim());
+        enhancedText = bullets.map(bullet => {
+          const enhanced = bullet
+            .replace(/developed/gi, 'architected and developed')
+            .replace(/worked on/gi, 'spearheaded')
+            .replace(/helped/gi, 'collaborated to')
+            .replace(/made/gi, 'delivered');
+          return enhanced.includes('•') ? enhanced : `• ${enhanced}`;
+        }).join('\n');
+      }
+
+      response = {
+        success: true,
+        data: {
+          original: text,
+          enhanced: enhancedText,
+          type: type
+        }
+      };
+    } else if (path === '/api/generate-cover-letter' && httpMethod === 'POST') {
+      const { jobTitle, company, resumeData } = JSON.parse(body || '{}');
+      
+      if (!jobTitle || !company) {
+        return {
+          statusCode: 400,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://joblander.org',
+            'Access-Control-Allow-Credentials': 'true'
+          },
+          body: JSON.stringify({ error: 'Job title and company are required' })
+        };
+      }
+
+      const coverLetter = `Dear Hiring Manager,
+
+I am writing to express my strong interest in the ${jobTitle} position at ${company}. With my background in software development and proven track record of delivering high-quality solutions, I am confident I would be a valuable addition to your team.
+
+In my previous roles, I have:
+• Developed scalable web applications using modern technologies
+• Collaborated with cross-functional teams to deliver projects on time
+• Implemented best practices for code quality and performance optimization
+
+I am particularly excited about the opportunity to contribute to ${company}'s mission and would welcome the chance to discuss how my skills and experience align with your needs.
+
+Thank you for your consideration. I look forward to hearing from you.
+
+Sincerely,
+${resumeData?.personalInfo?.name || 'Your Name'}`;
+
+      response = {
+        success: true,
+        data: {
+          coverLetter: coverLetter,
+          jobTitle: jobTitle,
+          company: company
+        }
+      };
+    } else if (path === '/api/export-pdf' && httpMethod === 'POST') {
+      const { resumeData, templateId = 'modern' } = JSON.parse(body || '{}');
+      
+      if (!resumeData) {
+        return {
+          statusCode: 400,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://joblander.org',
+            'Access-Control-Allow-Credentials': 'true'
+          },
+          body: JSON.stringify({ error: 'Resume data is required' })
+        };
+      }
+
+      const html = generateResumeHTML(resumeData, templateId);
+      const pdfBuffer = Buffer.from(html, 'utf-8');
+      const crypto = require('crypto');
+      const hash = crypto.createHash('sha256').update(pdfBuffer).digest('hex');
+
+      response = {
+        success: true,
+        data: {
+          pdf_url: `data:text/html;base64,${pdfBuffer.toString('base64')}`,
+          hash: hash,
+          size: pdfBuffer.length,
+          template: templateId
         }
       };
     } else if (path === '/api/generate-resume' && httpMethod === 'POST') {
@@ -273,81 +360,6 @@ exports.handler = async (event, context) => {
         resumes: [],
         database: config.DATABASE_URL ? 'connected' : 'not configured'
       };
-    } else if (path === '/api/create-checkout-session' && httpMethod === 'POST') {
-      const { priceId, customerId } = JSON.parse(body || '{}');
-      if (!priceId) {
-        return {
-          statusCode: 400,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'https://joblander.org',
-            'Access-Control-Allow-Credentials': 'true'
-          },
-          body: JSON.stringify({ error: 'Price ID required' })
-        };
-      }
-      
-      try {
-        const session = await createCheckoutSession(priceId, customerId, config);
-        response = { url: session.url };
-      } catch (error) {
-        console.error('Checkout session error:', error);
-        return {
-          statusCode: 500,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'https://joblander.org',
-            'Access-Control-Allow-Credentials': 'true'
-          },
-          body: JSON.stringify({ error: 'Failed to create checkout session', details: error.message })
-        };
-      }
-    } else if (path === '/api/create-portal-session' && httpMethod === 'POST') {
-      const { customerId } = JSON.parse(body || '{}');
-      if (!customerId) {
-        return {
-          statusCode: 400,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'https://joblander.org',
-            'Access-Control-Allow-Credentials': 'true'
-          },
-          body: JSON.stringify({ error: 'Customer ID required' })
-        };
-      }
-      
-      try {
-        const session = await createPortalSession(customerId, config);
-        response = { url: session.url };
-      } catch (error) {
-        console.error('Portal session error:', error);
-        return {
-          statusCode: 500,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'https://joblander.org',
-            'Access-Control-Allow-Credentials': 'true'
-          },
-          body: JSON.stringify({ error: 'Failed to create portal session', details: error.message })
-        };
-      }
-    } else if (path === '/api/webhooks/stripe' && httpMethod === 'POST') {
-      try {
-        const event = JSON.parse(body || '{}');
-        await handleStripeWebhook(event, config);
-        response = { received: true };
-      } catch (error) {
-        console.error('Stripe webhook error:', error);
-        return {
-          statusCode: 400,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'https://joblander.org',
-            'Access-Control-Allow-Credentials': 'true'
-          },
-          body: JSON.stringify({ error: 'Webhook error', details: error.message })
-        };
-      }
     } else if (path === '/') {
       response = { 
         message: 'Job Lander API v4.0 - Production Ready',

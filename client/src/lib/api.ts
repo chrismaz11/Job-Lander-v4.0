@@ -33,9 +33,22 @@ export interface ParsedResumeData {
   skills: string[];
 }
 
+export interface JobSearchResult {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  posted_date: string;
+  description: string;
+  apply_url: string;
+  salary_min?: number;
+  salary_max?: number;
+  job_type: string;
+}
+
 export async function parseResumeFile(file: File): Promise<ParsedResumeData> {
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append('resume', file);
 
   try {
     const response = await fetch(`${API_BASE_URL}/api/parse-resume`, {
@@ -59,8 +72,8 @@ export async function parseResumeFile(file: File): Promise<ParsedResumeData> {
     
     return {
       personalInfo: {
-        firstName: data.personalInfo?.firstName || data.personalInfo?.fullName?.split(' ')[0] || '',
-        lastName: data.personalInfo?.lastName || data.personalInfo?.fullName?.split(' ').slice(1).join(' ') || '',
+        firstName: data.personalInfo?.firstName || data.personalInfo?.name?.split(' ')[0] || '',
+        lastName: data.personalInfo?.lastName || data.personalInfo?.name?.split(' ').slice(1).join(' ') || '',
         email: data.personalInfo?.email || '',
         phone: data.personalInfo?.phone || '',
         location: data.personalInfo?.location || '',
@@ -81,13 +94,140 @@ export async function parseResumeFile(file: File): Promise<ParsedResumeData> {
         institution: edu.institution || edu.school || '',
         degree: edu.degree || '',
         field: edu.field || edu.major || '',
-        graduationDate: edu.graduationDate || edu.endDate || '',
+        graduationDate: edu.graduationDate || edu.year || '',
         gpa: edu.gpa || '',
       })),
       skills: data.skills || [],
     };
   } catch (error) {
     console.error('Resume parsing error:', error);
+    throw error;
+  }
+}
+
+export async function searchJobs(query: string, location?: string, page = 1): Promise<{
+  jobs: JobSearchResult[];
+  total: number;
+  page: number;
+  has_more: boolean;
+}> {
+  try {
+    const params = new URLSearchParams({
+      query,
+      page: page.toString(),
+    });
+    
+    if (location) {
+      params.append('location', location);
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/jobs/search?${params}`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to search jobs');
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error('Job search error:', error);
+    throw error;
+  }
+}
+
+export async function enhanceResumeText(text: string, type: 'bullets' | 'summary' = 'bullets'): Promise<string> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/enhance-resume`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text, type }),
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to enhance text');
+    }
+
+    return result.data.enhanced;
+  } catch (error) {
+    console.error('Text enhancement error:', error);
+    throw error;
+  }
+}
+
+export async function generateCoverLetter(jobTitle: string, company: string, resumeData: any): Promise<string> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/generate-cover-letter`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ jobTitle, company, resumeData }),
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to generate cover letter');
+    }
+
+    return result.data.coverLetter;
+  } catch (error) {
+    console.error('Cover letter generation error:', error);
+    throw error;
+  }
+}
+
+export async function exportResumePDF(resumeData: any, templateId = 'modern'): Promise<{
+  pdf_url: string;
+  hash: string;
+  size: number;
+  template: string;
+}> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/export-pdf`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ resumeData, templateId }),
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to export PDF');
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error('PDF export error:', error);
     throw error;
   }
 }
@@ -116,6 +256,25 @@ export async function generateResumeWithAI(resumeData: any): Promise<string> {
     return result.html || result.data;
   } catch (error) {
     console.error('Resume generation error:', error);
+    throw error;
+  }
+}
+
+// Health check endpoint
+export async function checkHealth(): Promise<{ status: string; environment: string }> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/health`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Health check error:', error);
     throw error;
   }
 }
