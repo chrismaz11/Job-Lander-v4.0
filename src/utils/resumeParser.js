@@ -1,5 +1,5 @@
-import pdfParse from 'pdf-parse';
-import mammoth from 'mammoth';
+// Browser-compatible resume parser
+// Note: PDF and DOCX parsing would need server-side processing
 
 export const parseResumeFile = async (file) => {
   console.log('🔍 Starting resume parsing for:', file.name);
@@ -8,16 +8,11 @@ export const parseResumeFile = async (file) => {
     let text = '';
     
     // Extract text based on file type
-    if (file.type === 'application/pdf') {
-      const arrayBuffer = await file.arrayBuffer();
-      const data = await pdfParse(arrayBuffer);
-      text = data.text;
-    } else if (file.type.includes('word') || file.name.endsWith('.docx')) {
-      const arrayBuffer = await file.arrayBuffer();
-      const result = await mammoth.extractRawText({ arrayBuffer });
-      text = result.value;
-    } else if (file.type === 'text/plain') {
+    if (file.type === 'text/plain') {
       text = await file.text();
+    } else if (file.type === 'application/pdf' || file.type.includes('word')) {
+      // For PDF and DOCX files, we'll need server-side processing
+      throw new Error('PDF and DOCX parsing requires server-side processing. Please use the API endpoint.');
     } else {
       throw new Error(`Unsupported file type: ${file.type}`);
     }

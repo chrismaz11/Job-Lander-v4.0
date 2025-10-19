@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChromePicker } from 'react-color';
+// Using native HTML color input instead of react-color
 import './TemplateCustomizer.css';
 
 const TemplateCustomizer = ({ onCustomizationChange }) => {
@@ -23,7 +23,7 @@ const TemplateCustomizer = ({ onCustomizationChange }) => {
   });
 
   const [activeTab, setActiveTab] = useState('colors');
-  const [colorPickerOpen, setColorPickerOpen] = useState(null);
+
 
   useEffect(() => {
     onCustomizationChange(customizations);
@@ -46,25 +46,15 @@ const TemplateCustomizer = ({ onCustomizationChange }) => {
   const ColorPicker = ({ color, onChange, label }) => (
     <div className="color-picker-container">
       <label className="color-label">{label}</label>
-      <div 
-        className="color-swatch"
-        style={{ backgroundColor: color }}
-        onClick={() => setColorPickerOpen(colorPickerOpen === label ? null : label)}
-      >
+      <div className="color-input-wrapper">
+        <input
+          type="color"
+          value={color}
+          onChange={(e) => onChange(e.target.value)}
+          className="color-input"
+        />
         <span className="color-value">{color}</span>
       </div>
-      {colorPickerOpen === label && (
-        <div className="color-picker-popup">
-          <div 
-            className="color-picker-overlay"
-            onClick={() => setColorPickerOpen(null)}
-          />
-          <ChromePicker
-            color={color}
-            onChange={(colorResult) => onChange(colorResult.hex)}
-          />
-        </div>
-      )}
     </div>
   );
 

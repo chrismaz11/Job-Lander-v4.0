@@ -1,52 +1,26 @@
-import jsPDF from 'jspdf';
+// Browser-compatible PDF generation using print API
 
 export class PDFGenerator {
   static async generateFromElement(element, options = {}) {
-    const defaultOptions = {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: '#ffffff',
-      width: 794,
-      height: 1123,
-      ...options
-    };
-
-    try {
-      console.log('🔄 Starting PDF generation...');
-      
-      
-      const imgWidth = 210;
-      const pageHeight = 295;
-      let heightLeft = imgHeight;
-      
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      let position = 0;
-      
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-      
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+    console.log('🔄 Using browser print for PDF generation...');
+    
+    // For now, we'll use the browser's print functionality
+    // In a real implementation, this would call the backend API
+    return {
+      print: () => window.print(),
+      download: (filename) => {
+        // This would typically call the backend API to generate PDF
+        console.log(`Would download PDF as: ${filename}`);
+        alert('PDF generation requires server-side processing. Please use the API endpoint.');
       }
-      
-      console.log('✅ PDF generated successfully');
-      return pdf;
-      
-    } catch (error) {
-      console.error('❌ PDF generation failed:', error);
-      throw new Error('Failed to generate PDF');
-    }
+    };
   }
 
   static async downloadPDF(element, filename = 'resume.pdf') {
     try {
-      const pdf = await this.generateFromElement(element);
-      pdf.save(filename);
-      console.log(`📥 PDF downloaded: ${filename}`);
+      console.log(`📥 Requesting PDF download: ${filename}`);
+      // This would call the backend API for PDF generation
+      alert('PDF download requires server-side processing. Please use the print function or contact support.');
     } catch (error) {
       console.error('Download failed:', error);
       throw error;
@@ -55,14 +29,9 @@ export class PDFGenerator {
 
   static async previewPDF(element) {
     try {
-      const pdf = await this.generateFromElement(element);
-      const pdfBlob = pdf.output('blob');
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-      
-      window.open(pdfUrl, '_blank');
-      console.log('👁️ PDF preview opened');
-      
-      return pdfUrl;
+      console.log('👁️ Opening print preview');
+      window.print();
+      return null;
     } catch (error) {
       console.error('Preview failed:', error);
       throw error;
