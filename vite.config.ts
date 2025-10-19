@@ -15,6 +15,7 @@ export default defineConfig(({ command, mode }) => {
   const isProduction = mode === 'production';
   
   return {
+    base: '/',
     plugins: [
       react({
         // Optimize JSX runtime for production
